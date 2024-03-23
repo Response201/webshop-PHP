@@ -40,7 +40,7 @@ require_once("Models/Product.php");
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Produkter
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu mb-2">
             <li class='dropdown-item' href='#!'> Alla produkter </li>
             <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
         
@@ -62,13 +62,14 @@ require_once("Models/Product.php");
 
         <li class="nav-item dropdown me-2">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person"></i> <!-- Icon of a person -->
+            <i class="bi bi-person"></i> 
           </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+          <ul class="dropdown-menu dropdown-menu-end " style="max-width:100px;">
+           
+            
+            <li><a class="dropdown-item" href="#">Logga In</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="#">skapa konto</a></li>
           </ul>
         </li>
       </ul>
