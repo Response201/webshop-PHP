@@ -14,6 +14,8 @@ require_once("Models/Product.php");
         <title>Shop Homepage - Start Bootstrap Template</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -22,16 +24,15 @@ require_once("Models/Product.php");
     <body>
         <!-- Navigation-->
 
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-default navbar-expand-lg  text-white fixed-top"     role="navigation"   >
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <ul class="navbar-nav mb-2 mb-lg-0">
+      <ul class="navbar-nav mb-2 mb-lg-0  ">
         <li class="nav-item me-2">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active  " aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item me-2">
           <a class="nav-link" href="#">Link</a>
@@ -53,8 +54,8 @@ require_once("Models/Product.php");
         </li>
         <li class="nav-item me-2">
           <form class="d-flex">
-            <button class="btn btn-outline-dark" type="submit">
-              <i class="bi-cart-fill me-1"></i> Cart
+            <button class="btn btn-outline-dark change" type="submit">
+              <i class="bi-cart-fill me-1 change"></i> Cart
               <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
             </button>
           </form>
@@ -86,23 +87,23 @@ require_once("Models/Product.php");
 
 
         <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <?php
-                    $hour = date('h');
-                    if($hour >= 9){
-                    ?>
-                    <h1 class="display-4 fw-bolder">Super shoppen</h1>
-                    <?php
-                    }
-                    ?> 
-                    <p class="lead fw-normal text-white-50 mb-0">Handla massa onödigt hos oss!</p>
-                </div>
-            </div>
-        </header>
+        <header class="d-flex justify-content-center align-items-center py-5 bg-dark" style="min-height: 40vh;"               class="spacer">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center ">
+            <?php
+            $hour = date('h');
+            if($hour >= 9){
+            ?>
+            <h1 class="display-4 fw-bolder">Super shoppen</h1>
+            <?php
+            }
+            ?> 
+            <p class="lead fw-normal ">Handla massa onödigt hos oss!</p>
+        </div>
+    </div>
+</header>
         <!-- Section-->
-        <section class="py-5">
+        <section class="py-6 " id="startchange" >
         <div class="container px-4 px-lg-5 mt-5">
         <div class="d-flex justify-content-end">
 
@@ -151,5 +152,6 @@ require_once("Models/Product.php");
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
     </body>
 </html>
