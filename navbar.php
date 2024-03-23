@@ -31,10 +31,10 @@ require_once("Models/Product.php");
                         ?>
                     </ul>
                 </li>
-                <li class="nav-item me-2">
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark change" type="submit">
-                            <i class="bi-cart-fill me-1 change"></i> Cart
+                <li class="nav-item ">
+                    <form class="">
+                        <button class="btn text-dark border-dark  change" type="submit">
+                            <i class="bi-cart-fill text-dark change"></i> Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                     </form>
