@@ -6,8 +6,9 @@ require_once("Models/Product.php");
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler  text-dark border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span  role="button" ><i class="fa fa-bars" aria-hidden="true"></i></span>
+
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -22,13 +23,14 @@ require_once("Models/Product.php");
                         Produkter
                     </a>
                     <ul class="dropdown-menu mb-2">
-                        <li class='dropdown-item' href='#!'> Alla produkter </li>
+                    <li><a class='dropdown-item' href='category.php?category=Alla produkter'>Alla produkter</a></li>
                         <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
                         <?php
                         foreach(getAllCategories() as $category){
-                            echo "<li><a class='dropdown-item' href='#!'>$category</a></li> ";   
+                            echo "<li><a class='dropdown-item' href='category.php?category=$category'>$category</a></li> ";   
                         }
                         ?>
+                         
                     </ul>
                 </li>
                 <li class="nav-item ">

@@ -18,20 +18,15 @@ require_once("Models/Product.php");
 
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
     </head>
-    <body>
+    <body >
         <!-- Navigation-->
 
-        <?php include_once('navbar.php'); ?>
-
-
-
-
-
-
-
+        <?php include_once('navbar.php'); ?> 
 
 
         <!-- Header-->
