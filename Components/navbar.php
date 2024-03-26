@@ -2,12 +2,14 @@
 <?php
 // include --  OK även om filen inte finns
 //include_once("Models/Products.php");
-require_once("Models/Product.php");
+require_once ("Models/Database.php");
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
     <div class="container-fluid">
-        <button class="navbar-toggler  text-dark border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span  role="button" ><i class="fa fa-bars" aria-hidden="true"></i></span>
+        <button class="navbar-toggler  text-dark border-dark" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span role="button"><i class="fa fa-bars" aria-hidden="true"></i></span>
 
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -19,18 +21,20 @@ require_once("Models/Product.php");
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown me-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Produkter
                     </a>
                     <ul class="dropdown-menu mb-2">
-                    <li><a class='dropdown-item' href='category.php?category=Alla produkter'>Alla produkter</a></li>
+                        <li><a class='dropdown-item' href='category.php?category=Alla produkter'>Alla produkter</a></li>
                         <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
                         <?php
-                        foreach(getAllCategories() as $category){
-                            echo "<li><a class='dropdown-item' href='category.php?category=$category'>$category</a></li> ";   
+
+                        foreach ($dbContext->getAllCategories() as $category) {
+                            echo "<li><a class='dropdown-item' href='category.php?category=$category->id'>$category->title</a></li> ";
                         }
                         ?>
-                         
+
                     </ul>
                 </li>
                 <li class="nav-item ">
@@ -42,12 +46,15 @@ require_once("Models/Product.php");
                     </form>
                 </li>
                 <li class="nav-item dropdown me-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person"></i> 
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="max-width:100px;">
                         <li><a class="dropdown-item" href="#">Logga In</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="#">skapa konto</a></li>
                     </ul>
                 </li>

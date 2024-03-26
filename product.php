@@ -1,4 +1,5 @@
-<?php  include_once('Models/Product.php'); include_once('components/productItem.php'); ?>
+<?php  include_once('Models/Database.php'); include_once('components/productItem.php'); $dbContext = new DBContext();?>
+
 <html>
 
 <head>
@@ -19,23 +20,17 @@
     </head>
     <body>
        
-      <?php 
-      $produkterna = getAllProducts();
-      $id = $_GET['id'];
-      $item = getProduct($id, $produkterna );
-
-
-      ?>
+  
 
 
 
 
 <article class="productContainer"> 
-<?php include_once('navbar.php'); ?>
+<?php include_once('Components/navbar.php'); ?>
 <section class="productItem">
-<?php
-productItem($item)
-?>
+ <?php
+productItem($dbContext->getProduct($_GET['id']));
+?> 
 </section >
     </article>
      
