@@ -48,11 +48,16 @@ class DBContext
 
     function getProductByCategory($categoryId)
     {
+        if($categoryId === 'all'){
+            return $this->pdo->query('SELECT * FROM products')->fetchAll(PDO::FETCH_CLASS, 'Product');
+        }else{
         $prep = $this->pdo->prepare('SELECT * FROM products WHERE categoryId = :categoryId');
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
         $prep->execute([':categoryId' => $categoryId]);
 
         return $prep->fetchAll();
+        }
+       
     }
     /* Tar ut alla produkter som tillhör en och samma kategori */
     function getCategoryByTitle($title): Category|false

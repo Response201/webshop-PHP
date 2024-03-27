@@ -23,15 +23,24 @@ $dbContext = new DBContext(); ?>
     <?php
 
     $category = $_GET['category'];
+    $allCat = $dbContext->getAllCategories();
+    $categoryName = $_GET['name'];
+    
 
     $list = $dbContext->getProductByCategory($category);
+    
 
     ?>
     <article class="categoryContainer">
-        <section>
+        <section class="categoryContainer___header_sort">
             <h1>
-                <?php echo "$category"; ?>
+                <?php echo "$categoryName";?>
             </h1>
+
+<div class="categoryContainer___btn">
+    <a class="itemBtn categoryBtn">s</a> <a class="itemBtn categoryBtn">s</a>
+</div>
+<hr class="categoryContainer___hr">
         </section>
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItemList">

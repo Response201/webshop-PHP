@@ -26,12 +26,12 @@ require_once ("Models/Database.php");
                         Produkter
                     </a>
                     <ul class="dropdown-menu mb-2">
-                        <li><a class='dropdown-item' href='category.php?category=Alla produkter'>Alla produkter</a></li>
+                        <li><a class='dropdown-item' href='category.php?category=all&name=Alla%20Produkter'>Alla produkter</a></li>
                         <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
                         <?php
 
                         foreach ($dbContext->getAllCategories() as $category) {
-                            echo "<li><a class='dropdown-item' href='category.php?category=$category->id'>$category->title</a></li> ";
+                            echo "<li><a class='dropdown-item' href='category.php?category=$category->id&name=$category->title'>$category->title</a></li> ";
                         }
                         ?>
 
