@@ -36,11 +36,19 @@ $dbContext = new DBContext(); ?>
             <h1>
                 <?php echo "$categoryName";?>
             </h1>
-
+<div class="categoryContainer___sort"> 
 <div class="categoryContainer___btn">
-    <a class="itemBtn categoryBtn">s</a> <a class="itemBtn categoryBtn">s</a>
+    <div class="btn___item"><a class=" categoryBtn"> <i class="bi bi-sort-alpha-down"></i>
+                   </a> <a class=" categoryBtn"> <i class="bi bi-sort-alpha-up"></i></a></div>
+    
+
+
+                   <div class="btn___item"> <i class="bi bi-currency-dollar categoryI"></i>  <a class=" categoryBtn"> <i class="bi bi-caret-up-fill"></i>
+                   </a> <a class=" categoryBtn"> <i class="bi bi-caret-down-fill"></i></a></div>
+
 </div>
 <hr class="categoryContainer___hr">
+</div>
         </section>
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItemList">
