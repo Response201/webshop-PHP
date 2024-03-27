@@ -38,13 +38,16 @@ $dbContext = new DBContext(); ?>
             </h1>
 <div class="categoryContainer___sort"> 
 <div class="categoryContainer___btn">
-    <div class="btn___item"><a class=" categoryBtn"> <i class="bi bi-sort-alpha-down"></i>
-                   </a> <a class=" categoryBtn"> <i class="bi bi-sort-alpha-up"></i></a></div>
+    <div class="btn___item"><a class="categoryBtnSort"> <i class="sortBtn bi bi-sort-alpha-down"></i>
+                   </a> <a class="categoryBtnSort"> <i class="sortBtn bi bi-sort-alpha-up"></i></a></div>
     
 
 
-                   <div class="btn___item"> <i class="bi bi-currency-dollar categoryI"></i>  <a class=" categoryBtn"> <i class="bi bi-caret-up-fill"></i>
-                   </a> <a class=" categoryBtn"> <i class="bi bi-caret-down-fill"></i></a></div>
+                   <div class="btn___item"><a class="categoryBtnSortIcon">
+                     <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"> <i class="sortBtn bi bi-caret-down-fill"></i></a> 
+                     <a class="categoryBtnSort"> <i class="sortBtn bi bi-caret-up-fill"></i>
+                   </a> 
+                   </div>
 
 </div>
 <hr class="categoryContainer___hr">
