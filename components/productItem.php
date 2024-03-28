@@ -12,7 +12,7 @@ if($admin){
   if ($item !== null) 
     echo "<div class=\"card p-3 item \">
         <div class=\"row  \" >
-          <a class=\" col-12     rounded \" href='product.php?id=$item->id'>
+          <a class=\" col-12     rounded \" href='product?id=$item->id'>
              <img src=\"$item->img\" class=\" rounded  img-fluid \" alt=\"Product Image\">
           </a> 
           <div class=\" d-flex  justify-content-between   \" style=\" margin-top: 1rem; \">

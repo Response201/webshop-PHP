@@ -65,10 +65,10 @@ class DBContext
         /* skapa filtrering */
         $sql = "ORDER BY $sortingType $sort";
         if ($q && $categoryId === 'all') {
-            $sql = "WHERE title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
+            $sql = "WHERE title LIKE '%".$q."%' ORDER BY $sortingType " . $sort;
         }
         if ($q && $categoryId !== 'all') {
-            $sql = "AND title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
+            $sql = "AND title LIKE '%".$q."%' ORDER BY $sortingType " . $sort;
         }
 
         /* anrop */
