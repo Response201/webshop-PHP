@@ -63,8 +63,8 @@ justify-content: center;
 flex-direction: column;
 height:100vh;
 width: 100%;
-min-height: 600px;
 
+min-height: calc(600px + 3rem);
 }
 
 .categoryContainer{
@@ -78,7 +78,7 @@ padding-top: 3rem;
 
 width: 100%;
 place-self:  stretch;
-background-color: #0a53be;
+
 
 }
 
@@ -143,9 +143,10 @@ justify-content: space-between;
 width: clamp(200px, 50%, 250px);
 margin-right:1rem ;
   }
-/*   .searchInput{
-    
-  } */
+ .search{
+    margin: 0;
+    padding: 0;
+  } 
   .btn___item:nth-child(1){
     display: flex;
     justify-content: space-between;
@@ -184,7 +185,8 @@ width: 15px;}
   justify-content: space-between;
 height: 15%;
 z-index: 1;
-background-color: white;
+
+
 }
 .categoryContainer___sort{
   width:100%;
