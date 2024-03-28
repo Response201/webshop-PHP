@@ -4,6 +4,7 @@
 require_once ("Models/Database.php");
 
 $dbContext = new DBContext();
+$q= "" 
 ?>
 
 <!DOCTYPE html>
@@ -63,10 +64,10 @@ $dbContext = new DBContext();
             <div class="d-flex justify-content-end">
 
 
-                <form class="d-flex">
+                <form class="d-flex"  method="GET">
                     <div class="input-group" style="max-width: 150px;">
-                        <input class="form-control" type="search" placeholder="Sök" aria-label="Search">
-                        <button class="btn btn-outline-dark" type="submit">
+                    <input type="text" name="q" class="form-control" value="<?php echo $q ?>"  />
+                        <button  class="btn btn-outline-dark" type="submit" >
                             <i class="bi bi-search"></i>
                         </button>
                     </div>

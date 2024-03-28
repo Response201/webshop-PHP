@@ -1,5 +1,6 @@
 <?php include_once ('Models/Database.php');
 include_once ('Components/productItem.php');
+include_once ('Components/searchForm.php');
 $dbContext = new DBContext(); ?>
 <html>
 
@@ -25,33 +26,50 @@ $dbContext = new DBContext(); ?>
     $category = $_GET['category'];
     $allCat = $dbContext->getAllCategories();
     $categoryName = $_GET['name'];
-    
-
     $list = $dbContext->getProductByCategory($category);
-    
+    $sort = $_GET['sorting'] ?? '';
+    $sortingType = $_GET['sortingType'] ?? 'title';
+    $q = $_GET['q'] ?? "";
+    $list = $dbContext->getProductByCategorySort($category, $sortingType, $sort, $q);
 
     ?>
     <article class="categoryContainer">
         <section class="categoryContainer___header_sort">
-            <h1>
-                <?php echo "$categoryName";?>
+            <h1 class="categoryContainer___h1">
+                <?php echo "$categoryName"; ?>
             </h1>
-<div class="categoryContainer___sort"> 
-<div class="categoryContainer___btn">
-    <div class="btn___item"><a class="categoryBtnSort"> <i class="sortBtn bi bi-sort-alpha-down"></i>
-                   </a> <a class="categoryBtnSort"> <i class="sortBtn bi bi-sort-alpha-up"></i></a></div>
-    
+            <div class="categoryContainer___sort">
+                <div class="categoryContainer___btn">
+                    <div class="btn___item"><a class="categoryBtnSort"
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q"; ?>">
+                            <i class="sortBtn bi bi-sort-alpha-down"></i>
+                        </a> <a class="categoryBtnSort"
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>">
+                            <i class="sortBtn bi bi-sort-alpha-up"></i></a></div>
 
 
-                   <div class="btn___item"><a class="categoryBtnSortIcon">
-                     <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"> <i class="sortBtn bi bi-caret-down-fill"></i></a> 
-                     <a class="categoryBtnSort"> <i class="sortBtn bi bi-caret-up-fill"></i>
-                   </a> 
-                   </div>
 
-</div>
-<hr class="categoryContainer___hr">
-</div>
+                    <div class="btn___item">
+
+                    <?php 
+                    searchForm($category, $categoryName, $sort, $sortingType, $q )
+                    ?>
+                    
+
+                        <a class="categoryBtnSortIcon">
+                            <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>">
+                            <i class="sortBtn bi bi-caret-down-fill"></i></a>
+                        <a class="categoryBtnSort"
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>">
+                            <i class="sortBtn bi bi-caret-up-fill"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+                <hr class="categoryContainer___hr">
+            </div>
         </section>
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItemList">
@@ -60,12 +78,25 @@ $dbContext = new DBContext(); ?>
             foreach ($list as $item) {
 
                 if ($item) {
+
                     productItem($item);
+
                 }
             }
             ;
             ?>
         </section>
+
+
+
+        <section class="categoryContainer___pages">
+
+
+            <hr class="categoryContainer___hr">
+            <div class="categoryContainer___btn">
+
+        </section>
+
     </article>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

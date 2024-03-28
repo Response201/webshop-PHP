@@ -19,7 +19,7 @@ if($admin){
          
           <div>
               <h5 class=\"card-title\"> $item->title</h5>
-              <p class=\"card-text\">Price:  $item->price</p>
+              <p class=\"card-text\">  $item->price kr</p>
               </div>
               <div class=\"  btnContainer  \">
               
