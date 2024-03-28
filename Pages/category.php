@@ -1,6 +1,7 @@
 <?php include_once ('Models/Database.php');
 include_once ('Components/productItem.php');
 include_once ('Components/searchForm.php');
+include_once ('Components/paginationItem.php');
 $dbContext = new DBContext(); ?>
 <html>
 
@@ -51,10 +52,10 @@ $dbContext = new DBContext(); ?>
 
                     <div class="btn___item">
 
-                    <?php 
-                    searchForm($category, $categoryName, $sort, $sortingType, $q )
-                    ?>
-                    
+                        <?php
+                        searchForm($category, $categoryName, $sort, $sortingType, $q)
+                            ?>
+
 
                         <a class="categoryBtnSortIcon">
                             <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"
@@ -93,12 +94,13 @@ $dbContext = new DBContext(); ?>
 
 
             <hr class="categoryContainer___hr">
-            <div class="categoryContainer___btn">
-
-        </section>
+         
+                <?php paginationItem($category, $categoryName, $sort, $sortingType, $q) ?>
+      
 
     </article>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/activeBtns.js"></script>
 </body>
 
 </html>
