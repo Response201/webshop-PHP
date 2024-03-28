@@ -27,11 +27,17 @@ $dbContext = new DBContext(); ?>
     $category = $_GET['category'];
     $allCat = $dbContext->getAllCategories();
     $categoryName = $_GET['name'];
-    $list = $dbContext->getProductByCategory($category);
     $sort = $_GET['sorting'] ?? '';
     $sortingType = $_GET['sortingType'] ?? 'title';
     $q = $_GET['q'] ?? "";
-    $list = $dbContext->getProductByCategorySort($category, $sortingType, $sort, $q);
+    if (!isset ($_GET['page']) ) {  
+        $page = 1;  
+    } else {  
+        $page = $_GET['page'];  
+    }  
+
+    $list = $dbContext->getProductByCategorySort($category,$categoryName, $sortingType, $sort, $q, $page);
+    
 
     ?>
     <article class="categoryContainer">
@@ -42,10 +48,10 @@ $dbContext = new DBContext(); ?>
             <div class="categoryContainer___sort">
                 <div class="categoryContainer___btn">
                     <div class="btn___item"><a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q"; ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q";?>&page=<?php echo"$page" ?>">
                             <i class="sortBtn bi bi-sort-alpha-down"></i>
                         </a> <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo"$page" ?>">
                             <i class="sortBtn bi bi-sort-alpha-up"></i></a></div>
 
 
@@ -59,10 +65,10 @@ $dbContext = new DBContext(); ?>
 
                         <a class="categoryBtnSortIcon">
                             <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo"$page" ?>">
                             <i class="sortBtn bi bi-caret-down-fill"></i></a>
                         <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo"$page" ?>">
                             <i class="sortBtn bi bi-caret-up-fill"></i>
                         </a>
                     </div>
@@ -95,7 +101,9 @@ $dbContext = new DBContext(); ?>
 
             <hr class="categoryContainer___hr">
          
-                <?php paginationItem($category, $categoryName, $sort, $sortingType, $q) ?>
+                <?php   
+    
+   paginationItem();      ?>
       
 
     </article>

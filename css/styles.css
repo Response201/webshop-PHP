@@ -290,14 +290,12 @@ td {
   display: flex;
   align-items: center;
   justify-content: end;
-
-
+  font-size: clamp(4px, 0.5vw, 9px);
 }
 
 .paginationItem___BtnContainer {
-  width: 30px;
-  min-width: fit-content;
-  padding-right: 1.5rem;
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -306,24 +304,29 @@ td {
 
 .paginationItem___Btn {
   height: fit-content;
-  min-width: 30px;
+  width: fit-content;
+  padding: 0 2px;
   text-align: center;
   height: 100%;
-  margin-left: 0.5rem;
   border: none;
+  font-size: clamp(12px, 1vw, 12px);
 }
 
 
-.btnPages {
 
-  font-size: 0.75rem;
-
-}
 
 /* Style the active class, and buttons on mouse-over */
-.active_btnPages {
+.btnPages-active,
+.btnPages-active:hover {
   border: 1px solid #6e6e6e;
-  height: 60%;
+
+  text-decoration: none;
+
+}
+
+.btnPages {
+  text-decoration: none;
+
 }
 
 .paginationItem___icon {
@@ -346,6 +349,21 @@ td {
 
   }
 
+  .paginationItem___BtnContainer {
+
+    padding-right: 1.2rem;
+    width: fit-content;
+
+
+  }
+
+  .paginationItem___Btn {
+    height: fit-content;
+    width: 30px;
+    text-align: center;
+    height: 100%;
+    font-size: clamp(12px, 1vw, 12px);
+  }
 
 
 }

@@ -1,35 +1,57 @@
 <?php
 
-require_once("Models/Database.php");
-
-function paginationItem($category, $categoryName, $sort, $sortingType, $q) {
-    echo '
-
-    <section class="paginationItem___Container">
-        <div class="paginationItem___BtnContainer" id="btnPages" >
-        <button class="paginationItem___Btn"> <i class="bi bi-caret-left-fill paginationItem___icon "></i></button>
+require_once ("Models/Database.php");
 
 
-        <button class="paginationItem___Btn btnPages"> 1</button>
+function paginationItem()
+{
+    $dbContext = new DBContext();
+    $category = $_GET['category'];
+    $categoryName = $_GET['name'];
+    $sort = $_GET['sorting'] ?? '';
+    $sortingType = $_GET['sortingType'] ?? 'title';
+    $q = $_GET['q'] ?? "";
+    $page = $_GET['page'] ?? 1;
 
-        <button class="paginationItem___Btn btnPages"> 2</button>
+    $list = $dbContext->getPages($category, $categoryName, $sortingType, $sort, $q, $page);
+    $newList = count($list);
+    $countPages = ceil($newList / 6);
+
+    if ($countPages > $page) {
+        $nextPage = $page + 1;
+    } else {
+        $nextPage = $page;
+    }
+    if ($page <= 1) {
+        $prevPage = 1;
+    } else {
+        $prevPage = $page - 1;
+    }
+
+    echo "
+    <section  class=\"paginationItem___Container\">
+        <div class=\"paginationItem___BtnContainer\" id=\"btnPagesContainer\" >
+            <a class=\"paginationItem___Btn\" href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$prevPage\" > <i class=\"bi bi-caret-left-fill paginationItem___icon \"></i></a>
+
+";
 
 
-        <button class="paginationItem___Btn btnPages"> 3</button>
+
+    for ($i = 1; $i <= $countPages; $i++) {
+        if ($i == $page) {
+            echo "<a class=\"paginationItem___Btn btnPages-active\" > $i</a>";
+        } else {
+            echo "<a class=\"paginationItem___Btn btnPages\"  href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$i\">$i</a>";
+        }
+    }
 
 
-            
-        <button class="paginationItem___Btn "><i class="bi bi-caret-right-fill paginationItem___icon "></i></i></button>
+
+    echo "
+            <a class=\"paginationItem___Btn\"  href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$nextPage\" > <i class=\"bi bi-caret-right-fill paginationItem___icon \"></i></a>
         </div>
     </section>
-  
-    ';
+";
 }
+
 ?>
-
-<!-- <button class="paginationItem___Btn btnPages"> 1</button>
-
-        <button class="paginationItem___Btn btnPages"> 2</button>
-
-
-        <button class="paginationItem___Btn btnPages"> 3</button> -->
