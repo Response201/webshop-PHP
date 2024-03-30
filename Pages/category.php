@@ -80,18 +80,20 @@ $dbContext = new DBContext(); ?>
         </section>
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItemList">
+            
             <?php
 
             foreach ($list as $item) {
 
                 if ($item) {
-
-                    productItem($item);
-
+               
+                  productItem($item);
+                   
                 }
             }
             ;
             ?>
+          
         </section>
 
 

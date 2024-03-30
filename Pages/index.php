@@ -15,6 +15,9 @@ $q= ""
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fahkwang:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Shop Homepage - Start Bootstrap Template</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -35,21 +38,17 @@ $q= ""
 
 
     <!-- Header-->
-    <header class="d-flex justify-content-center align-items-center bg-dark"
+    <header class="d-flex justify-content-center align-items-center  "
         style="min-height: 60vh; position: relative;">
         <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center ">
-                <?php
-                $hour = date('h');
-                if ($hour >= 9) {
-                    ?>
-                    <h1 class="display-4 fw-bolder">Super shoppen</h1>
-                    <?php
-                }
-                ?>
-                <p class="lead fw-normal ">Handla massa onödigt hos oss!</p>
+            <div class="text-center text-white Header___text ">
+               
+                <h1 class="Header_h1 ">Solitaire Astoria</h1>
+                <p>en stjärna i sitt eget universum av skönhet</p>
             </div>
         </div>
+
+        <img src="./assets/images/header.png" class="Header___img" />
         <div id="startchange" style="  position:absolute; bottom: 0;  ">
     </header>
 
