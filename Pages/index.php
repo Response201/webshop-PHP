@@ -2,10 +2,10 @@
 // include --  OK även om filen inte finns
 //include_once("Models/Products.php");
 require_once ("Models/Database.php");
-
+include_once ('Components/productItem.php');
 $dbContext = new DBContext();
-$q= "" 
-?>
+$q = ""
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +16,10 @@ $q= ""
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fahkwang:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fahkwang:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <title>Shop Homepage - Start Bootstrap Template</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -29,6 +31,7 @@ $q= ""
 
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/index.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -38,18 +41,17 @@ $q= ""
 
 
     <!-- Header-->
-    <header class="d-flex justify-content-center align-items-center  "
-        style="min-height: 60vh; position: relative;">
+    <header class="d-flex justify-content-center align-items-center  " style="min-height: 60vh; position: relative;">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white Header___text ">
-               
+
                 <h1 class="Header_h1 ">Solitaire Astoria</h1>
                 <p>en stjärna i sitt eget universum av skönhet</p>
             </div>
         </div>
 
         <img src="./assets/images/header.png" class="Header___img" />
-        <div id="startchange" style="  position:absolute; bottom: 0;  ">
+       
     </header>
 
 
@@ -57,40 +59,67 @@ $q= ""
 
 
 
-    <!-- Section-->
-    <section class="py-6 ">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="d-flex justify-content-end">
+    <!-- Section Nyheter-->
+    <section class="py-6 newProductContainer" id="startchange">
+  
 
+            <div class="newProductContainer___text">
+
+                <h2 class="text___h2">Nyheter</h2>
+                <a class="text___btn"> Handla nu </a>
 
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Stock level</th>
-                        <th></th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    <!-- Loopa alla produkter och SKAPA tr taggar -->
-                    <?php
+            <div class="newProductContainer___imgContainer">
 
-                    foreach ($dbContext->getAllProducts() as $product) {
-                        if ($product->price > 20) {
-                            echo "<tr><td>$product->title</td><td>$product->price</td><td>$product->stockLevel</td><td><a href='product.php?id=$product->id'>EDIT</a></td></tr>";
-                        } else {
-                            echo "<tr class='table-info'><td>$product->title</td><td>$product->price</td><td>$product->stockLevel</td><td><a href='product.php?id=$product->id'>EDIT</a></td></tr>";
-                        }
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+                <img class="imgContainer___img" src="../assets/images/brushes.png" />
+
+            </div>
+
+        
     </section>
+
+
+
+    <!-- sales -->
+
+    <section class="py-6 lowStockLevelContainer">
+  
+
+
+
+
+            
+            <?php
+ $list = $dbContext->getLowStockLevel();
+
+
+            foreach ($list as $item) {
+
+                if ($item) {
+                    echo "<section class='lowStockLevelContainer___item'>
+                    <p class=\"lowStockLevelContainer___p\"> $item->stockLevel kvar! </p>
+                    
+                    "; 
+                    
+                  productItem($item);
+                  echo "</section>"; 
+                
+                }
+            }
+            ;
+            ?>
+          
+    
+
+ 
+
+
+</section>
+
+
+
+
 
 
     <!-- Footer-->

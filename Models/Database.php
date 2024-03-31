@@ -159,6 +159,28 @@ class DBContext
 
 
 
+
+    function getLowStockLevel(){
+       
+        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
+       
+
+       
+
+            return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
+        
+
+    }
+
+
+
+
+
+
+
+
+
+
     function seedfNotSeeded()
     {
         static $seeded = false;

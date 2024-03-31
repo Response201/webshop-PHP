@@ -35,13 +35,23 @@ a:active {
   background-color: transparent;
 }
 
-
+.background___img {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: opacity(10%);
+}
 
 .navbar-nav,
 .nav-link,
 .lead {
-  color: white;
+
   font-weight: 600;
+  letter-spacing: 3px;
+
 }
 
 header {
@@ -53,7 +63,7 @@ header {
 
 }
 
-.Header___text{
+.Header___text {
   z-index: 2;
   font-family: "Hind Siliguri", sans-serif;
   font-weight: 300;
@@ -63,7 +73,8 @@ header {
   flex-direction: column;
   align-items: center;
 }
-.Header_h1{
+
+.Header_h1 {
 
   font-family: "Fahkwang", sans-serif;
   font-weight: 200;
@@ -71,32 +82,27 @@ header {
   padding: 0;
 
   font-size: clamp(45px, 4vw, 85px);
-border-bottom: 1px white solid;
-width: fit-content;
+  border-bottom: 1px white solid;
+  width: fit-content;
 }
 
 
 
-.Header___img{
-object-fit: cover;
-height: 100%;
-position: absolute;
-visibility: hidden;
+.Header___img {
+  object-fit: cover;
+  height: 100%;
+  position: absolute;
+  visibility: hidden;
 }
 
-tr {
 
-  font-size: clamp(10px, 1vw, 16px);
-  white-space: nowrap;
-}
 
-td {
-
-  font-size: clamp(8px, 1vw, 14px);
-
+.item {
+  border-radius: 5px;
+  background-color: #e8edfa;
+  border: #000 solid 1px;
 
 }
-
 
 .productItem {
   display: flex;
@@ -104,7 +110,7 @@ td {
   justify-content: center;
   width: clamp(200px, 90vw, 550px);
   height: 100%;
-   min-height: calc(600px + 3rem);
+  min-height: calc(600px + 3rem);
 }
 
 /* productItem */
@@ -116,7 +122,7 @@ td {
   flex-direction: column;
   height: 100vh;
   width: 100%;
-
+  background-color: #e8edfa;
   min-height: calc(600px + 3rem);
 }
 
@@ -140,6 +146,7 @@ td {
   width: fit-content;
   margin: 0;
   padding: 0;
+
 }
 
 .itemBtn,
@@ -153,11 +160,14 @@ td {
   background-color: transparent;
   transition: 0.5s ease;
 
+  color: #000;
+
 }
 
 .itemBtn:hover,
 .paginationItem___Btn:hover {
   transform: scale(92%);
+
 }
 
 
@@ -168,7 +178,8 @@ td {
   width: clamp(100px, 90vw, 1250px);
   display: grid;
   gap: 3rem;
-  row-gap:   1.5rem;;
+  row-gap: 1.5rem;
+  ;
   justify-content: center;
   align-items: center;
   z-index: 10;
@@ -177,20 +188,23 @@ td {
   overflow-y: scroll;
   padding: 3rem 0;
   z-index: 0;
-height: calc(100% - 6rem);
-
-}
-.itemContainer{
-
-height: 100%;
+  height: calc(100% - 6rem);
 
 }
 
+.itemContainer {
 
+  height: 100%;
 
-.itemTitle{
-font-size:clamp(10px, 1vw, 16px);
 }
+
+
+
+.itemTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+
 .categoryContainer___btn {
 
   width: clamp(100px, 90vw, 1200px);
@@ -213,7 +227,9 @@ font-size:clamp(10px, 1vw, 16px);
 .search {
   margin: 0;
   padding: 0;
+
 }
+
 
 .btn___item:nth-child(1) {
   display: flex;
@@ -224,21 +240,23 @@ font-size:clamp(10px, 1vw, 16px);
 .categoryBtnSort {
   width: 15px;
   padding: 0.4rem;
-  color: #646262;
+  color: #111010;
   text-decoration: none;
   text-align: center;
 
-
+  font-weight: 600;
 
 }
+
+
 
 .categoryBtnSortIcon,
 .categoryBtnSortIcon:hover {
   width: 10px;
   padding: 0.4rem;
-  color: #646262;
+  color: #0e0d0d;
   text-decoration: none;
-
+  font-weight: 600;
 
 }
 
@@ -285,11 +303,16 @@ font-size:clamp(10px, 1vw, 16px);
 }
 
 .categoryContainer___hr {
-  color: #000;
-  font-weight: 800;
+
+  border: 0.05rem solid rgba(3, 2, 7, 0.456);
+opacity: 1;
   width: 100%;
   padding: 0;
   margin: 0;
+}
+.form-control{
+font-weight: 800;
+
 }
 
 .imgContainer {
@@ -359,8 +382,8 @@ font-size:clamp(10px, 1vw, 16px);
 /* Style the active class, and buttons on mouse-over */
 .btnPages-active,
 .btnPages-active:hover {
-  border: 1px solid #6e6e6e;
-
+  border: 1px solid #101010;
+background-color: rgba(255, 111, 0, 0.495);
   text-decoration: none;
 
 }
@@ -371,7 +394,7 @@ font-size:clamp(10px, 1vw, 16px);
 }
 
 .paginationItem___icon {
-  color: #646262;
+  color: #020202;
 }
 
 .paginationItem___icon:hover {
@@ -398,6 +421,11 @@ font-size:clamp(10px, 1vw, 16px);
 
   }
 
+  .itemTitle {
+    font-size: clamp(10px, 1vw, 16px);
+    font-weight: 700;
+  }
+
   .paginationItem___Btn {
     height: fit-content;
     width: 30px;
@@ -405,12 +433,12 @@ font-size:clamp(10px, 1vw, 16px);
     height: 100%;
     font-size: clamp(12px, 1vw, 12px);
   }
- 
+
 
 }
 
 @media screen and (min-width:990px) {
-  .Header___img{
+  .Header___img {
     object-fit: cover;
     height: 105%;
     width: 55%;
@@ -419,7 +447,7 @@ font-size:clamp(10px, 1vw, 16px);
     left: 0%;
     bottom: -5%;
     visibility: inherit;
-    }
+  }
 
 
 }
@@ -2722,7 +2750,7 @@ progress {
   width: 100%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.5;
   color: #212529;
   background-color: #fff;

@@ -41,6 +41,7 @@ $dbContext = new DBContext(); ?>
 
     ?>
     <article class="categoryContainer">
+        <img src="./assets/images/background.png" class="background___img" />
         <section class="categoryContainer___header_sort">
             <h1 class="categoryContainer___h1">
                 <?php echo "$categoryName"; ?>

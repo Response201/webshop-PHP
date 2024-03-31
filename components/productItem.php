@@ -10,7 +10,7 @@ if($admin){
 };
 
   if ($item !== null) 
-    echo "<div class=\"card p-3 item \">
+    echo "<div class=\" p-3 item  \">
         <div class=\"row   \" >
           <a class=\" col-12  rounded \" href='product?id=$item->id'\" style=\" heigth: 100%; \">
              <img src=\"$item->img\" class=\" rounded  img-fluid \" alt=\"Product Image\" >
