@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var scroll_start = 0;
     var startchange = $('#startchange');
+    var no = $('#no');
     var offset = startchange.offset();
 
     $(".navbar-nav .nav-link, .navbar-toggler, .navbar-toggler-icon").removeClass("text-dark border-dark").addClass("text-white border-light");
@@ -15,7 +16,11 @@ $(document).ready(function () {
                 $(".navbar-nav .nav-link, .navbar-toggler, .navbar-toggler-icon").removeClass("text-white border-light").addClass("text-dark border-dark"); // Återgå till mörk textfärg
                 $(".lead").removeClass("text-white").addClass("text-dark"); // Återgå till mörk textfärg
                 $(".change").removeClass("text-white border-light").addClass("text-dark border-dark");
-            } else {
+            }
+            
+            
+            
+            else {
 
 
 
@@ -29,6 +34,11 @@ $(document).ready(function () {
 
             }
         });
+
+
+
     }
+
+    
 });
 

@@ -102,7 +102,7 @@ $q = ""
                     
                     "; 
                     
-                  productItem($item);
+                  productItem($item, false);
                   echo "</section>"; 
                 
                 }

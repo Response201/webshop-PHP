@@ -91,7 +91,7 @@ a:hover {
     z-index: 10;
     grid-template-columns: repeat(auto-fit, minmax(30wv, 50%));
     overflow-y: scroll;
-    padding: 5rem 0;
+    padding: 3rem 0;
     z-index: 0;
     height: fit-content;
    

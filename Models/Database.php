@@ -145,13 +145,13 @@ class DBContext
 
 
     /* Tar ut alla produkter som tillhör en och samma kategori */
-    function getCategoryByTitle($title, $page): Category|false
+    function getCategoryByTitlessss($title, $pages): Category|false
     {
         
         $per_page_record= 6;          
         $start_from = ($page - 1 ) * $per_page_record;
 
-        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title LIMIT $start_from, $per_page_record');
+        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title LIMIT $start_from $per_page_record');
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
         $prep->execute(['title' => $title]);
         return $prep->fetch();
@@ -175,14 +175,19 @@ class DBContext
 
 
 
-
-
-
-
-
-
-    function seedfNotSeeded()
+    function getCategoryByTitle($title): Category|false
     {
+        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title');
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
+        $prep->execute(['title' => $title]);
+        return $prep->fetch();
+    }
+
+
+
+
+
+    function seedfNotSeeded(){
         static $seeded = false;
         if ($seeded)
             return;

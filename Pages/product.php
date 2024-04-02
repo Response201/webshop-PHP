@@ -1,4 +1,6 @@
-<?php  include_once('Models/Database.php'); include_once('components/productItem.php'); $dbContext = new DBContext();?>
+<?php  include_once('Models/Database.php'); include_once('components/productItem.php'); $dbContext = new DBContext();
+ $admin = true;
+?>
 
 <html>
 
@@ -29,7 +31,7 @@
 <?php include_once('Components/navbar.php'); ?>
 <section class="productItem">
  <?php
-productItem($dbContext->getProduct($_GET['id']));
+productItem($dbContext->getProduct($_GET['id']), $admin);
 ?> 
 </section >
     </article>

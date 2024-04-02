@@ -35,7 +35,7 @@ $dbContext = new DBContext(); ?>
     } else {  
         $page = $_GET['page'];  
     }  
-
+    $admin = true;
     $list = $dbContext->getProductByCategorySort($category,$categoryName, $sortingType, $sort, $q, $page);
     
 
@@ -88,7 +88,7 @@ $dbContext = new DBContext(); ?>
 
                 if ($item) {
                
-                  productItem($item);
+                  productItem($item, $admin);
                    
                 }
             }
