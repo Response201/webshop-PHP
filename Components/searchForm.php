@@ -16,6 +16,20 @@ function searchForm($category, $categoryName, $sort, $sortingType, $q) {
             </button>
         </div>
     </form>';
+
+
+    
 }
-?>
+
+
+
+
+
+
+
+
+
+
+
+
 

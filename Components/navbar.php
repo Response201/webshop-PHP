@@ -10,7 +10,6 @@ require_once ("Models/Database.php");
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
             <span role="button"><i class="fa fa-bars" aria-hidden="true"></i></span>
-
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -29,12 +28,10 @@ require_once ("Models/Database.php");
                         <li><a class='dropdown-item' href='category?category=all&name=Alla%20Produkter'>Alla produkter</a></li>
                         <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
                         <?php
-
                         foreach ($dbContext->getAllCategories() as $category) {
                             echo "<li><a class='dropdown-item' href='category?category=$category->id&name=$category->title'>$category->title</a></li> ";
                         }
                         ?>
-
                     </ul>
                 </li>
                 <li class="nav-item ">

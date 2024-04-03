@@ -1,7 +1,6 @@
 <?php
 require_once ('Models/Product.php');
 require_once ('Models/Category.php');
-
 class DBContext
 {
     private $host = 'localhost';
@@ -10,7 +9,6 @@ class DBContext
     private $pass = 'root';
     private $charset = 'utf8mb4';
     private $pdo;
-
     function __construct()
     {
         $dsn = "mysql:host=$this->host;dbname=$this->db";
@@ -18,15 +16,10 @@ class DBContext
         $this->initIfNotInitialized();
         $this->seedfNotSeeded();
     }
-
     function getAllCategories()
     {
         return $this->pdo->query('SELECT * FROM category')->fetchAll(PDO::FETCH_CLASS, 'Category');
-
     }
-
-
-
     function getAllProducts()
     {
         return $this->pdo->query('SELECT * FROM products')->fetchAll(PDO::FETCH_CLASS, 'Product');
@@ -45,92 +38,53 @@ class DBContext
         $prep->execute(['title' => $title]);
         return $prep->fetch();
     }
-
     function getProductByCategory($categoryId)
     {
-       
-      
-         
-
         if ($categoryId === 'all') {
             return $this->pdo->query('SELECT * FROM products')->fetchAll(PDO::FETCH_CLASS, 'Product');
         } else {
-
-           
-
             $prep = $this->pdo->prepare("SELECT * FROM products WHERE categoryId = :categoryId");
             $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
             $prep->execute([':categoryId' => $categoryId]);
-
-        return $prep->fetchAll();
-
-           
-           
-
-
-
-
-
+            return $prep->fetchAll();
         }
-
     }
-
-    function getProductByCategorySort($categoryId,$categoryName,$sortingType, $sort, $q, $page)
-
+    function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q, $page)
     {
         /* skapa filtrering */
-
-
-        $per_page_record=6;          
-        $start_from = ($page - 1 ) * $per_page_record;
-
-
-
+        $per_page_record = 6;
+        $start_from = ($page - 1) * $per_page_record;
         $sql = "ORDER BY $sortingType $sort";
         if ($q && $categoryId === 'all') {
-            $sql = "WHERE title LIKE '%".$q."%' ORDER BY $sortingType " . $sort;
+            $sql = "WHERE title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
         }
         if ($q && $categoryId !== 'all') {
-            $sql = "AND title LIKE '%".$q."%' ORDER BY $sortingType " . $sort;
+            $sql = "AND title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
         }
-
         /* anrop */
         /* alla produkter */
         if ($categoryId === 'all') {
-
             return $this->pdo->query("SELECT * FROM products $sql LIMIT $start_from, $per_page_record ")->fetchAll(PDO::FETCH_CLASS, 'Product');
         } else {
-
-
-            
-
-
             /* efter kategori */
             $prep = $this->pdo->prepare("SELECT * FROM products WHERE categoryId = :categoryId  $sql LIMIT $start_from, $per_page_record ");
             $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
             $prep->execute([':categoryId' => $categoryId]);
             return $prep->fetchAll();
         }
-
     }
-
-
-    function getPages($categoryId,$categoryName,$sortingType, $sort, $q, $page)
-
+    function getPages($categoryId, $categoryName, $sortingType, $sort, $q, $page)
     {
-       
         $sql = "ORDER BY $sortingType $sort";
         if ($q && $categoryId === 'all') {
-            $sql = "WHERE title LIKE '%".$q."%' ORDER BY $sortingType " . $sort;
+            $sql = "WHERE title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
         }
         if ($q && $categoryId !== 'all') {
-            $sql = "AND title LIKE '%".$q."%' ORDER BY $sortingType " . $sort;
+            $sql = "AND title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
         }
-
         /* anrop */
         /* alla produkter */
         if ($categoryId === 'all') {
-
             return $this->pdo->query("SELECT * FROM products $sql ")->fetchAll(PDO::FETCH_CLASS, 'Product');
         } else {
             /* efter kategori */
@@ -139,45 +93,36 @@ class DBContext
             $prep->execute([':categoryId' => $categoryId]);
             return $prep->fetchAll();
         }
-
     }
-
-
-
     /* Tar ut alla produkter som tillhör en och samma kategori */
     function getCategoryByTitlessss($title, $pages): Category|false
     {
-        
-        $per_page_record= 6;          
-        $start_from = ($page - 1 ) * $per_page_record;
-
+        $per_page_record = 6;
+        $start_from = ($page - 1) * $per_page_record;
         $prep = $this->pdo->prepare('SELECT * FROM category where title=:title LIMIT $start_from $per_page_record');
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
         $prep->execute(['title' => $title]);
         return $prep->fetch();
     }
-
-
-
-
-    function getLowStockLevel(){
-       
+    function getLowStockLevel()
+    {
         $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
-       
-
-       
-
-            return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
-        
-
+        return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
     }
-
-
-
-
+    function updateProduct($id, $title, $price)
+    {
+        $id = intval($id);
+        $prep = $this->pdo->prepare("UPDATE products
+        SET title = :title,
+            price = :price
+        WHERE id = :id
+        ");
+        $prep->execute(["title" => $title, "price" => $price, "id" => $id]);
+        return $prep->rowCount() > 0;
+    }
     function getCategoryByTitle($title): Category|false
     {
-        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title');
+        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title  ');
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
         $prep->execute(['title' => $title]);
         return $prep->fetch();
@@ -187,10 +132,16 @@ class DBContext
 
 
 
-    function seedfNotSeeded(){
+
+
+
+
+
+
+    function seedfNotSeeded()
+    {
         static $seeded = false;
-        if ($seeded)
-            return;
+        if ($seeded)return;
         $this->createIfNotExisting('Chai', 18, 39, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $this->createIfNotExisting('Chang', 19, 17, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $this->createIfNotExisting('Aniseed Syrup', 10, 13, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
@@ -270,62 +221,46 @@ class DBContext
         $this->createIfNotExisting('Original Frankfurter grüne Soße', 13, 32, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $this->createIfNotExisting('Tidningen Buster', 13, 32, 'Tidningar', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $seeded = true;
-
     }
-
     function createIfNotExisting($title, $price, $stockLevel, $categoryName, $img)
     {
         $existing = $this->getProductByTitle($title);
-        if ($existing) {
+        if ($existing && !empty($existing->id)) {
             return;
         }
         ;
         return $this->addProduct($title, $price, $stockLevel, $categoryName, $img);
-
     }
-
     function addCategory($title)
     {
         $prep = $this->pdo->prepare('INSERT INTO category (title) VALUES(:title )');
         $prep->execute(['title' => $title]);
         return $this->pdo->lastInsertId();
     }
-
-
     function addProduct($title, $price, $stockLevel, $categoryName, $img)
     {
-
         $category = $this->getCategoryByTitle($categoryName);
         if ($category == false) {
             $this->addCategory($categoryName);
             $category = $this->getCategoryByTitle($categoryName);
         }
-
-
         //insert plus get new id 
         // return id             
         $prep = $this->pdo->prepare('INSERT INTO products (title, price, stockLevel, categoryId, img) VALUES(:title, :price, :stockLevel, :categoryId, :img )');
         $prep->execute(['title' => $title, 'price' => $price, 'stockLevel' => $stockLevel, 'categoryId' => $category->id, 'img' => $img]);
         return $this->pdo->lastInsertId();
-
     }
-
     function initIfNotInitialized()
     {
-
         static $initialized = false;
         if ($initialized)
             return;
-
-
         $sql = 'CREATE TABLE IF NOT EXISTS `category` (
             `id` INT AUTO_INCREMENT NOT NULL,
             `title` varchar(200) NOT NULL,
             PRIMARY KEY (`id`)
             ) ';
-
         $this->pdo->exec($sql);
-
         $sql = 'CREATE TABLE IF NOT EXISTS `products` (
             `id` INT AUTO_INCREMENT NOT NULL,
             `title` varchar(200) NOT NULL,
@@ -336,16 +271,9 @@ class DBContext
             PRIMARY KEY (`id`),
             FOREIGN KEY (`categoryId`)
                 REFERENCES category(id)
-             
             ) ';
-
         $this->pdo->exec($sql);
-
         $initialized = true;
     }
-
-
 }
-
-
 ?>

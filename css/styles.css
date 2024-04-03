@@ -103,6 +103,7 @@ header {
   border: #000 solid 1px;
 height: 100%;
 
+
 }
 
 .productItem {
@@ -111,7 +112,7 @@ height: 100%;
   justify-content: center;
   width: clamp(200px, 90vw, 550px);
   height: 100%;
-  min-height: calc(600px + 3rem);
+  max-height: calc(400px + 3rem);
 }
 
 /* productItem */
@@ -153,14 +154,14 @@ height: 100%;
 .itemBtn,
 .paginationItem___Btn {
   width: 100%;
-  height: 100%;
+  height: 30px;
   margin: 0;
   font-size: 1rem;
   border: var(--bs-gray-600) 1px solid;
   border-radius: 5px;
   background-color: transparent;
   transition: 0.5s ease;
-
+max-width: 30px;
   color: #000;
 
 }
@@ -184,6 +185,7 @@ height: 100%;
   align-items: center;
   z-index: 10;
   grid-template-columns: repeat(auto-fit, minmax(90wv, 1fr));
+  grid-template-rows:0.5fr;
   height: 80%;
   overflow-y: scroll;
   padding: 3rem 0;

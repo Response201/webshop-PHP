@@ -2,8 +2,25 @@
 include_once ('Components/productItem.php');
 include_once ('Components/searchForm.php');
 include_once ('Components/paginationItem.php');
-$dbContext = new DBContext(); ?>
-<html>
+include_once ('functions/UpdateFunc.php');
+$dbContext = new DBContext();
+$category = $_GET['category'];
+$allCat = $dbContext->getAllCategories();
+$categoryName = $_GET['name'];
+$sort = $_GET['sorting'] ?? '';
+$sortingType = $_GET['sortingType'] ?? 'title';
+$q = $_GET['q'] ?? "";
+if (!isset($_GET['page'])) {
+    $page = 1;
+} else {
+    $page = $_GET['page'];
+}
+$admin = true;
+$list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page);
+/* uppdate function connected to productItem => send link to refresh/ show page whit new value */
+updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page");
+?>
+<!DOCTYPE HTML>
 
 <head>
     <meta charset="utf-8" />
@@ -22,24 +39,6 @@ $dbContext = new DBContext(); ?>
 </head>
 
 <body>
-    <?php
-
-    $category = $_GET['category'];
-    $allCat = $dbContext->getAllCategories();
-    $categoryName = $_GET['name'];
-    $sort = $_GET['sorting'] ?? '';
-    $sortingType = $_GET['sortingType'] ?? 'title';
-    $q = $_GET['q'] ?? "";
-    if (!isset ($_GET['page']) ) {  
-        $page = 1;  
-    } else {  
-        $page = $_GET['page'];  
-    }  
-    $admin = true;
-    $list = $dbContext->getProductByCategorySort($category,$categoryName, $sortingType, $sort, $q, $page);
-    
-
-    ?>
     <article class="categoryContainer">
         <img src="./assets/images/background.png" class="background___img" />
         <section class="categoryContainer___header_sort">
@@ -49,66 +48,43 @@ $dbContext = new DBContext(); ?>
             <div class="categoryContainer___sort">
                 <div class="categoryContainer___btn">
                     <div class="btn___item"><a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q";?>&page=<?php echo"$page" ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
                             <i class="sortBtn bi bi-sort-alpha-down"></i>
                         </a> <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo"$page" ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
                             <i class="sortBtn bi bi-sort-alpha-up"></i></a></div>
-
-
-
                     <div class="btn___item">
-
                         <?php
                         searchForm($category, $categoryName, $sort, $sortingType, $q)
                             ?>
-
-
                         <a class="categoryBtnSortIcon">
                             <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo"$page" ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
                             <i class="sortBtn bi bi-caret-down-fill"></i></a>
                         <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo"$page" ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
                             <i class="sortBtn bi bi-caret-up-fill"></i>
                         </a>
                     </div>
-
                 </div>
-
                 <hr class="categoryContainer___hr">
             </div>
         </section>
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItemList">
-            
             <?php
-
             foreach ($list as $item) {
-
                 if ($item) {
-               
-                  productItem($item, $admin);
-                   
+                    productItem($item, true);
                 }
             }
             ;
             ?>
-          
         </section>
-
-
-
         <section class="categoryContainer___pages">
-
-
             <hr class="categoryContainer___hr">
-         
-                <?php   
-    
-   paginationItem();      ?>
-      
-
+            <?php
+            paginationItem(); ?>
     </article>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/activeBtns.js"></script>
