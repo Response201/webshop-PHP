@@ -5,7 +5,7 @@ $dbContext = new DBContext();
 $admin = true;
 $id = $_GET['id'];
 /* uppdate function connected to productItem => send link to refresh/ show page whit new value */
-updateProduct("/product?id=$id");
+ updateProduct("/product?id=$id");
 ?>
 <html>
 
@@ -27,7 +27,17 @@ updateProduct("/product?id=$id");
 
 <body>
     <article class="productContainer">
+
+
+
+
         <?php include_once ('Components/navbar.php'); ?>
+
+
+
+<?php {echo"<p>  $id</p> ";}  ?>
+
+
         <section class="productItem">
             <?php
             productItem($dbContext->getProduct($_GET['id']), $admin);

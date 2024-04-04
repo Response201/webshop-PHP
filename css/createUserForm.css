@@ -1,0 +1,95 @@
+.createUserFormContainer {
+
+    position: relative;
+    height: 100vh;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.background___img {
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: opacity(40%);
+}
+
+.createUserForm {
+    background-color: #e8edfa;
+    height: 300px;
+    width: clamp(200px, 90vw, 500px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem;
+
+    border-radius: 5px;
+    border: 1px solid lightgray;
+
+}
+
+
+
+.createInputContainer,
+.createBtnContainer {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+
+
+
+
+
+.createBtnContainer {
+
+    height: 40%;
+    justify-content: center;
+}
+
+.createBtn {
+    letter-spacing: 2px;
+    background-color: rgba(241, 182, 143, 0.5);
+    border: 2px solid #2410009a;
+    box-shadow: 1px 1px 20px #7600fd23;
+    border-radius: 5px;
+    width: fit-content;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    font-size: clamp(10px, 2vw, 14px);
+    transition: 0.25s ease-in;
+}
+
+
+.createBtn:hover {
+
+    transform: scale(95%);
+    background-color: rgba(159, 118, 200, 0.408);
+    border: 2px solid #6100fda3;
+
+}
+
+.createInputContainer {
+    height: 60%;
+
+}
+
+.createInput {
+
+    display: block;
+    min-width: 90%;
+
+}

@@ -109,16 +109,16 @@ class DBContext
         $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
         return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
     }
-    function updateProduct($id, $title, $price)
+    function updateProduct($id,  $price)
     {
         $id = intval($id);
         $prep = $this->pdo->prepare("UPDATE products
-        SET title = :title,
+        SET 
             price = :price
         WHERE id = :id
         ");
-        $prep->execute(["title" => $title, "price" => $price, "id" => $id]);
-        return $prep->rowCount() > 0;
+        $prep->execute(["id" => $id, "price" => $price]);
+        if($prep->rowCount() > 0){return $prep->rowCount() > 0;}else{return "fel";}
     }
     function getCategoryByTitle($title): Category|false
     {
@@ -141,7 +141,8 @@ class DBContext
     function seedfNotSeeded()
     {
         static $seeded = false;
-        if ($seeded)return;
+        if ($seeded)
+            return;
         $this->createIfNotExisting('Chai', 18, 39, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $this->createIfNotExisting('Chang', 19, 17, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $this->createIfNotExisting('Aniseed Syrup', 10, 13, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
@@ -250,17 +251,59 @@ class DBContext
         $prep->execute(['title' => $title, 'price' => $price, 'stockLevel' => $stockLevel, 'categoryId' => $category->id, 'img' => $img]);
         return $this->pdo->lastInsertId();
     }
+
+
+
+
+
+
+
+    /* Skapa user */
+
+
+    function createIfNotExistingUser($username, $password)
+    {
+        $existing = $this->getProductByTitle($username);
+        if ($existing) {
+            return;
+        }
+        ;
+        return $this->addUser($username, $password);
+    }
+
+    function addUser($username, $password)
+    {
+
+
+        $prep = $this->pdo->prepare('INSERT INTO products (username, password) VALUES(:username, :password,  )');
+        $prep->execute(['username' => $username, 'password' => $password]);
+        return $this->pdo->lastInsertId();
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /* skapa databas */
     function initIfNotInitialized()
     {
         static $initialized = false;
         if ($initialized)
             return;
+
         $sql = 'CREATE TABLE IF NOT EXISTS `category` (
             `id` INT AUTO_INCREMENT NOT NULL,
             `title` varchar(200) NOT NULL,
             PRIMARY KEY (`id`)
-            ) ';
+        )';
         $this->pdo->exec($sql);
+
         $sql = 'CREATE TABLE IF NOT EXISTS `products` (
             `id` INT AUTO_INCREMENT NOT NULL,
             `title` varchar(200) NOT NULL,
@@ -269,11 +312,48 @@ class DBContext
             `categoryId` INT NOT NULL,
             `img` varchar(200) NOT NULL,
             PRIMARY KEY (`id`),
-            FOREIGN KEY (`categoryId`)
-                REFERENCES category(id)
-            ) ';
+            FOREIGN KEY (`categoryId`) REFERENCES `category`(`id`)
+        )';
         $this->pdo->exec($sql);
+
+        $sql = 'CREATE TABLE IF NOT EXISTS `orders` (
+            `orderId` INT AUTO_INCREMENT PRIMARY KEY,
+            `orderDate` DATE NOT NULL
+        )';
+        $this->pdo->exec($sql);
+
+        $sql = 'CREATE TABLE IF NOT EXISTS `order_products` (
+            `orderId` INT NOT NULL,
+            `productId` INT NOT NULL,
+            `quantity` INT NOT NULL,
+            PRIMARY KEY (`orderId`, `productId`),
+            FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
+            FOREIGN KEY (`productId`) REFERENCES `products`(`id`)
+        )';
+        $this->pdo->exec($sql);
+
+        $sql = 'CREATE TABLE IF NOT EXISTS `users` (
+            `username` varchar(50) NOT NULL,
+            `password` varchar(64) NOT NULL,
+            PRIMARY KEY (`username`)
+        )';
+        $this->pdo->exec($sql);
+
+        $sql = 'CREATE TABLE IF NOT EXISTS `user_order` (
+            `orderId` INT NOT NULL,
+            `username` varchar(50) NOT NULL,
+            FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
+            FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+        )';
+        $this->pdo->exec($sql);
+
         $initialized = true;
     }
 }
+
+
+
+
+
+
 ?>

@@ -1,8 +1,8 @@
 <!-- navbar.php -->
 <?php
-// include --  OK även om filen inte finns
-//include_once("Models/Products.php");
+
 require_once ("Models/Database.php");
+$dbContext = new DBContext();
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
     <div class="container-fluid">
@@ -48,11 +48,11 @@ require_once ("Models/Database.php");
                         <i class="bi bi-person"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="max-width:100px;">
-                        <li><a class="dropdown-item" href="#">Logga In</a></li>
+                        <li><a class="dropdown-item" href="create?type=login">Logga In</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">skapa konto</a></li>
+                        <li><a class="dropdown-item" href="/create?type=create">skapa konto</a></li>
                     </ul>
                 </li>
             </ul>

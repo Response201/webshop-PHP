@@ -15,7 +15,7 @@ function updateProduct($link)
         $v->field('title')->required()->alpha([' '])->min_len(1)->max_len(50);
         $v->field('price')->required()->numeric()->min_val(1);
         if ($v->is_valid()) {
-            $dbContext->updateProduct($product->id, $product->title, $product->price);
+            $dbContext->updateProduct($product->id, $product->price);
             header("Location: $link "); // uppmaning Location = byt location till det jag säger
             exit;
         } else {
