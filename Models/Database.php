@@ -1,21 +1,22 @@
 <?php
 require_once ('Models/Product.php');
 require_once ('Models/Category.php');
-class DBContext
-{
-    private $host = 'localhost';
-    private $db = 'produktdatabas';
-    private $user = 'root';
-    private $pass = 'root';
-    private $charset = 'utf8mb4';
-    private $pdo;
-    function __construct()
-    {
-        $dsn = "mysql:host=$this->host;dbname=$this->db";
-        $this->pdo = new PDO($dsn, $this->user, $this->pass);
-        $this->initIfNotInitialized();
-        $this->seedfNotSeeded();
-    }
+class DBContext{ 
+
+private $pdo;
+
+    
+function __construct() {    
+    $host = $_ENV['host'];
+    $db   = $_ENV['db'];
+    $user = $_ENV['user'];
+    $pass = $_ENV['pass'];
+    $dsn = "mysql:host=$host;dbname=$db";
+    $this->pdo = new PDO($dsn, $user, $pass);
+    $this->initIfNotInitialized();
+    $this->seedfNotSeeded();    
+}
+
     function getAllCategories()
     {
         return $this->pdo->query('SELECT * FROM category')->fetchAll(PDO::FETCH_CLASS, 'Category');
@@ -332,20 +333,15 @@ class DBContext
         )';
         $this->pdo->exec($sql);
 
-        $sql = 'CREATE TABLE IF NOT EXISTS `users` (
-            `username` varchar(50) NOT NULL,
-            `password` varchar(64) NOT NULL,
-            PRIMARY KEY (`username`)
-        )';
-        $this->pdo->exec($sql);
-
+   
+/* 
         $sql = 'CREATE TABLE IF NOT EXISTS `user_order` (
             `orderId` INT NOT NULL,
             `username` varchar(50) NOT NULL,
             FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
             FOREIGN KEY (`username`) REFERENCES `users`(`username`)
         )';
-        $this->pdo->exec($sql);
+        $this->pdo->exec($sql); */
 
         $initialized = true;
     }
