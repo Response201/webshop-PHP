@@ -111,8 +111,9 @@ height: 100%;
   align-items: center;
   justify-content: center;
   width: clamp(200px, 90vw, 550px);
-  height: 100%;
-  max-height: calc(400px + 3rem);
+  height: fit-content;
+  max-height: calc(450px + 3rem);
+ 
 }
 
 /* productItem */
@@ -185,7 +186,7 @@ max-width: 30px;
   align-items: center;
   z-index: 10;
   grid-template-columns: repeat(auto-fit, minmax(90wv, 1fr));
-  grid-template-rows:repeat(0.5fr);
+  grid-template-rows:0.5fr 0.5fr;
   height: 80%;
   overflow-y: scroll;
   padding: 3rem 0;

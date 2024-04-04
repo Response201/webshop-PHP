@@ -1,21 +1,23 @@
 <?php
 require_once ('Models/Product.php');
 require_once ('Models/Category.php');
-class DBContext{ 
+class DBContext
+{
 
-private $pdo;
+    private $pdo;
 
-    
-function __construct() {    
-    $host = $_ENV['host'];
-    $db   = $_ENV['db'];
-    $user = $_ENV['user'];
-    $pass = $_ENV['pass'];
-    $dsn = "mysql:host=$host;dbname=$db";
-    $this->pdo = new PDO($dsn, $user, $pass);
-    $this->initIfNotInitialized();
-    $this->seedfNotSeeded();    
-}
+
+    function __construct()
+    {
+        $host = $_ENV['host'];
+        $db = $_ENV['db'];
+        $user = $_ENV['user'];
+        $pass = $_ENV['pass'];
+        $dsn = "mysql:host=$host;dbname=$db";
+        $this->pdo = new PDO($dsn, $user, $pass);
+        $this->initIfNotInitialized();
+        $this->seedfNotSeeded();
+    }
 
     function getAllCategories()
     {
@@ -110,7 +112,7 @@ function __construct() {
         $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
         return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
     }
-    function updateProduct($id,  $price)
+    function updateProduct($id, $price)
     {
         $id = intval($id);
         $prep = $this->pdo->prepare("UPDATE products
@@ -119,7 +121,11 @@ function __construct() {
         WHERE id = :id
         ");
         $prep->execute(["id" => $id, "price" => $price]);
-        if($prep->rowCount() > 0){return $prep->rowCount() > 0;}else{return "fel";}
+        if ($prep->rowCount() > 0) {
+            return $prep->rowCount() > 0;
+        } else {
+            return "fel";
+        }
     }
     function getCategoryByTitle($title): Category|false
     {
@@ -144,84 +150,63 @@ function __construct() {
         static $seeded = false;
         if ($seeded)
             return;
-        $this->createIfNotExisting('Chai', 18, 39, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Chang', 19, 17, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Aniseed Syrup', 10, 13, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Chef Antons Cajun Seasoning', 22, 53, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Chef Antons Gumbo Mix', 21, 0, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Grandmas Boysenberry Spread', 25, 120, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Uncle Bobs Organic Dried Pears', 30, 15, 'Produce', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Northwoods Cranberry Sauce', 40, 6, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Mishi Kobe Niku', 97, 29, 'Meat/Poultry', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Ikura', 31, 31, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Queso Cabrales', 21, 22, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Queso Manchego La Pastora', 38, 86, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Konbu', 6, 24, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Tofu', 22, 35, 'Produce', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Genen Shouyu', 18, 39, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Pavlova', 12, 29, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Alice Mutton', 39, 0, 'Meat/Poultry', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Carnarvon Tigers', 231, 42, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Teatime Chocolate Biscuits', 213, 25, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Sir Rodneys Marmalade', 81, 40, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Sir Rodneys Scones', 10, 3, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gustafs Knäckebröd', 21, 104, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Tunnbröd', 9, 61, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Guaraná Fantástica', 231, 20, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('NuNuCa Nuß-Nougat-Creme', 14, 76, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gumbär Gummibärchen', 312, 15, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Schoggi Schokolade', 213, 49, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Rössle Sauerkraut', 132, 26, 'Produce', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Thüringer Rostbratwurst', 231, 0, 'Meat/Poultry', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Nord-Ost Matjeshering', 321, 10, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gorgonzola Telino', 321, 0, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Mascarpone Fabioli', 32, 9, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Geitost', 12, 112, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Sasquatch Ale', 14, 111, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Steeleye Stout', 18, 20, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Inlagd Sill', 19, 112, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gravad lax', 26, 11, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Côte de Blaye', 1, 17, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Chartreuse verte', 18, 69, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Boston Crab Meat', 2, 123, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Jacks New England Clam Chowder', 2, 85, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Singaporean Hokkien Fried Mee', 14, 26, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Ipoh Coffee', 46, 17, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gula Malacca', 2, 27, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Rogede sild', 3, 5, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Spegesild', 12, 95, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Zaanse koeken', 4, 36, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Chocolade', 6, 15, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Maxilaku', 5, 10, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Valkoinen suklaa', 1, 65, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Manjimup Dried Apples', 53, 20, 'Produce', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Filo Mix', 7, 38, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Perth Pasties', 4, 0, 'Meat/Poultry', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Tourtière', 7, 21, 'Meat/Poultry', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Pâté chinois', 24, 115, 'Meat/Poultry', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gnocchi di nonna Alice', 38, 21, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Ravioli Angelo', 7, 36, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Escargots de Bourgogne', 7, 62, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Raclette Courdavault', 55, 79, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Camembert Pierrot', 34, 19, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Sirop dérable', 7, 113, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Tarte au sucre', 7, 17, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Vegie-spread', 7, 24, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Wimmers gute Semmelknödel', 7, 22, 'Grains/Cereals', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Louisiana Fiery Hot Pepper Sauce', 7, 76, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Louisiana Hot Spiced Okra', 17, 4, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Laughing Lumberjack Lager', 14, 52, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Scottish Longbreads', 8, 6, 'Confections', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Gudbrandsdalsost', 8, 26, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Outback Lager', 15, 15, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Flotemysost', 8, 26, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Mozzarella di Giovanni', 8, 14, 'Dairy Products', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Röd Kaviar', 15, 101, 'Seafood', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Longlife Tofu', 10, 4, 'Produce', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Rhönbräu Klosterbier', 9, 125, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Lakkalikööri', 9, 57, 'Beverages', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Original Frankfurter grüne Soße', 13, 32, 'Condiments', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Tidningen Buster', 13, 32, 'Tidningar', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Volume Boost', 18, 39, 'Mascara', '.\assets\images\mascara\mascara1.png');
+        $this->createIfNotExisting('Smoothie Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\9.png');
+        $this->createIfNotExisting('Rose Blush', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Eyelash Curler', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Liquid Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Lengthening Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\2.png');
+        $this->createIfNotExisting('blue Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\2.png');
+        $this->createIfNotExisting('Peach Flush', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Powder Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Curling Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\4.png');
+        $this->createIfNotExisting('Yellow Sunset Palette', 20, 15, 'Ögonskugga', '.\assets\images\eyeshadow\4.png');
+        $this->createIfNotExisting('Berry Tint', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Blending Sponge', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('BB Cream', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Waterproof Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\3.png');
+        $this->createIfNotExisting('Purple dream', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\1.png');
+        $this->createIfNotExisting('Highlighter Palette', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Brow Shaping Kit', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Tinted Moisturizer', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Volume Supreme', 18, 39, 'Mascara', '.\assets\images\mascara\5.png');
+        $this->createIfNotExisting('Pink Shimmer Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\7.png');
+        $this->createIfNotExisting('Golden Bronze', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Precision Applicator', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Matte Perfection', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Curl Enhance Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\6.png');
+        $this->createIfNotExisting('Sapphire Sky Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\8.png');
+        $this->createIfNotExisting('Crimson Flush Blush', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Eyebrow Tweezers', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Buildable Coverage Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Lash Boost Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\7.png');
+        $this->createIfNotExisting('Rose Shimmer Shadow', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\6.png');
+        $this->createIfNotExisting('Peachy Glow Blush', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Brow Shaping Kit', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Dewy Finish Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Volume Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\9.png');
+        $this->createIfNotExisting('Lime Eye Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\3.png');
+        $this->createIfNotExisting('Berry Blush', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Radiant Glow Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+        $this->createIfNotExisting('Fiber Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\8.png');
+        $this->createIfNotExisting('Misty Eyeshadow', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\5.png');
+        $this->createIfNotExisting('Golden Blush', 15, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Blending Brush Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Matte Finish Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Berry', 450, 35, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Sonic', 150, 13, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('lush', 1500, 5, 'Hudvård', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+
+
         $seeded = true;
     }
     function createIfNotExisting($title, $price, $stockLevel, $categoryName, $img)
@@ -333,15 +318,15 @@ function __construct() {
         )';
         $this->pdo->exec($sql);
 
-   
-/* 
-        $sql = 'CREATE TABLE IF NOT EXISTS `user_order` (
-            `orderId` INT NOT NULL,
-            `username` varchar(50) NOT NULL,
-            FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
-            FOREIGN KEY (`username`) REFERENCES `users`(`username`)
-        )';
-        $this->pdo->exec($sql); */
+
+        /* 
+                $sql = 'CREATE TABLE IF NOT EXISTS `user_order` (
+                    `orderId` INT NOT NULL,
+                    `username` varchar(50) NOT NULL,
+                    FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
+                    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
+                )';
+                $this->pdo->exec($sql); */
 
         $initialized = true;
     }

@@ -75,8 +75,8 @@ if($admin){
   if ($item !== null) {
     echo "<div class=\"p-3 item\">
             <div class=\"row\">
-                <a class=\"col-12 rounded\" href='product?id=$item->id' style=\"height: 100%;\">
-                    <img src=\"$item->img\" class=\"rounded img-fluid\" alt=\"Product Image\">
+                <a class=\"col-12 rounded\" href='product?id=$item->id' style=\"height: 60%;\">
+                    <img src=\"$item->img\" class=\"rounded img-fluid\" alt=\"Product Image\" style=\"height: 50%;\">
                 </a> 
                 <form class=\"d-flex justify-content-between\" method=\"POST\" style=\"margin-top: 1rem; height:30%; width:100%\">
                     $icon

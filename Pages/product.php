@@ -35,7 +35,6 @@ $id = $_GET['id'];
 
 
 
-<?php {echo"<p>  $id</p> ";}  ?>
 
 
         <section class="productItem">
