@@ -17,7 +17,7 @@ if (!isset($_GET['page'])) {
 }
 $admin = true;
 $list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page);
-/* uppdate function connected to productItem => send link to refresh/ show page whit new value */
+
 updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page");
 ?>
 <!DOCTYPE HTML>
@@ -73,7 +73,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItemList">
             <?php
-            foreach ($list as $item) {
+            foreach ($list["data"] as $item) {
                 if ($item) {
                     productItem($item, true);
                 }

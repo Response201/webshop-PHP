@@ -9,10 +9,8 @@ function paginationItem()
     $sortingType = $_GET['sortingType'] ?? 'title';
     $q = $_GET['q'] ?? "";
     $page = $_GET['page'] ?? 1;
-    $list = $dbContext->getPages($category, $categoryName, $sortingType, $sort, $q, $page);
-    $newList = count($list);
-    $countPages = ceil($newList / 6);
-    if ($countPages > $page) {
+    $countPages =  $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page);
+    if ($countPages['num_pages'] > $page) {
         $nextPage = $page + 1;
     } else {
         $nextPage = $page;
@@ -27,7 +25,7 @@ function paginationItem()
         <div class=\"paginationItem___BtnContainer\" id=\"btnPagesContainer\" >
             <a class=\"paginationItem___Btn\" href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$prevPage\" > <i class=\"bi bi-caret-left-fill paginationItem___icon \"></i></a>
 ";
-    for ($i = 1; $i <= $countPages; $i++) {
+    for ($i = 1; $i <= $countPages['num_pages']; $i++) {
         if ($i == $page) {
             echo "<a class=\"paginationItem___Btn btnPages-active\" > $i</a>";
         } else {

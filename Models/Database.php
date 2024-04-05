@@ -52,51 +52,58 @@ class DBContext
             return $prep->fetchAll();
         }
     }
-    function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q, $page)
+    function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q, $page=1, $per_page_record=6)
     {
-        /* skapa filtrering */
-        $per_page_record = 6;
+     
         $start_from = ($page - 1) * $per_page_record;
-        $sql = "ORDER BY $sortingType $sort";
-        if ($q && $categoryId === 'all') {
-            $sql = "WHERE title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
-        }
-        if ($q && $categoryId !== 'all') {
-            $sql = "AND title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
-        }
-        /* anrop */
-        /* alla produkter */
+        $sql = "SELECT * FROM products WHERE categoryId = :categoryId";
+        $paramsArray[":categoryId"] = $categoryId;
+
         if ($categoryId === 'all') {
-            return $this->pdo->query("SELECT * FROM products $sql LIMIT $start_from, $per_page_record ")->fetchAll(PDO::FETCH_CLASS, 'Product');
-        } else {
-            /* efter kategori */
-            $prep = $this->pdo->prepare("SELECT * FROM products WHERE categoryId = :categoryId  $sql LIMIT $start_from, $per_page_record ");
-            $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
-            $prep->execute([':categoryId' => $categoryId]);
-            return $prep->fetchAll();
+            $sql = "SELECT * FROM products ";
+            $paramsArray = [];
+            if($q){
+                $sql = "SELECT * FROM products WHERE title LIKE :q";
+               
+            $paramsArray[":q"] = '%' . $q . '%';
+}
+             } else if ($categoryId !== 'all'){
+          
+    
+            if ($q) {
+                $sql .= " AND title LIKE :q";
+                $paramsArray[":q"] = '%' . $q . '%';
+            }
         }
+
+        
+        
+        $sql .= " ORDER BY $sortingType $sort ";
+    
+        $sqlCount = str_replace("SELECT * FROM ", "SELECT CEIL(COUNT(*)/$per_page_record) FROM ", $sql);
+        $prep2 = $this->pdo->prepare($sqlCount);
+        
+        $prep2->execute($paramsArray);
+        $num_pages = $prep2->fetchColumn(); 
+
+
+        $sql .= " LIMIT $start_from, $per_page_record";
+        $prep = $this->pdo->prepare($sql);
+        $prep->setFetchMode(PDO::FETCH_CLASS,'Product');
+        $prep->execute($paramsArray);
+        $list = $prep->fetchAll();   
+    
+        $arr =  ["data"=>$list, "num_pages"=>$num_pages];
+        return $arr;
     }
-    function getPages($categoryId, $categoryName, $sortingType, $sort, $q, $page)
-    {
-        $sql = "ORDER BY $sortingType $sort";
-        if ($q && $categoryId === 'all') {
-            $sql = "WHERE title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
-        }
-        if ($q && $categoryId !== 'all') {
-            $sql = "AND title LIKE '%" . $q . "%' ORDER BY $sortingType " . $sort;
-        }
-        /* anrop */
-        /* alla produkter */
-        if ($categoryId === 'all') {
-            return $this->pdo->query("SELECT * FROM products $sql ")->fetchAll(PDO::FETCH_CLASS, 'Product');
-        } else {
-            /* efter kategori */
-            $prep = $this->pdo->prepare("SELECT * FROM products WHERE categoryId = :categoryId  $sql");
-            $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
-            $prep->execute([':categoryId' => $categoryId]);
-            return $prep->fetchAll();
-        }
-    }
+
+
+
+
+
+
+
+
     /* Tar ut alla produkter som tillhör en och samma kategori */
     function getCategoryByTitlessss($title, $pages): Category|false
     {
