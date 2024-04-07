@@ -1,4 +1,12 @@
-<?php include_once ('Models/Database.php');
+<?php 
+
+ob_start();
+
+
+
+
+
+include_once ('Models/Database.php');
 include_once ('Components/productItem.php');
 include_once ('Components/searchForm.php');
 include_once ('Components/paginationItem.php');
@@ -15,13 +23,15 @@ if (!isset($_GET['page'])) {
 } else {
     $page = $_GET['page'];
 }
-$admin = true;
+
+
+$admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
+
 $list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page);
 
 updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page");
 ?>
 <!DOCTYPE HTML>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -31,10 +41,10 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap icons-->
+    <!-- Bootstrap ikoner-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Core theme CSS (includes Bootstrap)-->
+    <!-- Core theme CSS (inkluderar Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
 
@@ -75,7 +85,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
             <?php
             foreach ($list["data"] as $item) {
                 if ($item) {
-                    productItem($item, true);
+                    productItem($item, $admin);
                 }
             }
             ;

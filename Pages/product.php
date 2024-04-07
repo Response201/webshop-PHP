@@ -1,11 +1,17 @@
-<?php include_once ('Models/Database.php');
+<?php
+
+
+ob_start();
+include_once ('Models/Database.php');
 include_once ('components/productItem.php');
 include_once ('functions/UpdateFunc.php');
 $dbContext = new DBContext();
-$admin = true;
 $id = $_GET['id'];
 /* uppdate function connected to productItem => send link to refresh/ show page whit new value */
- updateProduct("/product?id=$id");
+updateProduct("/product?id=$id");
+
+$admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
+
 ?>
 <html>
 
@@ -39,6 +45,7 @@ $id = $_GET['id'];
 
         <section class="productItem">
             <?php
+
             productItem($dbContext->getProduct($_GET['id']), $admin);
             ?>
         </section>

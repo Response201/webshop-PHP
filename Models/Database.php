@@ -1,12 +1,15 @@
 <?php
 require_once ('Models/Product.php');
 require_once ('Models/Category.php');
+require_once('Models/UserDatabase.php');
 class DBContext
 {
 
     private $pdo;
-
-
+    private $usersDatabase;
+    function getUsersDatabase(){
+        return $this->usersDatabase;
+    }
     function __construct()
     {
         $host = $_ENV['host'];
@@ -15,9 +18,15 @@ class DBContext
         $pass = $_ENV['pass'];
         $dsn = "mysql:host=$host;dbname=$db";
         $this->pdo = new PDO($dsn, $user, $pass);
+        $this->usersDatabase = new UserDatabase($this->pdo);
         $this->initIfNotInitialized();
-        $this->seedfNotSeeded();
+        $this->seedfNotSeeded();  
+  
     }
+
+  
+
+
 
     function getAllCategories()
     {
@@ -97,23 +106,8 @@ class DBContext
         return $arr;
     }
 
-
-
-
-
-
-
-
-    /* Tar ut alla produkter som tillhör en och samma kategori */
-    function getCategoryByTitlessss($title, $pages): Category|false
-    {
-        $per_page_record = 6;
-        $start_from = ($page - 1) * $per_page_record;
-        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title LIMIT $start_from $per_page_record');
-        $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
-        $prep->execute(['title' => $title]);
-        return $prep->fetch();
-    }
+ 
+    
     function getLowStockLevel()
     {
         $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
@@ -144,7 +138,7 @@ class DBContext
 
 
 
-
+  
 
 
 
@@ -250,39 +244,6 @@ class DBContext
 
 
 
-
-    /* Skapa user */
-
-
-    function createIfNotExistingUser($username, $password)
-    {
-        $existing = $this->getProductByTitle($username);
-        if ($existing) {
-            return;
-        }
-        ;
-        return $this->addUser($username, $password);
-    }
-
-    function addUser($username, $password)
-    {
-
-
-        $prep = $this->pdo->prepare('INSERT INTO products (username, password) VALUES(:username, :password,  )');
-        $prep->execute(['username' => $username, 'password' => $password]);
-        return $this->pdo->lastInsertId();
-    }
-
-
-
-
-
-
-
-
-
-
-
     /* skapa databas */
     function initIfNotInitialized()
     {
@@ -334,6 +295,14 @@ class DBContext
                     FOREIGN KEY (`username`) REFERENCES `users`(`username`)
                 )';
                 $this->pdo->exec($sql); */
+
+
+                $this->usersDatabase->setupUsers();
+                $this->usersDatabase->seedUsers();
+
+
+
+
 
         $initialized = true;
     }

@@ -1,25 +1,58 @@
-<?php include_once ('Models/Database.php');
+<?php 
+ob_start();
+    require 'vendor/autoload.php';
+    require_once('Models/Database.php');
+
 
 
 $dbContext = new DBContext();
-
+$message = "";
+$username = "";
+$password= "";
 $type = $_GET['type'] ?? "";
+$username = $_POST['username'] ?? '';
+$password = $_POST['password']?? '';
 
 if ($type === 'login') {
 
-
-
+    $dbContext = new DbContext();
+  
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+   
+        try{
+           // Hejsan123#
+ 
+     $dbContext->getUsersDatabase()->getAuth()->login($username, $password);
+         
+            header('Location: /');
+            exit;
+        }
+        catch(Exception $e){
+            $message = "Could not login";
+    
+        }}
 
 
 
 } else {
 
+    try{
+     
 
+        $dbContext-> getUsersDatabase()->createUser($username, $password);
+         header('Location: /');
+         exit;
+     }
+     catch(Exception $e){
+         $message = "Could not login";
+ 
+     }
 
 
 
 
 }
+ 
 
 ?>
 <!DOCTYPE HTML>
@@ -60,7 +93,7 @@ if ($type === 'login') {
 
         <form class="createUserForm" method="POST">
             <p>
-                <?php echo "$q "; ?>
+            <?php echo " $message"; ?>
             </p>
             <section class="createInputContainer">
                 <label class="createInput">Användarnamn: </label>
@@ -70,7 +103,7 @@ if ($type === 'login') {
 
             </section>
             <section class="createBtnContainer">
-                <button class="createBtn">Skapa konto</i></button>
+                <button type="submit" class="createBtn"> <?php  if($type === 'login'){echo "Logga in";}else{echo "Skapa konto";}    ?> </i></button>
             </section>
 
         </form>
