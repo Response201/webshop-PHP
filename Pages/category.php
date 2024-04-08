@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ob_start();
 
@@ -33,6 +33,7 @@ $list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingT
 updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");
 ?>
 <!DOCTYPE HTML>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -62,7 +63,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
 
 
 
-        
+
 
 
             <div class="categoryContainer___sort">
@@ -74,46 +75,45 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
                         <a class="categoryBtnSort"
                             href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>&per_page_record=<?php echo "$per_page_record" ?>">
                             <i class="sortBtn bi bi-sort-alpha-down"></i>
-                        </a> 
-                        
-                        
+                        </a>
+
+
                         <a class="categoryBtnSort"
                             href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>&per_page_record=<?php echo "$per_page_record" ?>">
                             <i class="sortBtn bi bi-sort-alpha-up"></i></a>
-                        
 
 
 
 
 
-                            <li class="categoryBtnSort dropdown me-2 nav-item CategoryDropDown" >
-                    <a class="dropdown-toggle categoryLink"   data-bs-toggle="dropdown" 
-                        aria-expanded="false">
-                        <?php
-                        
-                        echo " $per_page_record"; ?>
-                    </a>
-                    <ul class="dropdown-menu mb-2">
-                        
-                        <?php
-                        
-                            echo "<li><a class='dropdown-item '  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=6'>6</a></li> 
+
+                        <li class="categoryBtnSort dropdown me-2 nav-item CategoryDropDown">
+                            <a class="dropdown-toggle categoryLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php
+
+                                echo " $per_page_record"; ?>
+                            </a>
+                            <ul class="dropdown-menu mb-2">
+
+                                <?php
+
+                                echo "<li><a class='dropdown-item '  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=1&per_page_record=6'>6</a></li> 
                             
-                            <li><a class='dropdown-item'  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=9'>9</a></li>
-                            <li><a class='dropdown-item'  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=12'>12</a></li>
+                            <li><a class='dropdown-item'  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=1&per_page_record=9'>9</a></li>
+                            <li><a class='dropdown-item'  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=1&per_page_record=12'>12</a></li>
                             
                             ";
-                        
-                        ?>
-                    </ul>
-                </li>
-                        
-                        
-                        
-                          
-                        
-                        
-                        </div>
+
+                                ?>
+                            </ul>
+                        </li>
+
+
+
+
+
+
+                    </div>
                     <div class="btn___item">
                         <?php
                         searchForm($category, $categoryName, $sort, $sortingType, $q, $per_page_record)

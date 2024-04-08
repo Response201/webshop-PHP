@@ -26,6 +26,14 @@ $router->addRoute('/product', function () {
 $router->addRoute('/create', function () {
     require __DIR__ .'/Pages/create.php';
 });
+$router->addRoute('/checkout', function () {
+    require __DIR__ .'/Pages/checkOut.php';
+});
+
+
+
+
+
 
 $router->dispatch();
 ?>

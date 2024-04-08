@@ -68,7 +68,7 @@ $q = ""
                 echo "<section class='lowStockLevelContainer___item'>
                     <p class=\"lowStockLevelContainer___p\"> $item->stockLevel kvar! </p>
                     ";
-                productItem($item, false);
+                productItem($item, $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN));
                 echo "</section>";
             }
         }

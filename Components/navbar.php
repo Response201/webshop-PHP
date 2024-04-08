@@ -2,7 +2,7 @@
 <?php
 
 require_once ("Models/Database.php");
-$dbContext = new DBContext();
+
 $per_page_record = $_GET['per_page_record'] ?? 6;
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
@@ -35,28 +35,120 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
                         ?>
                     </ul>
                 </li>
-                <li class="nav-item ">
-                    <form class="">
-                        <button class="btn text-dark border-dark  change" type="submit">
-                            <i class="bi-cart-fill text-dark change"></i> Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </li>
+
+<?php 
+
+
+if( !$dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN)){
+
+
+echo '<li class="nav-item ">
+<a href="checkout">
+    <button class="btn text-dark border-dark  change" type="submit">
+        <i class="bi-cart-fill text-dark change"></i> Cart
+        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+    </button>
+</a>
+</li>';
+
+
+
+}
+
+
+
+
+
+
+?>
+
+
+              
                 <li class="nav-item dropdown me-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="bi bi-person"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="max-width:100px;">
-                        <li><a class="dropdown-item" href="create?type=login">Logga In</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="/create?type=create">skapa konto</a></li>
+
+
+
+<?php 
+
+
+
+
+
+$user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
+ $dbContext = new DBContext();
+
+ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  
+    try {
+        $dbContext->getUsersDatabase()->getAuth()->logOut();
+        $message = "logga ut";
+        header('Location: /');
+        exit;
+    }
+    catch(Exception $e) {
+        $message = "Could not logout";
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+if($user){
+    echo'
+    <form method="post">
+    <li><button type="submit" class="dropdown-item" name="logout">Logga Ut</button></li>
+</form>
+';
+ 
+if (!$dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN)){
+echo' <li><a class="dropdown-item" href="/">Ordrar</a></li>';
+
+}
+
+}else{
+echo'
+    <li><a class="dropdown-item" href="create?type=login">Logga In</a></li>
+    <li>
+        <hr class="dropdown-divider">
+    </li>
+    <li><a class="dropdown-item" href="/create?type=create">skapa konto</a></li>
+
+';
+
+
+}
+
+
+
+?>
+
+
+
+                        
                     </ul>
                 </li>
             </ul>
+
+
+
+
+
+
+
         </div>
     </div>
 </nav>
