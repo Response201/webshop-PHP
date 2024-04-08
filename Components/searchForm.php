@@ -2,7 +2,7 @@
 
 require_once("Models/Database.php");
 
-function searchForm($category, $categoryName, $sort, $sortingType, $q) {
+function searchForm($category, $categoryName, $sort, $sortingType, $q, $per_page_record) {
     echo '
     <form class="d-flex search" method="GET">
         <div class="input-group" style="max-width: 150px; background:transparent; font-weigth:800;">
@@ -11,6 +11,7 @@ function searchForm($category, $categoryName, $sort, $sortingType, $q) {
             <input type="hidden" name="sorting" class="form-control" value="' . $sort . '" />
             <input type="hidden" name="name" class="form-control" value="' . $categoryName . '" />
             <input type="hidden" name="sortingType" class="form-control" value="' . $sortingType . '" />
+            <input type="hidden" name="per_page_record" class="form-control" value="' . $per_page_record . '" />
             <button class="btn btn-outline-dark" type="submit">
                 <i class="bi bi-search"></i>
             </button>

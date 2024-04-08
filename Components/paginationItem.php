@@ -9,7 +9,8 @@ function paginationItem()
     $sortingType = $_GET['sortingType'] ?? 'title';
     $q = $_GET['q'] ?? "";
     $page = $_GET['page'] ?? 1;
-    $countPages =  $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page);
+    $per_page_record = $_GET['per_page_record'] ?? 6;
+    $countPages =  $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record);
     if ($countPages['num_pages'] > $page) {
         $nextPage = $page + 1;
     } else {
@@ -23,17 +24,17 @@ function paginationItem()
     echo "
     <section  class=\"paginationItem___Container\">
         <div class=\"paginationItem___BtnContainer\" id=\"btnPagesContainer\" >
-            <a class=\"paginationItem___Btn\" href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$prevPage\" > <i class=\"bi bi-caret-left-fill paginationItem___icon \"></i></a>
+            <a class=\"paginationItem___Btn\" href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$prevPage&per_page_record=$per_page_record\" > <i class=\"bi bi-caret-left-fill paginationItem___icon \"></i></a>
 ";
     for ($i = 1; $i <= $countPages['num_pages']; $i++) {
         if ($i == $page) {
             echo "<a class=\"paginationItem___Btn btnPages-active\" > $i</a>";
         } else {
-            echo "<a class=\"paginationItem___Btn btnPages\"  href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$i\">$i</a>";
+            echo "<a class=\"paginationItem___Btn btnPages\"  href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$i&per_page_record=$per_page_record\">$i</a>";
         }
     }
     echo "
-            <a class=\"paginationItem___Btn\"  href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$nextPage\" > <i class=\"bi bi-caret-right-fill paginationItem___icon \"></i></a>
+            <a class=\"paginationItem___Btn\"  href=\"?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$nextPage&per_page_record=$per_page_record\" > <i class=\"bi bi-caret-right-fill paginationItem___icon \"></i></a>
         </div>
     </section>
 ";

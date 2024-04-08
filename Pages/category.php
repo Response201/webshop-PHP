@@ -18,6 +18,7 @@ $categoryName = $_GET['name'];
 $sort = $_GET['sorting'] ?? '';
 $sortingType = $_GET['sortingType'] ?? 'title';
 $q = $_GET['q'] ?? "";
+$per_page_record = $_GET['per_page_record'] ?? 6;
 if (!isset($_GET['page'])) {
     $page = 1;
 } else {
@@ -27,9 +28,9 @@ if (!isset($_GET['page'])) {
 
 $admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
 
-$list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page);
+$list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record);
 
-updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page");
+updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");
 ?>
 <!DOCTYPE HTML>
 <head>
@@ -55,24 +56,74 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
             <h1 class="categoryContainer___h1">
                 <?php echo "$categoryName"; ?>
             </h1>
+
+
+
+
+
+
+        
+
+
             <div class="categoryContainer___sort">
                 <div class="categoryContainer___btn">
-                    <div class="btn___item"><a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
+
+                    <div class="btn___item">
+
+
+                        <a class="categoryBtnSort"
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>&per_page_record=<?php echo "$per_page_record" ?>">
                             <i class="sortBtn bi bi-sort-alpha-down"></i>
-                        </a> <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
-                            <i class="sortBtn bi bi-sort-alpha-up"></i></a></div>
+                        </a> 
+                        
+                        
+                        <a class="categoryBtnSort"
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=title&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>&per_page_record=<?php echo "$per_page_record" ?>">
+                            <i class="sortBtn bi bi-sort-alpha-up"></i></a>
+                        
+
+
+
+
+
+                            <li class="categoryBtnSort dropdown me-2 nav-item CategoryDropDown" >
+                    <a class="dropdown-toggle categoryLink"   data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                        <?php
+                        
+                        echo " $per_page_record"; ?>
+                    </a>
+                    <ul class="dropdown-menu mb-2">
+                        
+                        <?php
+                        
+                            echo "<li><a class='dropdown-item '  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=6'>6</a></li> 
+                            
+                            <li><a class='dropdown-item'  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=9'>9</a></li>
+                            <li><a class='dropdown-item'  href='?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=12'>12</a></li>
+                            
+                            ";
+                        
+                        ?>
+                    </ul>
+                </li>
+                        
+                        
+                        
+                          
+                        
+                        
+                        </div>
                     <div class="btn___item">
                         <?php
-                        searchForm($category, $categoryName, $sort, $sortingType, $q)
+                        searchForm($category, $categoryName, $sort, $sortingType, $q, $per_page_record)
                             ?>
                         <a class="categoryBtnSortIcon">
                             <i class=" bi bi-currency-dollar"></i> </a> <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=ASC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>&per_page_record=<?php echo "$per_page_record" ?>">
                             <i class="sortBtn bi bi-caret-down-fill"></i></a>
                         <a class="categoryBtnSort"
-                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>">
+                            href="?category=<?php echo "$category"; ?>&name=<?php echo "$categoryName"; ?>&sortingType=price&sorting=DESC&q=<?php echo "$q"; ?>&page=<?php echo "$page" ?>&per_page_record=<?php echo "$per_page_record" ?>">
                             <i class="sortBtn bi bi-caret-up-fill"></i>
                         </a>
                     </div>

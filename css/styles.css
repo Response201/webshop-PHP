@@ -138,7 +138,25 @@ height: 100%;
 }
 
 
+.CategoryDropDown{
+list-style: none;
+text-decoration: none;
 
+
+}
+.categoryLink, .CategoryDropDown li{
+  list-style: none;
+  text-decoration: none;
+  
+  
+  }
+  .categoryLink:hover, .categoryLink:active, .categoryLink:focus, .CategoryDropDown li:hover{
+    list-style: none;
+    text-decoration: none;
+    font-weight: 500;
+    transform: none;
+    
+    }
 
 .btnContainer {
   display: flex;
@@ -223,7 +241,7 @@ max-width: 30px;
 .btn___item {
   display: flex;
   justify-content: space-between;
-  width: clamp(200px, 50%, 250px);
+  width: clamp(200px, 50%, 300px);
   margin-right: 1rem;
 }
 
@@ -241,7 +259,7 @@ max-width: 30px;
 }
 
 .categoryBtnSort {
-  width: 15px;
+  width: 40px;
   padding: 0.4rem;
   color: #111010;
   text-decoration: none;
@@ -255,7 +273,7 @@ max-width: 30px;
 
 .categoryBtnSortIcon,
 .categoryBtnSortIcon:hover {
-  width: 10px;
+  width: 40px;
   padding: 0.4rem;
   color: #0e0d0d;
   text-decoration: none;
@@ -273,10 +291,10 @@ max-width: 30px;
 .sortBtn:hover,
 .categoryBtnSort:hover {
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 500;
   color: #060606;
   text-decoration: none;
-  width: 15px;
+  width: 40px;
 }
 
 .categoryContainer___header_sort {

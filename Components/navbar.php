@@ -3,6 +3,7 @@
 
 require_once ("Models/Database.php");
 $dbContext = new DBContext();
+$per_page_record = $_GET['per_page_record'] ?? 6;
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
     <div class="container-fluid">
@@ -25,11 +26,11 @@ $dbContext = new DBContext();
                         Produkter
                     </a>
                     <ul class="dropdown-menu mb-2">
-                        <li><a class='dropdown-item' href='category?category=all&name=Alla%20Produkter'>Alla produkter</a></li>
+                        <li><a class='dropdown-item' href='category?category=all&name=Alla%20Produkter&per_page_record=<?php echo"$per_page_record"; ?>'>Alla produkter</a></li>
                         <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
                         <?php
                         foreach ($dbContext->getAllCategories() as $category) {
-                            echo "<li><a class='dropdown-item' href='category?category=$category->id&name=$category->title'>$category->title</a></li> ";
+                            echo "<li><a class='dropdown-item' href='category?category=$category->id&name=$category->title&per_page_record=$per_page_record '>$category->title</a></li> ";
                         }
                         ?>
                     </ul>
