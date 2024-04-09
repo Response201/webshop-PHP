@@ -1,5 +1,5 @@
 <?php
-function productItem($item, $admin)
+function productItem($item)
 {
   require_once ("Models/Database.php");
   require_once ("Utils/Validator.php");
@@ -12,6 +12,10 @@ $dbContext = new DBContext();
   $page = isset($_POST['page']) ? $_POST['page'] : 1;
   $change = $_POST['change'] ?? false;
   $id = $_POST['id'] ?? '';
+  $admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
+
+
+
 if($admin){ 
     if ($change && $item->id === $id) {
       $icon = '

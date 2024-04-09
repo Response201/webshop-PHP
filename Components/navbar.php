@@ -82,7 +82,7 @@ echo '<li class="nav-item ">
 $user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
  $dbContext = new DBContext();
 
- if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+ if (isset($_POST['logOut'])) {
   
     try {
         $dbContext->getUsersDatabase()->getAuth()->logOut();
@@ -110,7 +110,7 @@ $user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
 if($user){
     echo'
     <form method="post">
-    <li><button type="submit" class="dropdown-item" name="logout">Logga Ut</button></li>
+    <li><button  name="logOut" class="dropdown-item" name="logout">Logga Ut</button></li>
 </form>
 ';
  

@@ -26,11 +26,11 @@ if (!isset($_GET['page'])) {
 }
 
 
-$admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
+
 
 $list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record);
 
-updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");
+updateProduct("?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");
 ?>
 <!DOCTYPE HTML>
 
@@ -136,7 +136,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType= $sortingType&
             <?php
             foreach ($list["data"] as $item) {
                 if ($item) {
-                    productItem($item, $admin);
+                    productItem($item);
                 }
             }
             ;

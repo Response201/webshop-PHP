@@ -5,9 +5,13 @@ ob_start();
 //include_once("Models/Products.php");
 include_once ("Models/Database.php");
 include_once ('Components/productItem.php');
-$dbContext = new DBContext();
-$q = ""
+include_once ('functions/UpdateFunc.php');
 
+
+
+$dbContext = new DBContext();
+$q = "";
+updateProduct("/");
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +72,7 @@ $q = ""
                 echo "<section class='lowStockLevelContainer___item'>
                     <p class=\"lowStockLevelContainer___p\"> $item->stockLevel kvar! </p>
                     ";
-                productItem($item, $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN));
+                productItem($item);
                 echo "</section>";
             }
         }

@@ -10,7 +10,7 @@ $id = $_GET['id'];
 /* uppdate function connected to productItem => send link to refresh/ show page whit new value */
 updateProduct("/product?id=$id");
 
-$admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
+
 
 ?>
 <html>
@@ -46,7 +46,7 @@ $admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::
         <section class="productItem">
             <?php
 
-            productItem($dbContext->getProduct($_GET['id']), $admin);
+            productItem($dbContext->getProduct($_GET['id']));
             ?>
         </section>
     </article>
