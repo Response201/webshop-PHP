@@ -83,7 +83,7 @@ a:hover {
 
 /* salses */
 .lowStockLevelContainer {
-  background-color: #000000;
+    background-color: #000000;
     display: grid;
     gap: 3rem;
     justify-content: space-evenly;
@@ -94,16 +94,18 @@ a:hover {
     padding: 3rem 0;
     z-index: 0;
     height: fit-content;
-   
-}
 
-.lowStockLevelContainer___item{
 
-max-width: 90vw;
 
 }
 
-.lowStockLevelContainer___p{
+.lowStockLevelContainer___item {
+
+    max-width: 90vw;
+
+}
+
+.lowStockLevelContainer___p {
 
     color: white;
 
@@ -113,11 +115,12 @@ max-width: 90vw;
 
 @media screen and (min-width: 768px) {
     .lowStockLevelContainer {
-  
-      grid-template-columns: repeat(auto-fit, minmax(200px, 15%));
-  
-  
-    } }
+
+        grid-template-columns: repeat(auto-fit, minmax(300px, 15%));
+
+
+    }
+}
 
 
 @media screen and (min-width:990px) {
@@ -136,6 +139,6 @@ max-width: 90vw;
 
 
     }
-   
+
 
 }

@@ -1,11 +1,34 @@
 <?php
 ob_start();
 include_once ('Models/Database.php');
+include_once ('Components/checkOutListItems.php');
 $dbContext = new DBContext();
+$username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
+$customer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
+$id = $_POST['id'] ?? '';
 
 
- $customer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
-      
+
+
+
+
+if (isset($_POST['add'])){
+
+    $dbContext -> addCart($username,$id,1,'add');
+} 
+
+
+if (isset($_POST['remove'])){
+
+  $dbContext -> addCart($username,$id,1,'remove');
+}
+
+
+
+if (isset($_POST['delete'])){
+
+  $dbContext -> addCart($username,$id,1,'delete');
+}
     
 
 ?>
@@ -38,7 +61,37 @@ $dbContext = new DBContext();
 <p> 
         <?php if($customer){
 
+
 echo"Du är inloggad och kan handla";
+
+$list = $dbContext -> findCart($username);
+
+$hello = count($list);
+
+if( 1 <= $hello ){
+echo ' 
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>';
+
+checkOutListItems();
+
+  echo ' 
+  </tbody>
+</table>
+
+';}
 
 
         }else{

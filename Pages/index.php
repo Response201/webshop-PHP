@@ -11,7 +11,25 @@ include_once ('functions/UpdateFunc.php');
 
 $dbContext = new DBContext();
 $q = "";
+
+$id = $_POST['id'] ?? '';
+$username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 updateProduct("/");
+
+
+
+
+
+if (isset($_POST['buy'])){
+
+    $dbContext -> addCart($username,$id,1, 'add');
+
+
+} 
+
+
+
+
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,14 +83,16 @@ updateProduct("/");
     </section>
     <!-- sales -->
     <section class="py-6 lowStockLevelContainer">
+    <input type="hidden" name="id" value="">
         <?php
+       
         $list = $dbContext->getLowStockLevel();
         foreach ($list as $item) {
             if ($item) {
                 echo "<section class='lowStockLevelContainer___item'>
                     <p class=\"lowStockLevelContainer___p\"> $item->stockLevel kvar! </p>
                     ";
-                productItem($item);
+                productItem($item, '/');
                 echo "</section>";
             }
         }

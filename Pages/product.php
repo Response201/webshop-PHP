@@ -7,9 +7,17 @@ include_once ('components/productItem.php');
 include_once ('functions/UpdateFunc.php');
 $dbContext = new DBContext();
 $id = $_GET['id'];
+
 /* uppdate function connected to productItem => send link to refresh/ show page whit new value */
 updateProduct("/product?id=$id");
+$username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 
+
+if (isset($_POST['buy'])){
+ 
+    $dbContext -> addCart($username,$id,1, 'add');
+
+} 
 
 
 ?>
@@ -46,7 +54,7 @@ updateProduct("/product?id=$id");
         <section class="productItem">
             <?php
 
-            productItem($dbContext->getProduct($_GET['id']));
+            productItem($dbContext->getProduct($_GET['id']), "/product?id=$id");
             ?>
         </section>
     </article>

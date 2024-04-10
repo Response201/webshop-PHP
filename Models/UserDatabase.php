@@ -114,6 +114,17 @@ class UserDatabase {
         if($this->pdo->query("select * from users where email='oliver@systementor.se'")->rowCount() == 0){
             $userId = $this->auth->admin()->createUser("oliver@systementor.se", "Hejsan123#", "oliver@systementor.se");    
             $this->auth->admin()->addRoleForUserById($userId, \Delight\Auth\Role::CONSUMER);
+
+
+
+
+
+
+
+
+
+
+
         }
 
     }

@@ -1,6 +1,7 @@
 <?php
 require_once ('Models/Product.php');
 require_once ('Models/Category.php');
+require_once ('Models/Cart.php');
 require_once ('Models/UserDatabase.php');
 class DBContext
 {
@@ -109,26 +110,34 @@ class DBContext
 
 
 
-    function getLowStockLevel()
-    {
-        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
-        return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
-    }
-    function updateProduct($id, $price)
+
+
+
+
+    function updateProduct($id, $price, $stockLevel)
     {
         $id = intval($id);
         $prep = $this->pdo->prepare("UPDATE products
         SET 
-            price = :price
+            price = :price,
+            stockLevel =:stockLevel
         WHERE id = :id
         ");
-        $prep->execute(["id" => $id, "price" => $price]);
+        $prep->execute(["id" => $id, "price" => $price, "stockLevel" => $stockLevel]);
+
         if ($prep->rowCount() > 0) {
             return $prep->rowCount() > 0;
         } else {
             return "fel";
         }
     }
+
+    function getLowStockLevel()
+    {
+        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
+        return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
+    }
+
     function getCategoryByTitle($title): Category|false
     {
         $prep = $this->pdo->prepare('SELECT * FROM category where title=:title  ');
@@ -136,6 +145,93 @@ class DBContext
         $prep->execute(['title' => $title]);
         return $prep->fetch();
     }
+
+
+    function findCart($username)
+    {
+        $prep = $this->pdo->prepare('SELECT * FROM cart where username=:username');
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Cart');
+        $prep->execute(['username' => $username]);
+        return $prep->fetchAll();
+    }
+
+    function addCart($username, $productId, $quantity, $action)
+    {
+
+        $existInCartItem = $this->findCartByUserAndProduct($username, $productId);
+        $run = true;
+        $productitem = $this->getProduct($productId);
+
+
+
+        /* Add or remove from cart */
+        if ($productId && $username) {
+
+
+            if ($existInCartItem && $productitem) {
+                $newquantity = $existInCartItem->quantity;
+                $price = $productitem->price;
+
+                if ($run && $action === 'add' || $action === 'remove') {
+
+                    if ($action === 'add' && $productitem->stockLevel >= 1) {
+                        $newquantity = $existInCartItem->quantity + 1;
+                        $newValue = $productitem->stockLevel - 1;
+
+                    }
+
+                    if ($action === 'remove' && $existInCartItem->quantity >= 1) {
+                        $newquantity = $existInCartItem->quantity - 1;
+                        $newValue = $productitem->stockLevel + 1;
+
+                    }
+
+                    $this->updateProduct($productId, $price, $newValue);
+                    $sql = "UPDATE cart SET quantity = :quantity WHERE productId = :productId AND username = :username";
+                    $prep = $this->pdo->prepare($sql);
+                    $prep->execute(["username" => $username, "productId" => $productId, "quantity" => $newquantity]);
+
+                    $run = false;
+                }
+
+                /* Delete from cart */ else if ($run && $action === 'delete') {
+
+
+                    $newValue = $productitem->stockLevel + $existInCartItem->quantity;
+
+                    $sql = "DELETE FROM cart WHERE productId = :productId AND username = :username";
+                    $prep = $this->pdo->prepare($sql);
+                    $prep->execute(["username" => $username, "productId" => $productId]);
+                    $this->updateProduct($productId, $price, $newValue);
+                    $run = false;
+                }
+
+
+
+            }
+            /* Lägger till en ny produkt i cart */
+            if ($run && !$existInCartItem) {
+                $run = false;
+                $newValue = $productitem->stockLevel - 1;
+                $price = $productitem->price;
+                $this->updateProduct($productId, $price, $newValue);
+                $this->createCartData($username, $productId, 1);
+
+            }
+
+
+
+
+
+
+
+
+        }
+
+
+
+    }
+
 
 
 
@@ -152,13 +248,13 @@ class DBContext
         static $seeded = false;
         if ($seeded)
             return;
-        $this->createIfNotExisting('Volume Boost', 18, 39, 'Mascara', '.\assets\images\mascara\mascara1.png');
-        $this->createIfNotExisting('Smoothie Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\9.png');
+        $this->createIfNotExisting('Volume Boost', 18, 3, 'Mascara', '.\assets\images\mascara\mascara1.png');
+        $this->createIfNotExisting('Smoothie Palette', 20, 4, 'Ögonskugga', '.\assets\images\eyeshadow\9.png');
         $this->createIfNotExisting('Skin Lux', 15, 35, 'Hudvård', '.\assets\images\skincare\1.png');
-        $this->createIfNotExisting('Eyelash Curler', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Liquid Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Lengthening Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\2.png');
-        $this->createIfNotExisting('blue Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\2.png');
+        $this->createIfNotExisting('Eyelash Curler', 22, 4, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Liquid Foundation', 25, 5, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Lengthening Mascara', 18, 9, 'Mascara', '.\assets\images\mascara\2.png');
+        $this->createIfNotExisting('blue Palette', 20, 2, 'Ögonskugga', '.\assets\images\eyeshadow\2.png');
         $this->createIfNotExisting('Peach Flush', 15, 35, 'Hudvård', '.\assets\images\skincare\2.png');
         $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
         $this->createIfNotExisting('Powder Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
@@ -209,6 +305,7 @@ class DBContext
         $this->createIfNotExisting('Lush', 1500, 5, 'Hudvård', '.\assets\images\skincare\12.png');
 
 
+
         $seeded = true;
     }
     function createIfNotExisting($title, $price, $stockLevel, $categoryName, $img)
@@ -241,6 +338,42 @@ class DBContext
     }
 
 
+    function findCartByUserAndProduct($username, $productId)
+    {
+        $productId = intval($productId);
+        $sql = "SELECT * FROM cart where username=:username AND productId=:productId";
+
+        $prep = $this->pdo->prepare($sql);
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Cart');
+        $prep->execute(['username' => $username, 'productId' => $productId]);
+        return $prep->fetch();
+    }
+
+
+    function createCartData($username, $productId, $quantity)
+    {
+        $existingCart = $this->findCartByUserAndProduct($username, $productId);
+
+        if (!$existingCart) {
+            return $this->addNewCart($username, $productId, $quantity);
+        } else {
+            return;
+        }
+
+    }
+
+    function addNewCart($username, $productId, $quantity)
+    {
+        $prep = $this->pdo->prepare('INSERT INTO cart (username, productId, quantity) VALUES(:username, :productId, :quantity)');
+        $prep->execute(['username' => $username, 'productId' => $productId, 'quantity' => 1]);
+        return $this->pdo->lastInsertId();
+    }
+
+
+
+
+
+
 
 
 
@@ -271,39 +404,22 @@ class DBContext
         )';
         $this->pdo->exec($sql);
 
-        $sql = 'CREATE TABLE IF NOT EXISTS `orders` (
-            `orderId` INT AUTO_INCREMENT PRIMARY KEY,
-            `orderDate` DATE NOT NULL
-        )';
-        $this->pdo->exec($sql);
 
-        $sql = 'CREATE TABLE IF NOT EXISTS `order_products` (
-            `orderId` INT NOT NULL,
+
+
+        $sql = 'CREATE TABLE IF NOT EXISTS `cart` (
+            `username` varchar(100) NOT NULL,
             `productId` INT NOT NULL,
-            `quantity` INT NOT NULL,
-            PRIMARY KEY (`orderId`, `productId`),
-            FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
-            FOREIGN KEY (`productId`) REFERENCES `products`(`id`)
+            `quantity` INT NULL,
+            PRIMARY KEY (`username`, `productId`)
         )';
         $this->pdo->exec($sql);
 
 
-        /* 
-                $sql = 'CREATE TABLE IF NOT EXISTS `user_order` (
-                    `orderId` INT NOT NULL,
-                    `username` varchar(50) NOT NULL,
-                    FOREIGN KEY (`orderId`) REFERENCES `orders`(`orderId`),
-                    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
-                )';
-                $this->pdo->exec($sql); */
 
 
         $this->usersDatabase->setupUsers();
         $this->usersDatabase->seedUsers();
-
-
-
-
 
         $initialized = true;
     }

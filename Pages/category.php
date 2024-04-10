@@ -19,12 +19,22 @@ $sort = $_GET['sorting'] ?? '';
 $sortingType = $_GET['sortingType'] ?? 'title';
 $q = $_GET['q'] ?? "";
 $per_page_record = $_GET['per_page_record'] ?? 6;
+$id = $_POST['id'] ?? "";
+
 if (!isset($_GET['page'])) {
     $page = 1;
 } else {
     $page = $_GET['page'];
 }
+$username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 
+
+if (isset($_POST['buy'])){
+ 
+    $dbContext -> addCart($username,$id,1, 'add');
+
+
+} 
 
 
 
@@ -136,7 +146,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType=$sortingType&s
             <?php
             foreach ($list["data"] as $item) {
                 if ($item) {
-                    productItem($item);
+                    productItem($item,"?category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");
                 }
             }
             ;

@@ -1,5 +1,5 @@
 <?php
-function productItem($item)
+function productItem($item, $link)
 {
   require_once ("Models/Database.php");
   require_once ("Utils/Validator.php");
@@ -11,10 +11,13 @@ $dbContext = new DBContext();
   $q = $_POST['q'] ?? "";
   $page = isset($_POST['page']) ? $_POST['page'] : 1;
   $change = $_POST['change'] ?? false;
-  $id = $_POST['id'] ?? '';
+ 
   $admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
+  $consumer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
+ 
 
 
+  
 
 if($admin){ 
     if ($change && $item->id === $id) {
@@ -65,17 +68,49 @@ if($admin){
           </div>';
          }
   }
-} else {
+} else if($consumer) {
+
+    $icon = '
+        <div>
+            <h5 class="itemTitle">' . $item->title . '</h5>
+            <p class="card-text">' . $item->price . ' kr</p>
+            <input name="id" type="hidden" value="' . $item->id . '" />
+        </div>
+       ';
+       $value = intval($item->stockLevel);
+       if($value >= 1){
+       $button = ' <a class="btnContainer" hrfe=' . $link . '>
+    <button class="itemBtn" name="buy" type="submit" ><i class="bi-cart-fill"></i></button>
+</a>';}else{$button =' <p class="ItemNoConText";> tillfälligt slut </p>';
+
+
+
+
+}
+  }
+  else{
+
     $icon = '
         <div>
             <h5 class="itemTitle">' . $item->title . '</h5>
             <p class="card-text">' . $item->price . ' kr</p>
         </div>
        ';
-       $button = ' <div class="btnContainer">
-    <button class="itemBtn" ><i class="bi-cart-fill"></i></button>
+       $button = ' <div class="btnContainer ItemNoConBtn" ;>
+       <p class="ItemNoConText";> logga in för att handla</p>
 </div>';
+
+
+
   }
+
+
+
+
+
+
+
+
   if ($item !== null) {
     echo "<div class=\"p-3 item\">
             <div class=\"row\">

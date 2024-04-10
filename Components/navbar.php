@@ -38,22 +38,37 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
 
 <?php 
 
+if($dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER)){
+$count = 0;
+$username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 
-if( !$dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN)){
+    $existingCart = $dbContext -> findCart($username);
+foreach ($existingCart as $product){
+   $count +=$product->quantity;
+    }
+    
+
+
+
 
 
 echo '<li class="nav-item ">
 <a href="checkout">
     <button class="btn text-dark border-dark  change" type="submit">
         <i class="bi-cart-fill text-dark change"></i> Cart
-        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-    </button>
-</a>
-</li>';
-
+        <span class="badge bg-dark text-white ms-1 rounded-pill"> '; 
+        
+          echo " $count </span>
+        </button>
+    </a>
+    </li     ";      
+        
 
 
 }
+
+
+
 
 
 
@@ -74,10 +89,6 @@ echo '<li class="nav-item ">
 
 
 <?php 
-
-
-
-
 
 $user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
  $dbContext = new DBContext();
@@ -110,14 +121,9 @@ $user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
 if($user){
     echo'
     <form method="post">
-    <li><button  name="logOut" class="dropdown-item" name="logout">Logga Ut</button></li>
+    <button  name="logOut" class="dropdown-item" name="logout">Logga Ut</button>
 </form>
 ';
- 
-if (!$dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN)){
-echo' <li><a class="dropdown-item" href="/">Ordrar</a></li>';
-
-}
 
 }else{
 echo'
