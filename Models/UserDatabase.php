@@ -93,14 +93,7 @@ class UserDatabase {
 
 
 
-/* Skapa användare  */
-      function createUser($username, $password)
-      {
-        if($this->pdo->query("select * from users where email=$username")->rowCount() == 0){
-          $userId = $this->auth->admin()->createUser("$username", "$password", "$username");    
-          $this->auth->admin()->addRoleForUserById($userId, \Delight\Auth\Role::CONSUMER);
-      }
-      }
+
 
     
     

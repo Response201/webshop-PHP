@@ -30,7 +30,9 @@ $router->addRoute('/checkout', function () {
     require __DIR__ .'/Pages/checkOut.php';
 });
 
-
+$router->addRoute('/verify_email', function () {
+    require __DIR__ .'/Pages/verify.php';
+});
 
 
 

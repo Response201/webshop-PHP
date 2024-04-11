@@ -1,8 +1,9 @@
 <?php 
 ob_start();
-    require 'vendor/autoload.php';
     require_once('Models/Database.php');
-
+    require_once('functions/auth.php');
+    require_once ("Utils/Validator.php");
+    $v = new Validator($_POST);
 
 
 $dbContext = new DBContext();
@@ -11,14 +12,17 @@ $username = "";
 $password= "";
 $type = $_GET['type'] ?? "";
 $username = $_POST['username'] ?? '';
-$password = $_POST['password']?? '';
+$password = $_POST['password'] ?? '';
+$passwordAgain = $_POST['passwordAgain'] ?? '';
+
+
+
 
 if ($type === 'login') {
 
     $dbContext = new DbContext();
   
-    if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-   
+    if (isset($_POST['login'])){
         try{
            // Hejsan123#
  
@@ -29,29 +33,53 @@ if ($type === 'login') {
         }
         catch(Exception $e){
             $message = "Could not login";
-    
+       
         }}
+ }
 
 
 
-} else {
-
-    try{
-     
-
-        $dbContext-> getUsersDatabase()->createUser($username, $password);
-         header('Location: /');
-         exit;
-     }
-     catch(Exception $e){
-         $message = "Could not login";
- 
-     }
 
 
 
+
+
+
+
+
+
+if(isset($_POST['create'])){
+
+         
+if($password !== $passwordAgain ){
+
+$message = "password not match";
 
 }
+else if(!$password || !$passwordAgain || !$username){
+
+    $message = "empty fields";
+
+}
+
+$v->field('username')->required()->email()->min_val(1)->max_len(100);;
+if ($v->is_valid()) {
+
+
+
+
+    $message = test();
+
+
+
+
+}else {
+    $message = "Could not create account";
+}
+
+}
+
+
  
 
 ?>
@@ -80,6 +108,17 @@ if ($type === 'login') {
     $dbContext->getAllCategories();
     include_once ('Components/navbar.php');
 
+    if($type === 'login'){
+
+        $btn = '<button type="submit" name="login" class="createBtn">Logga in</button>
+        ';
+
+    } if($type === 'create'){
+
+        $btn = '<button type="submit" name="create" class="createBtn">Skapa konto</button>
+        ';
+
+    }
 
 
 
@@ -92,19 +131,34 @@ if ($type === 'login') {
         <img src="./assets/images/background.png" class="background___img" />
 
         <form class="createUserForm" method="POST">
-            <p>
-            <?php echo " $message"; ?>
-            </p>
+            
             <section class="createInputContainer">
                 <label class="createInput">Användarnamn: </label>
                 <input name="username" class="createInput" />
                 <label class="createInput">Lösenord: </label>
                 <input name="password" class="createInput" type="password" />
 
+                <?php   if( $type === 'create'){ 
+                    
+                    echo "  
+                <label class=\"createInput\">Lösenord: </label>
+                <input name=\"passwordAgain\" class=\"createInput\" type=\"password\" />";
+            } 
+                ?>
+
+               
+                <p class="createUserMessage">
+            <?php echo " $message"; ?>
+            </p>
             </section>
             <section class="createBtnContainer">
-                <button type="submit" class="createBtn"> <?php  if($type === 'login'){echo "Logga in";}else{echo "Skapa konto";}    ?> </i></button>
+            <?php echo "$btn"; ?>
             </section>
+
+
+
+
+
 
         </form>
 
