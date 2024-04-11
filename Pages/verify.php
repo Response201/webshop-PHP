@@ -2,26 +2,48 @@
 ob_start();
 require 'vendor/autoload.php';
    require_once('Models/Database.php');
-$dbContext = new DBContext();
- $s = $_GET['selector'] ?? '';
-$message = 'hej hej';
-if( $s ){
-try {
-    $dbContext->getUsersDatabase()->getAuth()->confirmEmail($_GET['selector'], $_GET['token']);
-    $message = 'Email address has been verified';
-}
-catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
-    $message = 'Något gick fel';
-}
-catch (\Delight\Auth\TokenExpiredException $e) {
-    $message = 'Något gick fel';
-}
-catch (\Delight\Auth\UserAlreadyExistsException $e) {
-    $message = 'Något gick fel';
-}
-catch (\Delight\Auth\TooManyRequestsException $e) {
-    $message = 'Något gick fel';
-}
+
+   $dbContext = new DBContext();
+   $selector = $_GET['selector'] ?? '';
+  $message = '';
+  
+  
+  
+  
+  $user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
+  
+  
+  
+  if($user){
+  
+      $dbContext->getUsersDatabase()->getAuth()->logOut();
+    
+    
+      
+     
+  }
+  
+  
+  
+  if( $selector ){
+  try {
+      $dbContext->getUsersDatabase()->getAuth()->confirmEmail($_GET['selector'], $_GET['token']);
+      $message = 'Email address has been verified';
+  }
+  catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+      $message = 'Något gick fel';
+  }
+  catch (\Delight\Auth\TokenExpiredException $e) {
+      $message = 'Något gick fel';
+  }
+  catch (\Delight\Auth\UserAlreadyExistsException $e) {
+      $message = 'Något gick fel';
+  }
+  catch (\Delight\Auth\TooManyRequestsException $e) {
+      $message = 'Något gick fel';
+  }
+  
+ 
 }
 ?>
 <!DOCTYPE HTML>

@@ -8,6 +8,7 @@ $dbContext = new DBContext();
 $message = "";
 $username = "";
 $password= "";
+$passwordAgain = "";
 $type = $_GET['type'] ?? "";
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
@@ -31,7 +32,8 @@ $message = "password not match";
 }
 else if(!$password || !$passwordAgain || !$username){
     $message = "empty fields";
-}
+}else{
+
 $v->field('username')->required()->email()->min_val(1)->max_len(100);;
 if ($v->is_valid()) {
     $message = test();
@@ -40,7 +42,7 @@ if ($v->is_valid()) {
     }
 }else {
     $message = "Could not create account";
-}
+}}
 }
 ?>
 <!DOCTYPE HTML>

@@ -92,6 +92,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType=$sortingType&s
             </div>
         </section>
         <?php include_once ('Components/navbar.php'); ?>
+        <section class="productItemListCon">
         <section class="productItemList">
             <?php
             foreach ($list["data"] as $item) {
@@ -101,6 +102,7 @@ updateProduct("?category=$category&name=$categoryName&sortingType=$sortingType&s
             }
             ;
             ?>
+        </section>
         </section>
         <section class="categoryContainer___pages">
             <hr class="categoryContainer___hr">
