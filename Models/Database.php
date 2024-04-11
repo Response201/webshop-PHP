@@ -171,7 +171,7 @@ class DBContext
             if ($existInCartItem && $productitem) {
                 $newquantity = $existInCartItem->quantity;
                 $price = $productitem->price;
-
+                $newValue = null;
                 if ($run && $action === 'add' || $action === 'remove') {
 
                     if ($action === 'add' && $productitem->stockLevel >= 1) {
@@ -185,12 +185,12 @@ class DBContext
                         $newValue = $productitem->stockLevel + 1;
 
                     }
-
+if($newValue !== null){
                     $this->updateProduct($productId, $price, $newValue);
                     $sql = "UPDATE cart SET quantity = :quantity WHERE productId = :productId AND username = :username";
                     $prep = $this->pdo->prepare($sql);
                     $prep->execute(["username" => $username, "productId" => $productId, "quantity" => $newquantity]);
-
+}
                     $run = false;
                 }
 

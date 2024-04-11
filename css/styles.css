@@ -227,9 +227,9 @@ header {
 }
 
 .ItemNoConBtn {
-max-width: 20%;
+  max-width: 20%;
   min-width: fit-content;
-  height: 13px;
+  height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -237,7 +237,7 @@ max-width: 20%;
   font-size: 9px;
 
   padding: 0 1px;
-  background-color: rgb(235, 192, 206);
+  background-color: rgb(210, 206, 207);
 
 }
 
@@ -459,14 +459,109 @@ max-width: 20%;
 
 /* Check out page */
 
-.checkOutHollowBtn{
+.checkOutContainer {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #e8edfa;
+  min-height: calc(600px + 3rem);
+
+}
+
+.checkOutTabel {
+
+  width: clamp(300px, 90vw, 700px);
+  display: flex;
+  flex-direction: column;
+}
+
+.changeObjectItemContainer,
+tr {
+
+  height: clamp(55px, 10vw, 90px);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 
 
-filter: opacity(20%);
- cursor: auto;
+}
+
+.headerTable {
+
+  border-bottom: 1px solid var(--bs-gray);
+  height: 50px;
+  padding: 0;
+}
+
+.changeObjectItem,
+th {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 15%;
+  font-size: clamp(8px, 2vw, 16px);
+  border-bottom: 1px solid var(--bs-gray-400);
+
 }
 
 
+
+.changeObjectItem:nth-child(2),
+th:nth-child(2) {
+
+  width: 45%;
+}
+
+th {
+
+  justify-content: center;
+
+  ;
+}
+
+.changeObjectText {
+
+  position: absolute;
+  bottom: 0;
+  top: 73%;
+  font-size: clamp(10px, 1vw, 12px);
+}
+
+.checkOutBtn {
+
+  width: clamp(25px, 2vw, 30px);
+  height: clamp(25px, 2vw, 30px);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkOutBtn>i {
+
+  font-size: clamp(10px, 2vw, 15px);
+
+
+}
+
+.checkOutHollowBtn,
+.checkOutHollowBtn:hover {
+  filter: opacity(20%);
+  transform: scale(100%);
+}
+
+.checkOutHollowBtn,
+.checkOutHollowBtn>i {
+
+  cursor: auto;
+}
 
 
 @media screen and (min-width: 768px) {
@@ -500,10 +595,10 @@ filter: opacity(20%);
 
   .ItemNoConText {
 
-    font-size: clamp(0.6rem, 1vw, 0.8rem);
-  
+    font-size: clamp(0.6rem, 1vw, 0.65rem);
+
   }
-  
+
 }
 
 @media screen and (min-width:990px) {

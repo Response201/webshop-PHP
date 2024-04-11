@@ -51,7 +51,7 @@ if (isset($_POST['delete'])){
 </head>
 
 <body>
-    <article class="productContainer">
+    <article class="checkOutContainer">
 
 
 
@@ -62,28 +62,27 @@ if (isset($_POST['delete'])){
         <?php if($customer){
 
 
-echo"Du är inloggad och kan handla";
+
 
 $list = $dbContext -> findCart($username);
 
-$hello = count($list);
+$listCount = count($list);
 
-if( 1 <= $hello ){
+if( 1 <= $listCount ){
 echo ' 
 
-<table class="table">
+<table class="checkOutTabel">
   <thead>
-    <tr>
+    <tr class="headerTable">
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col">Vara</th>
+      <th scope="col">Antal</th>
+      <th scope="col">Lägg till</th>
+      <th scope="col">Tabort</th>
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>';
+  <tbody >';
 
 checkOutListItems();
 
@@ -91,7 +90,12 @@ checkOutListItems();
   </tbody>
 </table>
 
-';}
+';}else{
+
+
+  echo"Du är inloggad och kan handla";
+
+}
 
 
         }else{

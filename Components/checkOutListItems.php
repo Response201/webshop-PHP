@@ -12,22 +12,24 @@ for ($i = 0; $i < count($list); $i++) {
    $quanti = intval($list[$i]->quantity);
     $listItem = $i +1;
       $value = $product->stockLevel;
-
+$message ='';
       /* ADD */
-$btnAdd ='<a href="?checkout"> <button type="submit" name="add" class="itemBtn" >
+$btnAdd ='<a href="?checkout"> <button type="submit" name="add" class="itemBtn checkOutBtn" >
 <i class="bi bi-plus-lg"></i>
 </button></a>';
 if($value <= 0){
- $btnAdd ='<button class="itemBtn checkOutHollowBtn" ><i class="bi bi-plus-lg "></i></button> '; 
+ $btnAdd ='<div class="itemBtn checkOutHollowBtn checkOutBtn" ><i class="bi bi-plus-lg "></i></div> '; 
  }
-
+ if($value == 1){
+  $message ='1 kvar!'; 
+  }
 
       /* REMOVE */
-      $btnRemove ='<a href="?checkout"> <button type="submit" name="remove" class="itemBtn" >
+      $btnRemove ='<a href="?checkout"> <button type="submit" name="remove" class="itemBtn checkOutBtn" >
       <i class="bi bi-dash-lg"></i>
       </button></a>';
       if( $quanti  <= 0){
-        $btnRemove ='<button class="itemBtn checkOutHollowBtn" ><i class="bi bi-dash-lg"></i></button> '; 
+        $btnRemove ='<div class="itemBtn checkOutHollowBtn checkOutBtn" ><i class="bi bi-dash-lg"></i></div> '; 
        }
 
 
@@ -36,8 +38,8 @@ if($value <= 0){
 
 
 
-       $btnDelete ='<a href="?checkout"> <button type="submit" name="delete" class="itemBtn" >
-       <i class="bi bi-dash-lg"></i>
+       $btnDelete ='<a href="?checkout"> <button type="submit" name="delete" class="itemBtn checkOutBtn" >
+       <i class="bi bi-trash"></i>
        </button></a>';
      
 
@@ -47,24 +49,24 @@ if($value <= 0){
 
 
 
-    echo " <form method=\"POST\"><tr>
-    <th scope=\"row\">
+    echo " <form method=\"POST\"><tr class='changeObjectItemContainer'>
+    <th scope=\"row\" class=\"changeObjectItem\" >
     
     
       $listItem 
     </th>
-    <td></td>
-    <td>$product->title</td>
-    <td> $quanti</td>
-    <td>
+
+    <td  class=\"changeObjectItem\">$product->title</td>
+    <td class=\"changeObjectItem\"> $quanti</td>
+    <td class=\"changeObjectItem\">
    
     <input name=\"id\" type=\"hidden\" class=\"form-control\" value=\"$product->id\" />
   
     $btnAdd
-   
+   <p class=\" changeObjectText \"> $message </p>
     </td>
-    <td>$btnRemove </td>
-    <td>$btnDelete   <p>$value  </p></td>
+    <td class=\"changeObjectItem\">$btnRemove </td>
+    <td class=\"changeObjectItem\">$btnDelete   </td>
   </tr>
   
  
