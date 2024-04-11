@@ -11,13 +11,11 @@ $dbContext = new DBContext();
   $q = $_POST['q'] ?? "";
   $page = isset($_POST['page']) ? $_POST['page'] : 1;
   $change = $_POST['change'] ?? false;
- 
+  $id = $_POST['id'] ?? '';
   $admin = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::ADMIN) ? true : false;
   $consumer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
  
 
-
-  
 
 if($admin){ 
     if ($change && $item->id === $id) {
@@ -26,6 +24,7 @@ if($admin){
       <h5 class="itemTitle">' . $item->title . ' </h5>
               <input type="hidden" name="title" class="form-control"  class="itemTitle" style="width:100%" value="' . $item->title . '" />
               <input name="price"class="card-text" class="form-control" style="width:100%" value="' . $item->price . '" />
+              <input name="stockLevel" type="hidden" value="' . $item->stockLevel . '" />
               <input name="id" type="hidden" class="form-control" value="' . $item->id . '" />
               <input type="hidden" name="q" class="form-control" value="' . $q . '" />
               <input type="hidden" name="category" class="form-control" value="' . $category . '" />
@@ -37,7 +36,7 @@ if($admin){
           </div
          ';
       $button = '<div class="btnContainer">
-      <button type="submit" name="submit" class="itemBtn" ><i class="bi bi-plus-lg"></i></button>
+      <button type="submit" name="changeProductBtn" class="itemBtn" ><i class="bi bi-plus-lg"></i></button>
 </div>';
     } else {
       $icon = '
@@ -46,6 +45,7 @@ if($admin){
           <p class="card-text">' . $item->price . ' kr</p>
               <input name="title" class="itemTitle" type="hidden" value="' . $item->title . '" />
               <input name="price" class="itemTitle" type="hidden" value="' . $item->price . '" />
+              <input name="stockLevel" type="hidden"value="' . $item->stockLevel . '" />
               <input name="id" type="hidden" value="' . $item->id . '" />
               <input type="hidden" name="q" value="' . $q . '" />
               <input type="hidden" name="category" value="' . $category . '" />
