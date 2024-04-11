@@ -6,34 +6,17 @@ $dbContext = new DBContext();
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 $customer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
 $id = $_POST['id'] ?? '';
-
-
-
-
-
-
 if (isset($_POST['add'])){
-
     $dbContext -> addCart($username,$id,1,'add');
 } 
-
-
 if (isset($_POST['remove'])){
-
   $dbContext -> addCart($username,$id,1,'remove');
 }
-
-
-
 if (isset($_POST['delete'])){
-
   $dbContext -> addCart($username,$id,1,'delete');
 }
-    
-
 ?>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -49,28 +32,15 @@ if (isset($_POST['delete'])){
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
-
 <body>
     <article class="checkOutContainer">
-
-
-
-
         <?php include_once ('Components/navbar.php'); ?>
-
 <p> 
         <?php if($customer){
-
-
-
-
 $list = $dbContext -> findCart($username);
-
 $listCount = count($list);
-
 if( 1 <= $listCount ){
 echo ' 
-
 <table class="checkOutTabel">
   <thead>
     <tr class="headerTable">
@@ -83,34 +53,19 @@ echo '
     </tr>
   </thead>
   <tbody >';
-
 checkOutListItems();
-
   echo ' 
   </tbody>
 </table>
-
 ';}else{
-
-
   echo"Du är inloggad och kan handla";
-
 }
-
-
         }else{
-
-
             echo"Du behöver logga in för att slutför ditt köp";
-
-
         } ?>
-
 </p>
-        
         </section>
     </article>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

@@ -7,27 +7,8 @@ function test(  ){
 
 
     $dbContext = new DbContext();
-    $message = "";
     $username = "";
 
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-   
 
     if(isset($_POST['create'])){
         $username = $_POST['username'];

@@ -1,10 +1,8 @@
 <?php
 require 'vendor/autoload.php';
-
 class UserDatabase {
     private $pdo;
     private $auth;
-
     function getAuth(){
       return $this->auth;
     }
@@ -12,18 +10,21 @@ class UserDatabase {
         $this->pdo = $pdo;
         $this->auth = new \Delight\Auth\Auth($pdo);
     }
-
+    function makeConsumer($username) {
+      if ($this->auth->hasRole(\Delight\Auth\Role::CONSUMER, $username)) {
+          return;
+      }
+      $this->auth->admin()->addRoleForUserByEmail($username, \Delight\Auth\Role::CONSUMER);
+  }
     function setupUsers(){
         $sql = "
         -- PHP-Auth (https://github.com/delight-im/PHP-Auth)
         -- Copyright (c) delight.im (https://www.delight.im/)
         -- Licensed under the MIT License (https://opensource.org/licenses/MIT)
-        
         /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
         /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
         /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
         /*!40101 SET NAMES utf8mb4 */;
-        
         CREATE TABLE IF NOT EXISTS `users` (
           `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
           `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -39,7 +40,6 @@ class UserDatabase {
           PRIMARY KEY (`id`),
           UNIQUE KEY `email` (`email`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        
         CREATE TABLE IF NOT EXISTS `users_confirmations` (
           `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
           `user_id` int(10) unsigned NOT NULL,
@@ -52,7 +52,6 @@ class UserDatabase {
           KEY `email_expires` (`email`,`expires`),
           KEY `user_id` (`user_id`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        
         CREATE TABLE IF NOT EXISTS `users_remembered` (
           `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
           `user` int(10) unsigned NOT NULL,
@@ -63,7 +62,6 @@ class UserDatabase {
           UNIQUE KEY `selector` (`selector`),
           KEY `user` (`user`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        
         CREATE TABLE IF NOT EXISTS `users_resets` (
           `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
           `user` int(10) unsigned NOT NULL,
@@ -74,7 +72,6 @@ class UserDatabase {
           UNIQUE KEY `selector` (`selector`),
           KEY `user_expires` (`user`,`expires`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        
         CREATE TABLE IF NOT EXISTS `users_throttling` (
           `bucket` varchar(44) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
           `tokens` float unsigned NOT NULL,
@@ -83,46 +80,20 @@ class UserDatabase {
           PRIMARY KEY (`bucket`),
           KEY `expires_at` (`expires_at`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        
         /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
         /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
         /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;";
         $this->pdo->exec($sql);
     }
-    
-
-
-
-
-
-    
-    
-    
     function seedUsers(){
         if($this->pdo->query("select * from users where email='stefan.holmberg@systementor.se'")->rowCount() == 0){
             $userId = $this->auth->admin()->createUser("stefan.holmberg@systementor.se", "Hejsan123#", "stefan.holmberg@systementor.se");    
             $this->auth->admin()->addRoleForUserById($userId, \Delight\Auth\Role::ADMIN);
         }
-
         if($this->pdo->query("select * from users where email='oliver@systementor.se'")->rowCount() == 0){
             $userId = $this->auth->admin()->createUser("oliver@systementor.se", "Hejsan123#", "oliver@systementor.se");    
             $this->auth->admin()->addRoleForUserById($userId, \Delight\Auth\Role::CONSUMER);
-
-
-
-
-
-
-
-
-
-
-
         }
-
     }
-    
 }
-
-
 ?>

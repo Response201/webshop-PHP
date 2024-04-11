@@ -1,41 +1,22 @@
 <?php
-
 ob_start();
 // include --  OK även om filen inte finns
 //include_once("Models/Products.php");
 include_once ("Models/Database.php");
 include_once ('Components/productItem.php');
 include_once ('functions/UpdateFunc.php');
-
-
-
 $dbContext = new DBContext();
 $q = "";
-
 $id = $_POST['id'] ?? '';
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 updateProduct("/");
-
-
-
-
-
 if (isset($_POST['buy'])){
-
     $dbContext -> addCart($username,$id,1, 'add');
-
-
 } 
-
-
-
-
     ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -56,7 +37,6 @@ if (isset($_POST['buy'])){
     <link href="/css/styles.css" rel="stylesheet" />
     <link href="/css/index.css" rel="stylesheet" />
 </head>
-
 <body>
     <!-- Navigation-->
     <?php include_once ('Components/navbar.php'); ?>
@@ -85,7 +65,6 @@ if (isset($_POST['buy'])){
     <section class="py-6 lowStockLevelContainer">
     <input type="hidden" name="id" value="">
         <?php
-       
         $list = $dbContext->getLowStockLevel();
         foreach ($list as $item) {
             if ($item) {
@@ -110,5 +89,4 @@ if (isset($_POST['buy'])){
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 </body>
-
 </html>

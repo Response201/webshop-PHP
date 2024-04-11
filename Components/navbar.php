@@ -120,7 +120,7 @@ $user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
 
 if($user){
     echo'
-    <form method="post">
+    <form method="post" class="dropdownForm">
     <button  name="logOut" class="dropdown-item" name="logout">Logga Ut</button>
 </form>
 ';
