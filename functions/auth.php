@@ -3,11 +3,30 @@
     require_once('Models/Database.php');
 
 
-function test(){
+function test(  ){
+
 
     $dbContext = new DbContext();
     $message = "";
     $username = "";
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
    
 
     if(isset($_POST['create'])){
@@ -16,17 +35,21 @@ function test(){
 
     try{
         $userId = $dbContext->getUsersDatabase()->getAuth()->register($username, $password, $username, function ($selector, $token) {
-            
+            $smtphost = $_ENV['smtphost'] ?? '';
+            $smtpport = $_ENV['smtpport'];
+            $smtpusername = $_ENV['smtpusername'];
+            $smtppassword = $_ENV['smtppassword'];
+            $smtpsecure = $_ENV['smtpsecure'];
            
             
             $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 $mail->isSMTP();
-$mail->Host = 'smtp.ethereal.email';
+$mail->Host = $smtphost;
 $mail->SMTPAuth = true;
-$mail->Username = 'edwina.berge18@ethereal.email';
-$mail->Password = 'rfs8vBMAMfY8eRUwk2';
-$mail->SMTPSecure = 'tls';
-$mail->Port = 587;
+$mail->Username = $smtpusername;
+$mail->Password =  $smtppassword;
+$mail->SMTPSecure =  $smtpsecure;
+$mail->Port = $smtpport;
 
             $mail->From = "solitaire@astoria.com"; 
             $mail->FromName = "Hello"; //To address and name 
@@ -46,13 +69,12 @@ $mail->Port = 587;
        
        
         return 'Tack för din registerinbg, kolla mailet och verifiera ditt konto';
-        exit;
+     
 }
     catch(Exception $e){
-        throw $e;
-        echo  $e->getMessage();
+     
         return "Error";
-        exit;
+      
         
     }
 
