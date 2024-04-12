@@ -35,7 +35,7 @@ $mail->Port = $smtpport;
             $mail->From = "solitaire@astoria.com"; 
             $mail->FromName = "Hello"; //To address and name 
             $mail->addAddress($_POST['username']); //Address to which recipient will reply 
-            $mail->addReplyTo("noreply@ysuperdupershop.com", "No-Reply"); //CC and BCC 
+            $mail->addReplyTo("noreply@solitaire.com", "No-Reply"); //CC and BCC 
             $mail->isHTML(true); 
             $mail->Subject = "Registrering"; 
             $url = 'http://localhost:8000/verify_email?selector=' . \urlencode($selector) . '&token=' . \urlencode($token);   
@@ -54,7 +54,7 @@ $mail->Port = $smtpport;
 }
     catch(Exception $e){
      
-        return "Error";
+        return "Oj då! Något gick fel!";
       
         
     }
