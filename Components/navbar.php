@@ -127,7 +127,7 @@ if($user){
 
 }else{
 echo'
-    <li><a class="dropdown-item" href="create?type=login">Logga In</a></li>
+    <li><a class="dropdown-item" href="login">Logga In</a></li>
     <li>
         <hr class="dropdown-divider">
     </li>

@@ -105,6 +105,24 @@ a:hover {
 
 }
 
+
+.lowStockLevelContainer h5 {
+
+    display: block;
+    width: 100%;
+    max-width: 70vw;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+
+
+
 .lowStockLevelContainer___p {
 
     color: white;
@@ -118,6 +136,13 @@ a:hover {
 
         grid-template-columns: repeat(auto-fit, minmax(300px, 15%));
 
+
+    }
+
+    .lowStockLevelContainer h5 {
+
+
+        max-width:clamp(150px, 70%, 300px)
 
     }
 }

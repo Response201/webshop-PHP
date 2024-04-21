@@ -24,14 +24,20 @@ $router->addRoute('/product', function () {
 });
 
 $router->addRoute('/create', function () {
-    require __DIR__ .'/Pages/create.php';
+    require __DIR__ .'/Pages/createUser.php';
 });
+
+
+$router->addRoute('/login', function () {
+    require __DIR__ .'/Pages/loginUser.php';
+});
+
 $router->addRoute('/checkout', function () {
     require __DIR__ .'/Pages/checkOut.php';
 });
 
 $router->addRoute('/verify_email', function () {
-    require __DIR__ .'/Pages/verify.php';
+    require __DIR__ .'/functions/verify.php';
 });
 
 
