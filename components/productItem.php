@@ -18,7 +18,7 @@ $dbContext = new DBContext();
 
 
 if($admin){ 
-    if ($change && $item->id === $id) {
+    if ($change && $item->id == $id) {
       $icon = '
       <div >
       <h5 class="itemTitle">' . $item->title . ' </h5>

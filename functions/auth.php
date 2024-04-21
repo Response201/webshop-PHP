@@ -21,8 +21,7 @@ function auth(){
                 $body = "<i>Hej, klicka <a href='$urlIn'>här</a></i> för att verifiera ditt konto";
                 mailer($selector, $token, $subject, $urlIn, $body);
             });
-
-         
+  
        
        
         return 'Tack för din registerinbg, kolla mailet och verifiera ditt konto';
@@ -30,7 +29,9 @@ function auth(){
 }
     catch(Exception $e){
      
-        return "Något gick fel";
+
+        return "Oj då! Något gick fel!";
+
       
         
     }
