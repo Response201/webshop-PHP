@@ -52,6 +52,7 @@ if (isset($_POST['buy'])){
         foreach ($list as $item) {
             if ($item) {
                 echo "<section class='newProductContainer___item'>
+                <p class='newProductDate'> $item->timeStamp </p>
                     ";
                 productItem($item, '/');
                 echo "</section>";

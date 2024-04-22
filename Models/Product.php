@@ -6,6 +6,7 @@ class Product
     public $price;
     public $stockLevel;
     public $categoryId;
+    public $timeStamp;
     public $img;
 }
 ;

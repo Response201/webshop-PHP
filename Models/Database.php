@@ -140,7 +140,8 @@ class DBContext
 
     function getNewProducts()
     {
-        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 6";
+
+        $sql = " ORDER BY timestamp  DESC LIMIT 0, 6";
         return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
     }
 
@@ -213,63 +214,65 @@ class DBContext
         static $seeded = false;
         if ($seeded)
             return;
-        $this->createIfNotExisting('Volume Boost', 18, 3, 'Mascara', '.\assets\images\mascara\mascara1.png');
-        $this->createIfNotExisting('Smoothie Palette', 20, 4, 'Ögonskugga', '.\assets\images\eyeshadow\9.png');
-        $this->createIfNotExisting('Skin Lux', 15, 35, 'Hudvård', '.\assets\images\skincare\1.png');
-        $this->createIfNotExisting('Eyelash Curler', 22, 4, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Liquid Foundation', 25, 5, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Lengthening Mascara', 18, 9, 'Mascara', '.\assets\images\mascara\2.png');
-        $this->createIfNotExisting('blue Palette', 20, 2, 'Ögonskugga', '.\assets\images\eyeshadow\2.png');
-        $this->createIfNotExisting('Peach Flush', 15, 35, 'Hudvård', '.\assets\images\skincare\2.png');
-        $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Powder Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Curling Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\4.png');
-        $this->createIfNotExisting('Yellow Sunset Palette', 20, 15, 'Ögonskugga', '.\assets\images\eyeshadow\4.png');
-        $this->createIfNotExisting('Berry Tint', 15, 35, 'Hudvård', '.\assets\images\skincare\3.png');
-        $this->createIfNotExisting('Blending Sponge', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('BB Cream', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Waterproof Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\3.png');
-        $this->createIfNotExisting('Purple dream', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\1.png');
-        $this->createIfNotExisting('funky bar', 15, 35, 'Hudvård', '.\assets\images\skincare\4.png');
-        $this->createIfNotExisting('Brow Shaping Kit', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Tinted Moisturizer', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Volume Supreme', 18, 39, 'Mascara', '.\assets\images\mascara\5.png');
-        $this->createIfNotExisting('Pink Shimmer Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\7.png');
-        $this->createIfNotExisting('Hyper Moi', 15, 35, 'Hudvård', '.\assets\images\skincare\5.png');
-        $this->createIfNotExisting('Precision Applicator', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Matte Perfection', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Curl Enhance Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\6.png');
-        $this->createIfNotExisting('Sapphire Sky Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\8.png');
-        $this->createIfNotExisting('Crimson', 15, 35, 'Hudvård', '.\assets\images\skincare\6.png');
-        $this->createIfNotExisting('Eyebrow Tweezers', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Buildable Coverage Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Lash Boost Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\7.png');
-        $this->createIfNotExisting('Rose Shimmer Shadow', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\6.png');
-        $this->createIfNotExisting('Mega Glow', 15, 35, 'Hudvård', '.\assets\images\skincare\7.png');
-        $this->createIfNotExisting('Brow Shaping Kit', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Dewy Finish Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Volume Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\9.png');
-        $this->createIfNotExisting('Lime Eye Palette', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\3.png');
-        $this->createIfNotExisting('Berry Wow', 15, 35, 'Hudvård', '.\assets\images\skincare\8.png');
-        $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Radiant Glow Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Fiber Mascara', 18, 39, 'Mascara', '.\assets\images\mascara\8.png');
-        $this->createIfNotExisting('Misty Eyeshadow', 20, 42, 'Ögonskugga', '.\assets\images\eyeshadow\5.png');
-        $this->createIfNotExisting('Golden Lux', 15, 35, 'Hudvård', '.\assets\images\skincare\10.png');
-        $this->createIfNotExisting('Blending Brush Set', 22, 45, 'Verktyg', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Matte Finish Foundation', 25, 50, 'Foundation', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
-        $this->createIfNotExisting('Hyyper', 450, 35, 'Hudvård', '.\assets\images\skincare\11.png');
-        $this->createIfNotExisting('Lush', 1500, 5, 'Hudvård', '.\assets\images\skincare\12.png');
+
+        $this->createIfNotExisting('Volume Boost', 18, 3, 'Mascara','2024-03-10', '.\assets\images\mascara\mascara1.png');
+        $this->createIfNotExisting('Smoothie Palette', 20, 4, 'Ögonskugga', '2024-03-10', '.\assets\images\eyeshadow\9.png');
+        $this->createIfNotExisting('Skin Lux', 15, 35, 'Hudvård', '2024-04-20', '.\assets\images\skincare\1.png');
+        $this->createIfNotExisting('Eyelash Curler', 22, 4, 'Verktyg', '2024-03-15', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Liquid Foundation', 25, 5, 'Foundation', '2024-03-20', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Lengthening Mascara', 18, 9, 'Mascara', '2024-03-25', '.\assets\images\mascara\2.png');
+        $this->createIfNotExisting('blue Palette', 20, 2, 'Ögonskugga', '2024-04-02', '.\assets\images\eyeshadow\2.png');
+        $this->createIfNotExisting('Peach Flush', 15, 35, 'Hudvård', '2024-03-17', '.\assets\images\skincare\2.png');
+        $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', '2024-04-10', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Powder Foundation', 25, 50, 'Foundation', '2024-03-18', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Curling Mascara', 18, 39, 'Mascara', '2024-03-12', '.\assets\images\mascara\4.png');
+        $this->createIfNotExisting('Yellow Sunset Palette', 20, 15, 'Ögonskugga', '2024-03-13', '.\assets\images\eyeshadow\4.png');
+        $this->createIfNotExisting('Berry Tint', 15, 35, 'Hudvård', '2024-03-14', '.\assets\images\skincare\3.png');
+        $this->createIfNotExisting('Blending Sponge', 22, 45, 'Verktyg', '2024-03-16', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('BB Cream', 25, 50, 'Foundation', '2024-03-19', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Waterproof Mascara', 18, 39, 'Mascara', '2024-03-21', '.\assets\images\mascara\3.png');
+        $this->createIfNotExisting('Purple dream', 20, 42, 'Ögonskugga', '2024-03-22', '.\assets\images\eyeshadow\1.png');
+        $this->createIfNotExisting('funky bar', 15, 35, 'Hudvård', '2024-03-23', '.\assets\images\skincare\4.png');
+        $this->createIfNotExisting('Brow Shaping Kit', 22, 45, 'Verktyg', '2024-03-24', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Tinted Moisturizer', 25, 50, 'Foundation', '2024-03-26', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Volume Supreme', 18, 39, 'Mascara', '2024-03-27', '.\assets\images\mascara\5.png');
+        $this->createIfNotExisting('Pink Shimmer Palette', 20, 42, 'Ögonskugga', '2024-03-28', '.\assets\images\eyeshadow\7.png');
+        $this->createIfNotExisting('Hyper Moi', 15, 35, 'Hudvård', '2024-03-29', '.\assets\images\skincare\5.png');
+        $this->createIfNotExisting('Precision Applicator', 22, 45, 'Verktyg', '2024-03-30', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Matte Perfection', 25, 50, 'Foundation', '2024-03-31', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Curl Enhance Mascara', 18, 39, 'Mascara', '2024-04-01', '.\assets\images\mascara\6.png');
+        $this->createIfNotExisting('Sapphire Sky Palette', 20, 42, 'Ögonskugga', '2024-04-03', '.\assets\images\eyeshadow\8.png');
+        $this->createIfNotExisting('Crimson', 15, 35, 'Hudvård', '2024-04-04', '.\assets\images\skincare\6.png');
+        $this->createIfNotExisting('Eyebrow Tweezers', 22, 45, 'Verktyg', '2024-04-05', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Buildable Coverage Foundation', 25, 50, 'Foundation', '2024-04-06', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Lash Boost Mascara', 18, 39, 'Mascara', '2024-04-07', '.\assets\images\mascara\7.png');
+        $this->createIfNotExisting('Rose Shimmer Shadow', 20, 42, 'Ögonskugga', '2024-04-08', '.\assets\images\eyeshadow\6.png');
+        $this->createIfNotExisting('Mega Glow', 15, 35, 'Hudvård', '2024-04-09', '.\assets\images\skincare\7.png');
+        $this->createIfNotExisting('Brow Shaping Kit', 22, 45, 'Verktyg', '2024-04-11', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Dewy Finish Foundation', 25, 50, 'Foundation', '2024-04-12', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Volume Mascara', 18, 39, 'Mascara', '2024-04-13', '.\assets\images\mascara\9.png');
+        $this->createIfNotExisting('Lime Eye Palette', 20, 42, 'Ögonskugga', '2024-04-14', '.\assets\images\eyeshadow\3.png');
+        $this->createIfNotExisting('Berry Wow', 15, 35, 'Hudvård', '2024-04-15', '.\assets\images\skincare\8.png');
+        $this->createIfNotExisting('Makeup Brushes Set', 22, 45, 'Verktyg', '2024-04-16', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Radiant Glow Foundation', 25, 50, 'Foundation', '2024-04-17', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Fiber Mascara', 18, 39, 'Mascara', '2024-04-18', '.\assets\images\mascara\8.png');
+        $this->createIfNotExisting('Misty Eyeshadow', 20, 42, 'Ögonskugga', '2024-04-19', '.\assets\images\eyeshadow\5.png');
+        $this->createIfNotExisting('Golden Lux', 15, 35, 'Hudvård', '2024-04-21', '.\assets\images\skincare\10.png');
+        $this->createIfNotExisting('Blending Brush Set', 22, 45, 'Verktyg', '2024-04-22', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Matte Finish Foundation', 25, 50, 'Foundation', '2024-04-23', 'https://images.unsplash.com/photo-1598908314766-3e3ce9bd2f48');
+        $this->createIfNotExisting('Hyyper', 450, 35, 'Hudvård', '2024-04-24', '.\assets\images\skincare\11.png');
+        $this->createIfNotExisting('Lush', 1500, 5, 'Hudvård', '2024-04-25', '.\assets\images\skincare\12.png');
+        
         $seeded = true;
     }
-    function createIfNotExisting($title, $price, $stockLevel, $categoryName, $img)
+    function createIfNotExisting($title, $price, $stockLevel, $categoryName, $timeStamp, $img)
     {
         $existing = $this->getProductByTitle($title);
         if ($existing && !empty($existing->id)) {
             return;
         }
         ;
-        return $this->addProduct($title, $price, $stockLevel, $categoryName, $img);
+        return $this->addProduct($title, $price, $stockLevel, $categoryName,$timeStamp, $img);
     }
     function addCategory($title)
     {
@@ -277,7 +280,7 @@ class DBContext
         $prep->execute(['title' => $title]);
         return $this->pdo->lastInsertId();
     }
-    function addProduct($title, $price, $stockLevel, $categoryName, $img)
+    function addProduct($title, $price, $stockLevel, $categoryName, $timeStamp, $img)
     {
         $category = $this->getCategoryByTitle($categoryName);
         if ($category == false) {
@@ -286,8 +289,8 @@ class DBContext
         }
         //insert plus get new id 
         // return id             
-        $prep = $this->pdo->prepare('INSERT INTO products (title, price, stockLevel, categoryId, img) VALUES(:title, :price, :stockLevel, :categoryId, :img )');
-        $prep->execute(['title' => $title, 'price' => $price, 'stockLevel' => $stockLevel, 'categoryId' => $category->id, 'img' => $img]);
+        $prep = $this->pdo->prepare('INSERT INTO products (title, price, stockLevel, categoryId, timeStamp, img) VALUES(:title, :price, :stockLevel, :categoryId, :timeStamp, :img )');
+        $prep->execute(['title' => $title, 'price' => $price, 'stockLevel' => $stockLevel, 'categoryId' => $category->id, 'timeStamp'=> $timeStamp, 'img' => $img]);
         return $this->pdo->lastInsertId();
     }
     function findCartByUserAndProduct($username, $productId)
@@ -333,6 +336,7 @@ class DBContext
             `price` INT,
             `stockLevel` INT,
             `categoryId` INT NOT NULL,
+            `timeStamp` varchar(20) NOT NULL,
             `img` varchar(200) NOT NULL,
             PRIMARY KEY (`id`),
             FOREIGN KEY (`categoryId`) REFERENCES `category`(`id`)
