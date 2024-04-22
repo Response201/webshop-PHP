@@ -1,12 +1,9 @@
 <?php
 ob_start();
-// include --  OK även om filen inte finns
-//include_once("Models/Products.php");
 include_once ("Models/Database.php");
 include_once ('Components/productItem.php');
 include_once ('functions/UpdateFunc.php');
 $dbContext = new DBContext();
-$q = "";
 $id = $_POST['id'] ?? '';
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 updateProduct("/new");
@@ -18,9 +15,7 @@ if (isset($_POST['buy'])){
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -52,10 +47,11 @@ if (isset($_POST['buy'])){
         foreach ($list as $item) {
             if ($item) {
                 echo "<section class='newProductContainer___item'>
-                <p class='newProductDate'> $item->timeStamp </p>
+              
                     ";
                 productItem($item, '/new');
-                echo "</section>";
+            
+                echo "<p class='newProductDate'> $item->timeStamp </p></section>";
             }
         }
         ;

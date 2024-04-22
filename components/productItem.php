@@ -20,7 +20,7 @@ $dbContext = new DBContext();
 if($admin){ 
     if ($change && $item->id == $id) {
       $icon = '
-      <div >
+      <div class="ItemText">
       <h5 class="itemTitle">' . $item->title . ' </h5>
               <input type="hidden" name="title" class="form-control"  class="itemTitle" style="width:100%" value="' . $item->title . '" />
               <input name="price"class="card-text" class="form-control" style="width:100%" value="' . $item->price . '" />
@@ -40,7 +40,7 @@ if($admin){
 </div>';
     } else {
       $icon = '
-          <div >
+          <div class="ItemText">
           <h5 class="itemTitle">' . $item->title . '</h5>
           <p class="card-text">' . $item->price . ' kr</p>
               <input name="title" class="itemTitle" type="hidden" value="' . $item->title . '" />
@@ -71,7 +71,7 @@ if($admin){
 } else if($consumer) {
 
     $icon = '
-        <div>
+        <div class="ItemText">
             <h5 class="itemTitle">' . $item->title . '</h5>
             <p class="card-text">' . $item->price . ' kr</p>
             <input name="id" type="hidden" value="' . $item->id . '" />
@@ -91,7 +91,7 @@ if($admin){
   else{
 
     $icon = '
-        <div>
+        <div class="ItemText--smaller">
             <h5 class="itemTitle">' . $item->title . '</h5>
             <p class="card-text">' . $item->price . ' kr</p>
         </div>
