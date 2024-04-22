@@ -3,6 +3,7 @@ ob_start();
     require_once('Models/Database.php');
     require_once('functions/auth.php');
     require_once ("Utils/Validator.php");
+    require_once('Components/loginOrCreateFormItem.php');
     $v = new Validator($_POST);
 $dbContext = new DBContext();
 $message = $_GET['message'] ?? "";
@@ -13,20 +14,21 @@ $passwordAgain = $_POST['passwordAgain'] ?? '';
 
 if(isset($_POST['create'])){
 if($password !== $passwordAgain ){
-$message = "password not match";
+$message = "Lösenorden matchar inte varandra";
 }
 else if(!$password || !$passwordAgain || !$username){
-    $message = "empty fields";
+    $message = "Vänligen fyll i alla fält";
 }else{
 
 $v->field('username')->required()->email()->min_val(1)->max_len(100);;
+$v->field('password')->required()->match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/");
 if ($v->is_valid()) {
     $message = auth();
     if($message === 'Tack för din registerinbg, kolla mailet och verifiera ditt konto'){
         $dbContext->getUsersDatabase()->makeConsumer($username); 
     }
 }else {
-    $message = "Could not create account";
+    $message = "Det gick inte registrera kontot";
 }}
 }
 ?>
@@ -54,7 +56,6 @@ if ($v->is_valid()) {
     <?php
     $dbContext->getAllCategories();
     include_once ('Components/navbar.php');
-    require_once('Components/loginOrCreateFormItem.php');
     $createUser = loginOrCreateFormItem('createUser', $message);
     echo "$createUser"; 
     ?>

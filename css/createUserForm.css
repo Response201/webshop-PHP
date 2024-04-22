@@ -2,7 +2,7 @@
 
     position: relative;
     height: 100vh;
-    min-height: 500px;
+    min-height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +22,8 @@
 
 .createUserForm {
     background-color: #e8edfa;
-    height: 300px;
+    height: fit-content;
+    min-height: 250px;
     width: clamp(200px, 90vw, 500px);
     display: flex;
     flex-direction: column;

@@ -12,12 +12,12 @@ $categoryName = $_GET['name'];
 $sort = $_GET['sorting'] ?? '';
 $sortingType = $_GET['sortingType'] ?? 'title';
 $q = $_GET['q'] ?? "";
-$per_page_record = $_GET['per_page_record'] ?? 6;
+$per_page_record = intval($_GET['per_page_record'] ?? 6);
 $id = $_POST['id'] ?? "";
 if (!isset($_GET['page'])) {
     $page = 1;
 } else {
-    $page = $_GET['page'];
+    $page = $_GET['page'] ?? 1;
 }
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 if (isset($_POST['buy'])){
@@ -25,6 +25,7 @@ if (isset($_POST['buy'])){
 } 
 $list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record);
 updateProduct("?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");
+
 ?>
 <!DOCTYPE HTML>
 <head>

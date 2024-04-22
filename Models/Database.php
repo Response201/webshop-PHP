@@ -56,30 +56,55 @@ class DBContext
             return $prep->fetchAll();
         }
     }
+
+
+    function oneOf($sortCol, $arrayOfValid, $default)
+    {
+        foreach ($arrayOfValid as $a) {
+            if (strcasecmp($a, $sortCol) == 0) {
+                return $a;
+            }
+        }
+        return $default;
+    }
+
     function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q, $page = 1, $per_page_record = 6)
     {
-        $start_from = ($page - 1) * $per_page_record;
-        $sql = "SELECT * FROM products WHERE categoryId = :categoryId";
+
+
+        /* get values to int - secure issu */
+        $pageInt = intval($page) ?? 1;
+        $per_page_record_int = intval($per_page_record) ?? 6;
+
+        /* check if value is DESC' - else defualt ASC */
+        $sortOrder = $sort == 'DESC' ? 'DESC' : 'ASC';
+
+        /* check if value is title or price' - else defualt title */
+        $sortCol = $this->oneOf($sortingType, ["title", "price"], 'title');
+
+
+        $start_from = ($pageInt - 1) * $per_page_record_int;
+        $sql = "SELECT * FROM products WHERE categoryId =:categoryId";
         $paramsArray[":categoryId"] = $categoryId;
         if ($categoryId === 'all') {
             $sql = "SELECT * FROM products ";
             $paramsArray = [];
-            if ($q) {
-                $sql = "SELECT * FROM products WHERE title LIKE :q";
-                $paramsArray[":q"] = '%' . $q . '%';
-            }
-        } else if ($categoryId !== 'all') {
-            if ($q) {
-                $sql .= " AND title LIKE :q";
-                $paramsArray[":q"] = '%' . $q . '%';
-            }
+
+
         }
-        $sql .= " ORDER BY $sortingType $sort ";
-        $sqlCount = str_replace("SELECT * FROM ", "SELECT CEIL(COUNT(*)/$per_page_record) FROM ", $sql);
+        if ($q) {
+            $sql .= ($categoryId === 'all') ? " WHERE title LIKE :q" : " AND title LIKE :q";
+            $paramsArray[':q'] = '%' . $q . '%';
+        }
+
+
+
+        $sql .= " ORDER BY  $sortCol $sortOrder ";
+        $sqlCount = str_replace("SELECT * FROM ", "SELECT CEIL(COUNT(*)/$per_page_record_int) FROM ", $sql);
         $prep2 = $this->pdo->prepare($sqlCount);
         $prep2->execute($paramsArray);
         $num_pages = $prep2->fetchColumn();
-        $sql .= " LIMIT $start_from, $per_page_record";
+        $sql .= "LIMIT $start_from, $per_page_record_int";
         $prep = $this->pdo->prepare($sql);
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
         $prep->execute($paramsArray);
@@ -87,6 +112,8 @@ class DBContext
         $arr = ["data" => $list, "num_pages" => $num_pages];
         return $arr;
     }
+
+
     function updateProduct($id, $price, $stockLevel)
     {
         $id = intval($id);
@@ -106,7 +133,7 @@ class DBContext
     function getLowStockLevel()
     {
         $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
-        return $this->pdo->query("SELECT * FROM products $sql  ")->fetchAll(PDO::FETCH_CLASS, 'Product');
+        return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
     }
     function getCategoryByTitle($title): Category|false
     {
@@ -142,12 +169,12 @@ class DBContext
                         $newquantity = $existInCartItem->quantity - 1;
                         $newValue = $productitem->stockLevel + 1;
                     }
-if($newValue !== null){
-                    $this->updateProduct($productId, $price, $newValue);
-                    $sql = "UPDATE cart SET quantity = :quantity WHERE productId = :productId AND username = :username";
-                    $prep = $this->pdo->prepare($sql);
-                    $prep->execute(["username" => $username, "productId" => $productId, "quantity" => $newquantity]);
-}
+                    if ($newValue !== null) {
+                        $this->updateProduct($productId, $price, $newValue);
+                        $sql = "UPDATE cart SET quantity = :quantity WHERE productId = :productId AND username = :username";
+                        $prep = $this->pdo->prepare($sql);
+                        $prep->execute(["username" => $username, "productId" => $productId, "quantity" => $newquantity]);
+                    }
                     $run = false;
                 }
                 /* Delete from cart */ else if ($run && $action === 'delete') {
@@ -269,10 +296,11 @@ if($newValue !== null){
             return;
         }
     }
-    function addNewCart($username, $productId, $quantity)
+    function addNewCart($username, $productId, $quantity = 1)
     {
+
         $prep = $this->pdo->prepare('INSERT INTO cart (username, productId, quantity) VALUES(:username, :productId, :quantity)');
-        $prep->execute(['username' => $username, 'productId' => $productId, 'quantity' => 1]);
+        $prep->execute(['username' => $username, 'productId' => $productId, 'quantity' => $quantity]);
         return $this->pdo->lastInsertId();
     }
     /* skapa databas */
