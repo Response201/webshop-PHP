@@ -9,7 +9,7 @@ $dbContext = new DBContext();
 $q = "";
 $id = $_POST['id'] ?? '';
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
-updateProduct("/");
+updateProduct("/new");
 if (isset($_POST['buy'])){
     $dbContext -> addCart($username,$id,1, 'add');
 } 
@@ -42,7 +42,7 @@ if (isset($_POST['buy'])){
     <?php include_once ('Components/navbar.php'); ?>
 
 <article>
-<h1> Ny Produkter </h1> 
+<h1> Nya Produkter </h1> 
 <section class="newProductsSection">
  
     <section class="newProductContainer">
@@ -54,7 +54,7 @@ if (isset($_POST['buy'])){
                 echo "<section class='newProductContainer___item'>
                 <p class='newProductDate'> $item->timeStamp </p>
                     ";
-                productItem($item, '/');
+                productItem($item, '/new');
                 echo "</section>";
             }
         }
