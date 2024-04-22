@@ -28,6 +28,11 @@ $router->addRoute('/create', function () {
 });
 
 
+$router->addRoute('/new', function () {
+    require __DIR__ .'/Pages/newProducts.php';
+});
+
+
 $router->addRoute('/login', function () {
     require __DIR__ .'/Pages/loginUser.php';
 });

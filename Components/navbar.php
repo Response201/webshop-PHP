@@ -1,8 +1,6 @@
 <!-- navbar.php -->
 <?php
-
 require_once ("Models/Database.php");
-
 $per_page_record = $_GET['per_page_record'] ?? 6;
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
@@ -18,7 +16,7 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/new">Nyheter</a>
                 </li>
                 <li class="nav-item dropdown me-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -26,7 +24,9 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
                         Produkter
                     </a>
                     <ul class="dropdown-menu mb-2">
-                        <li><a class='dropdown-item' href='category?category=all&name=Alla%20Produkter&per_page_record=<?php echo"$per_page_record"; ?>'>Alla produkter</a></li>
+                        <li><a class='dropdown-item'
+                                href='category?category=all&name=Alla%20Produkter&per_page_record=<?php echo "$per_page_record"; ?>'>Alla
+                                produkter</a></li>
                         <li role="separator" class="dropdown-divider border --bs-secondary-color"></li>
                         <?php
                         foreach ($dbContext->getAllCategories() as $category) {
@@ -35,126 +35,63 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
                         ?>
                     </ul>
                 </li>
-
-<?php 
-
-if($dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER)){
-$count = 0;
-$username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
-
-    $existingCart = $dbContext -> findCart($username);
-foreach ($existingCart as $product){
-   $count +=$product->quantity;
-    }
-    
-
-
-
-
-
-echo '<li class="nav-item ">
+                <?php
+                if ($dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER)) {
+                    $count = 0;
+                    $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
+                    $existingCart = $dbContext->findCart($username);
+                    foreach ($existingCart as $product) {
+                        $count += $product->quantity;
+                    }
+                    echo '<li class="nav-item ">
 <a href="checkout">
     <button class="btn text-dark border-dark  change" type="submit">
         <i class="bi-cart-fill text-dark change"></i> Cart
-        <span class="badge bg-dark text-white ms-1 rounded-pill"> '; 
-        
-          echo " $count </span>
+        <span class="badge bg-dark text-white ms-1 rounded-pill"> ';
+                    echo " $count </span>
         </button>
     </a>
-    </li     ";      
-        
-
-
-}
-
-
-
-
-
-
-
-
-
-?>
-
-
-              
+    </li     ";
+                }
+                ?>
                 <li class="nav-item dropdown me-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="bi bi-person"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="max-width:100px;">
-
-
-
-<?php 
-
-$user  = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
- $dbContext = new DBContext();
-
- if (isset($_POST['logOut'])) {
-  
-    try {
-        $dbContext->getUsersDatabase()->getAuth()->logOut();
-        $message = "logga ut";
-        header('Location: /');
-        exit;
-    }
-    catch(Exception $e) {
-        $message = "Could not logout";
-    }
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-if($user){
-    echo'
+                        <?php
+                        $user = $dbContext->getUsersDatabase()->getAuth()->isLoggedIn();
+                        $dbContext = new DBContext();
+                        if (isset($_POST['logOut'])) {
+                            try {
+                                $dbContext->getUsersDatabase()->getAuth()->logOut();
+                                $message = "logga ut";
+                                header('Location: /');
+                                exit;
+                            } catch (Exception $e) {
+                                $message = "Could not logout";
+                            }
+                        }
+                        if ($user) {
+                            echo '
     <form method="post" class="dropdownForm">
     <button  name="logOut" class="dropdown-item" name="logout">Logga Ut</button>
 </form>
 ';
-
-}else{
-echo'
+                        } else {
+                            echo '
     <li><a class="dropdown-item" href="login">Logga In</a></li>
     <li>
         <hr class="dropdown-divider">
     </li>
     <li><a class="dropdown-item" href="/create?type=create">skapa konto</a></li>
-
 ';
-
-
-}
-
-
-
-?>
-
-
-
-                        
+                        }
+                        ?>
                     </ul>
                 </li>
             </ul>
-
-
-
-
-
-
-
         </div>
     </div>
 </nav>

@@ -135,6 +135,18 @@ class DBContext
         $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
         return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
     }
+
+
+
+    function getNewProducts()
+    {
+        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 6";
+        return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
+    }
+
+
+
+
     function getCategoryByTitle($title): Category|false
     {
         $prep = $this->pdo->prepare('SELECT * FROM category where title=:title  ');

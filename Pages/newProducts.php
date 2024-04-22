@@ -35,41 +35,23 @@ if (isset($_POST['buy'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/css/index.css" rel="stylesheet" />
+    <link href="/css/newProducts.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Navigation-->
     <?php include_once ('Components/navbar.php'); ?>
-    <!-- Header-->
-    <header class="d-flex justify-content-center align-items-center  " style="min-height: 60vh; position: relative;">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white Header___text ">
-                <h1 class="Header_h1 ">Solitaire Astoria</h1>
-                <p>en stjärna i sitt eget universum av skönhet</p>
-            </div>
-        </div>
-        <img src="./assets/images/header.png" class="Header___img" />
-    </header>
-    </div>
-    <!-- Section Nyheter-->
-    <section class="py-6 newProductContainer" id="startchange">
-        <div class="newProductContainer___text">
-            <h2 class="text___h2">Nyheter</h2>
-            <a class="text___btn" href="/new"> Handla nu </a>
-        </div>
-        <div class="newProductContainer___imgContainer">
-            <img class="imgContainer___img" src="../assets/images/brushes.png" />
-        </div>
-    </section>
-    <!-- sales -->
-    <section class="py-6 lowStockLevelContainer">
+
+<article>
+<h1> Ny Produkter </h1> 
+<section class="newProductsSection">
+ 
+    <section class="newProductContainer">
     <input type="hidden" name="id" value="">
         <?php
-        $list = $dbContext->getLowStockLevel();
+        $list = $dbContext->getNewProducts();
         foreach ($list as $item) {
             if ($item) {
-                echo "<section class='lowStockLevelContainer___item'>
-                    <p class=\"lowStockLevelContainer___p\"> $item->stockLevel kvar! </p>
+                echo "<section class='newProductContainer___item'>
                     ";
                 productItem($item, '/');
                 echo "</section>";
@@ -78,15 +60,11 @@ if (isset($_POST['buy'])){
         ;
         ?>
     </section>
-    <!-- Footer-->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Solitaire Astoria 2024</p>
-        </div>
-    </footer>
+    </section>
+     </article>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+  
 </body>
 </html>
