@@ -135,7 +135,7 @@ class DBContext
     }
 
 
-    function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q, $page = 1, $per_page_record = 6)
+    function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q,  $page = 1, $per_page_record = 6)
     {
 
 
@@ -152,37 +152,42 @@ class DBContext
 
         $start_from = ($pageInt - 1) * $per_page_record_int;
 
-        $sql = "SELECT * FROM products WHERE categoryId =:categoryId";
+
+        $sql = "SELECT * FROM products WHERE categoryId = :categoryId";
         $paramsArray[":categoryId"] = $categoryId;
 
         if ($categoryId === 'all') {
             $sql = "SELECT * FROM products ";
             $paramsArray = [];
-
-
+            if ($q) {
+                $sql = "SELECT * FROM products WHERE title LIKE :q";
+                $paramsArray[":q"] = '%' . $q . '%';
+            }
+        } 
+        
+        else if ($categoryId !== 'all') {
+            if ($q) {
+                $sql .= " AND title LIKE :q";
+                $paramsArray[":q"] = '%' . $q . '%';
+            }
         }
 
-        if ($q) {
-            $sql .= ($categoryId === 'all') ? " WHERE title LIKE :q" : " AND title LIKE :q";
-            $paramsArray[':q'] = '%' . $q . '%';
-        }
+
+        
 
 
-
-        $sql .= "ORDER BY  $sortCol $sortOrder ";
+        $sql .= " ORDER BY  $sortCol $sortOrder ";
         $sqlCount = str_replace("SELECT * FROM ", "SELECT CEIL(COUNT(*)/$per_page_record_int) FROM ", $sql);
         $prep2 = $this->pdo->prepare($sqlCount);
         $prep2->execute($paramsArray);
         $num_pages = $prep2->fetchColumn();
 
 
-        $sql .= "LIMIT $start_from, $per_page_record_int";
+        $sql .= " LIMIT $start_from, $per_page_record_int";
         $prep = $this->pdo->prepare($sql);
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
         $prep->execute($paramsArray);
         $list = $prep->fetchAll();
-
-
         $arr = ["data" => $list, "num_pages" => $num_pages];
         return $arr;
     }
