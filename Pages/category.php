@@ -21,7 +21,7 @@ if (!isset($_GET['page'])) {
 }
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 if (isset($_POST['buy'])){
-    $dbContext -> addCart($username,$id,1, 'add');
+    $dbContext ->getCartDatabase()-> addCart($username,$id,1, 'add');
 } 
 $list = $dbContext->getProductByCategorySort($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record);
 updateProduct("?category=$category&name=$categoryName&sortingType=$sortingType&sorting=$sort&q=$q&page=$page&per_page_record=$per_page_record");

@@ -7,13 +7,13 @@ $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 $customer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
 $id = $_POST['id'] ?? '';
 if (isset($_POST['add'])){
-    $dbContext -> addCart($username,$id,1,'add');
+    $dbContext ->getCartDatabase()-> addCart($username,$id,1,'add');
 } 
 if (isset($_POST['remove'])){
-  $dbContext -> addCart($username,$id,1,'remove');
+  $dbContext ->getCartDatabase()-> addCart($username,$id,1,'remove');
 }
 if (isset($_POST['delete'])){
-  $dbContext -> addCart($username,$id,1,'delete');
+  $dbContext ->getCartDatabase()-> addCart($username,$id,1,'delete');
 }
 ?>
 <html>
@@ -37,7 +37,7 @@ if (isset($_POST['delete'])){
         <?php include_once ('Components/navbar.php'); ?>
 <p> 
         <?php if($customer){
-$list = $dbContext -> findCart($username);
+$list = $dbContext ->getCartDatabase()-> findCart($username);
 $listCount = count($list);
 if( 1 <= $listCount ){
 echo ' 

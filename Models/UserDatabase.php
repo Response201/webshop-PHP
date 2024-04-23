@@ -13,6 +13,8 @@ class UserDatabase
     $this->pdo = $pdo;
     $this->auth = new \Delight\Auth\Auth($pdo);
   }
+
+  
   function makeConsumer($username)
   {
     if ($this->auth->hasRole(\Delight\Auth\Role::CONSUMER, $username)) {
@@ -90,6 +92,9 @@ class UserDatabase
         /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;";
     $this->pdo->exec($sql);
   }
+
+
+
   function seedUsers()
   {
     if ($this->pdo->query("select * from users where email='stefan.holmberg@systementor.se'")->rowCount() == 0) {

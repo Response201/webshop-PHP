@@ -39,7 +39,7 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
                 if ($dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER)) {
                     $count = 0;
                     $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
-                    $existingCart = $dbContext->findCart($username);
+                    $existingCart = $dbContext->getCartDatabase()->findCart($username);
                     foreach ($existingCart as $product) {
                         $count += $product->quantity;
                     }

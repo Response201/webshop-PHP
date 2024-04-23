@@ -3,6 +3,7 @@ ob_start();
 // include --  OK även om filen inte finns
 //include_once("Models/Products.php");
 include_once ("Models/Database.php");
+include_once ("Models/CartDatabase.php");
 include_once ('Components/productItem.php');
 include_once ('functions/UpdateFunc.php');
 $dbContext = new DBContext();
@@ -11,7 +12,7 @@ $id = $_POST['id'] ?? '';
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 updateProduct("/");
 if (isset($_POST['buy'])){
-    $dbContext -> addCart($username,$id,1, 'add');
+    $dbContext -> getCartDatabase()-> addCart($username,$id,1, 'add');
 } 
     ?>
 <!DOCTYPE html>

@@ -5,7 +5,7 @@ include_once ('Models/Database.php');
 $dbContext = new DBContext();
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 
-$list = $dbContext -> findCart($username);
+$list = $dbContext ->getCartDatabase()-> findCart($username);
 
 for ($i = 0; $i < count($list); $i++) {
     $product = $dbContext->getProduct($list[$i]->productId);

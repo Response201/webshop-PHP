@@ -9,7 +9,7 @@ $id = $_GET['id'];
 updateProduct("/product?id=$id");
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 if (isset($_POST['buy'])){
-    $dbContext -> addCart($username,$id,1, 'add');
+    $dbContext ->getCartDatabase()-> addCart($username,$id,1, 'add');
 } 
 ?>
 <html>

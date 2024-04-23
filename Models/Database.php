@@ -3,14 +3,24 @@ require_once ('Models/Product.php');
 require_once ('Models/Category.php');
 require_once ('Models/Cart.php');
 require_once ('Models/UserDatabase.php');
+require_once ('Models/CartDatabase.php');
 class DBContext
 {
     private $pdo;
     private $usersDatabase;
+
     function getUsersDatabase()
     {
         return $this->usersDatabase;
     }
+
+    private $cartDatabase;
+    function getCartDatabase()
+    {
+        return $this->cartDatabase;
+    }
+    
+
     function __construct()
     {
         $host = $_ENV['host'];
@@ -20,31 +30,22 @@ class DBContext
         $dsn = "mysql:host=$host;dbname=$db";
         $this->pdo = new PDO($dsn, $user, $pass);
         $this->usersDatabase = new UserDatabase($this->pdo);
+        $this-> cartDatabase = new CartDatabase($this->pdo);
         $this->initIfNotInitialized();
         $this->seedfNotSeeded();
     }
+
+
+
+    /* Kategorier */
+
+
     function getAllCategories()
     {
         return $this->pdo->query('SELECT * FROM category')->fetchAll(PDO::FETCH_CLASS, 'Category');
     }
-    function getAllProducts()
-    {
-        return $this->pdo->query('SELECT * FROM products')->fetchAll(PDO::FETCH_CLASS, 'Product');
-    }
-    function getProduct($id)
-    {
-        $prep = $this->pdo->prepare('SELECT * FROM products where id=:id');
-        $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
-        $prep->execute(['id' => $id]);
-        return $prep->fetch();
-    }
-    function getProductByTitle($title)
-    {
-        $prep = $this->pdo->prepare('SELECT * FROM products where title=:title');
-        $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
-        $prep->execute(['title' => $title]);
-        return $prep->fetch();
-    }
+
+    
     function getProductByCategory($categoryId)
     {
         if ($categoryId === 'all') {
@@ -57,7 +58,72 @@ class DBContext
         }
     }
 
+    function getCategoryByTitle($title): Category|false
+    {
+        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title  ');
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
+        $prep->execute(['title' => $title]);
+        return $prep->fetch();
+    }
 
+
+
+
+
+    /* Produkter */
+
+    function getAllProducts()
+    {
+        return $this->pdo->query('SELECT * FROM products')->fetchAll(PDO::FETCH_CLASS, 'Product');
+    }
+
+
+
+    function getProduct($id)
+    {
+        $prep = $this->pdo->prepare('SELECT * FROM products where id=:id');
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
+        $prep->execute(['id' => $id]);
+        return $prep->fetch();
+    }
+
+
+
+    function getProductByTitle($title)
+    {
+        $prep = $this->pdo->prepare('SELECT * FROM products where title=:title');
+        $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
+        $prep->execute(['title' => $title]);
+        return $prep->fetch();
+    }
+
+
+
+    function getLowStockLevel()
+    {
+        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
+        return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
+    }
+
+
+
+
+    function getNewProducts()
+    {
+
+        $sql = "ORDER BY timestamp DESC LIMIT 0, 6";
+        return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
+    }
+
+
+
+
+
+
+
+
+    /* Validerar inkommande värde($sortCol) med inkommande array-värden(arrayOfValid). 
+       Om ingen match finns så skickas default-värdet tillbaka ($default)  */
     function oneOf($sortCol, $arrayOfValid, $default)
     {
         foreach ($arrayOfValid as $a) {
@@ -67,6 +133,7 @@ class DBContext
         }
         return $default;
     }
+
 
     function getProductByCategorySort($categoryId, $categoryName, $sortingType, $sort, $q, $page = 1, $per_page_record = 6)
     {
@@ -84,14 +151,17 @@ class DBContext
 
 
         $start_from = ($pageInt - 1) * $per_page_record_int;
+
         $sql = "SELECT * FROM products WHERE categoryId =:categoryId";
         $paramsArray[":categoryId"] = $categoryId;
+
         if ($categoryId === 'all') {
             $sql = "SELECT * FROM products ";
             $paramsArray = [];
 
 
         }
+
         if ($q) {
             $sql .= ($categoryId === 'all') ? " WHERE title LIKE :q" : " AND title LIKE :q";
             $paramsArray[':q'] = '%' . $q . '%';
@@ -99,19 +169,26 @@ class DBContext
 
 
 
-        $sql .= " ORDER BY  $sortCol $sortOrder ";
+        $sql .= "ORDER BY  $sortCol $sortOrder ";
         $sqlCount = str_replace("SELECT * FROM ", "SELECT CEIL(COUNT(*)/$per_page_record_int) FROM ", $sql);
         $prep2 = $this->pdo->prepare($sqlCount);
         $prep2->execute($paramsArray);
         $num_pages = $prep2->fetchColumn();
+
+
         $sql .= "LIMIT $start_from, $per_page_record_int";
         $prep = $this->pdo->prepare($sql);
         $prep->setFetchMode(PDO::FETCH_CLASS, 'Product');
         $prep->execute($paramsArray);
         $list = $prep->fetchAll();
+
+
         $arr = ["data" => $list, "num_pages" => $num_pages];
         return $arr;
     }
+
+
+
 
 
     function updateProduct($id, $price, $stockLevel)
@@ -130,85 +207,67 @@ class DBContext
             return "fel";
         }
     }
-    function getLowStockLevel()
+
+
+
+
+
+/* Skapa produkt */
+
+    function createIfNotExisting($title, $price, $stockLevel, $categoryName, $timeStamp, $img)
     {
-        $sql = "WHERE stockLevel >= 1 ORDER BY stockLevel ASC LIMIT 0, 10";
-        return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
-    }
-
-
-
-    function getNewProducts()
-    {
-
-        $sql = " ORDER BY timestamp  DESC LIMIT 0, 6";
-        return $this->pdo->query("SELECT * FROM products $sql")->fetchAll(PDO::FETCH_CLASS, 'Product');
-    }
-
-
-
-
-    function getCategoryByTitle($title): Category|false
-    {
-        $prep = $this->pdo->prepare('SELECT * FROM category where title=:title  ');
-        $prep->setFetchMode(PDO::FETCH_CLASS, 'Category');
-        $prep->execute(['title' => $title]);
-        return $prep->fetch();
-    }
-    function findCart($username)
-    {
-        $prep = $this->pdo->prepare('SELECT * FROM cart where username=:username');
-        $prep->setFetchMode(PDO::FETCH_CLASS, 'Cart');
-        $prep->execute(['username' => $username]);
-        return $prep->fetchAll();
-    }
-    function addCart($username, $productId, $quantity, $action)
-    {
-        $existInCartItem = $this->findCartByUserAndProduct($username, $productId);
-        $run = true;
-        $productitem = $this->getProduct($productId);
-        /* Add or remove from cart */
-        if ($productId && $username) {
-            if ($existInCartItem && $productitem) {
-                $newquantity = $existInCartItem->quantity;
-                $price = $productitem->price;
-                $newValue = null;
-                if ($run && $action === 'add' || $action === 'remove') {
-                    if ($action === 'add' && $productitem->stockLevel >= 1) {
-                        $newquantity = $existInCartItem->quantity + 1;
-                        $newValue = $productitem->stockLevel - 1;
-                    }
-                    if ($action === 'remove' && $existInCartItem->quantity >= 1) {
-                        $newquantity = $existInCartItem->quantity - 1;
-                        $newValue = $productitem->stockLevel + 1;
-                    }
-                    if ($newValue !== null) {
-                        $this->updateProduct($productId, $price, $newValue);
-                        $sql = "UPDATE cart SET quantity = :quantity WHERE productId = :productId AND username = :username";
-                        $prep = $this->pdo->prepare($sql);
-                        $prep->execute(["username" => $username, "productId" => $productId, "quantity" => $newquantity]);
-                    }
-                    $run = false;
-                }
-                /* Delete from cart */ else if ($run && $action === 'delete') {
-                    $newValue = $productitem->stockLevel + $existInCartItem->quantity;
-                    $sql = "DELETE FROM cart WHERE productId = :productId AND username = :username";
-                    $prep = $this->pdo->prepare($sql);
-                    $prep->execute(["username" => $username, "productId" => $productId]);
-                    $this->updateProduct($productId, $price, $newValue);
-                    $run = false;
-                }
-            }
-            /* Lägger till en ny produkt i cart */
-            if ($run && !$existInCartItem) {
-                $run = false;
-                $newValue = $productitem->stockLevel - 1;
-                $price = $productitem->price;
-                $this->updateProduct($productId, $price, $newValue);
-                $this->createCartData($username, $productId, 1);
-            }
+        $existing = $this->getProductByTitle($title);
+        if ($existing && !empty($existing->id)) {
+            return;
         }
+        ;
+        return $this->addProduct($title, $price, $stockLevel, $categoryName,$timeStamp, $img);
     }
+
+
+
+    function addCategory($title)
+    {
+        $prep = $this->pdo->prepare('INSERT INTO category (title) VALUES(:title )');
+        $prep->execute(['title' => $title]);
+        return $this->pdo->lastInsertId();
+    }
+
+
+
+    function addProduct($title, $price, $stockLevel, $categoryName, $timeStamp, $img)
+    {
+        $category = $this->getCategoryByTitle($categoryName);
+        if ($category == false) {
+            $this->addCategory($categoryName);
+            $category = $this->getCategoryByTitle($categoryName);
+        }
+      
+        
+        $prep = $this->pdo->prepare('INSERT INTO products (title, price, stockLevel, categoryId, timeStamp, img) VALUES(:title, :price, :stockLevel, :categoryId, :timeStamp, :img )');
+        $prep->execute(['title' => $title, 'price' => $price, 'stockLevel' => $stockLevel, 'categoryId' => $category->id, 'timeStamp'=> $timeStamp, 'img' => $img]);
+        return $this->pdo->lastInsertId();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Skapa nya produkter */
+
+
     function seedfNotSeeded()
     {
         static $seeded = false;
@@ -265,60 +324,12 @@ class DBContext
         
         $seeded = true;
     }
-    function createIfNotExisting($title, $price, $stockLevel, $categoryName, $timeStamp, $img)
-    {
-        $existing = $this->getProductByTitle($title);
-        if ($existing && !empty($existing->id)) {
-            return;
-        }
-        ;
-        return $this->addProduct($title, $price, $stockLevel, $categoryName,$timeStamp, $img);
-    }
-    function addCategory($title)
-    {
-        $prep = $this->pdo->prepare('INSERT INTO category (title) VALUES(:title )');
-        $prep->execute(['title' => $title]);
-        return $this->pdo->lastInsertId();
-    }
-    function addProduct($title, $price, $stockLevel, $categoryName, $timeStamp, $img)
-    {
-        $category = $this->getCategoryByTitle($categoryName);
-        if ($category == false) {
-            $this->addCategory($categoryName);
-            $category = $this->getCategoryByTitle($categoryName);
-        }
-        //insert plus get new id 
-        // return id             
-        $prep = $this->pdo->prepare('INSERT INTO products (title, price, stockLevel, categoryId, timeStamp, img) VALUES(:title, :price, :stockLevel, :categoryId, :timeStamp, :img )');
-        $prep->execute(['title' => $title, 'price' => $price, 'stockLevel' => $stockLevel, 'categoryId' => $category->id, 'timeStamp'=> $timeStamp, 'img' => $img]);
-        return $this->pdo->lastInsertId();
-    }
-    function findCartByUserAndProduct($username, $productId)
-    {
-        $productId = intval($productId);
-        $sql = "SELECT * FROM cart where username=:username AND productId=:productId";
-        $prep = $this->pdo->prepare($sql);
-        $prep->setFetchMode(PDO::FETCH_CLASS, 'Cart');
-        $prep->execute(['username' => $username, 'productId' => $productId]);
-        return $prep->fetch();
-    }
-    function createCartData($username, $productId, $quantity)
-    {
-        $existingCart = $this->findCartByUserAndProduct($username, $productId);
-        if (!$existingCart) {
-            return $this->addNewCart($username, $productId, $quantity);
-        } else {
-            return;
-        }
-    }
-    function addNewCart($username, $productId, $quantity = 1)
-    {
 
-        $prep = $this->pdo->prepare('INSERT INTO cart (username, productId, quantity) VALUES(:username, :productId, :quantity)');
-        $prep->execute(['username' => $username, 'productId' => $productId, 'quantity' => $quantity]);
-        return $this->pdo->lastInsertId();
-    }
-    /* skapa databas */
+
+ 
+
+
+    /*  tabeller */
     function initIfNotInitialized()
     {
         static $initialized = false;
@@ -342,15 +353,9 @@ class DBContext
             FOREIGN KEY (`categoryId`) REFERENCES `category`(`id`)
         )';
         $this->pdo->exec($sql);
-        $sql = 'CREATE TABLE IF NOT EXISTS `cart` (
-            `username` varchar(100) NOT NULL,
-            `productId` INT NOT NULL,
-            `quantity` INT NULL,
-            PRIMARY KEY (`username`, `productId`)
-        )';
-        $this->pdo->exec($sql);
         $this->usersDatabase->setupUsers();
         $this->usersDatabase->seedUsers();
+        $this->cartDatabase->setupCart();
         $initialized = true;
     }
 }

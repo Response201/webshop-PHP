@@ -18,7 +18,7 @@ function updateProduct($link)
         $v->field('stockLevel')->required()->numeric()->min_val(1);
         if ($v->is_valid()) {
             $dbContext->updateProduct($product->id, $product->price,  $product->stockLevel);
-            header("Location: $link "); // uppmaning Location = byt location till det jag säger
+            header("Location: $link ");
             exit;
         } else {
             $successMessage = "Det uppstod ett fel vid uppdateringen av produkten.";
