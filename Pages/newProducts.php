@@ -8,7 +8,7 @@ $id = $_POST['id'] ?? '';
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 updateProduct("/new");
 if (isset($_POST['buy'])){
-    $dbContext -> addCart($username,$id,1, 'add');
+    $dbContext ->getCartDatabase()-> addCart($username,$id,1, 'add');
 } 
     ?>
 <!DOCTYPE html>

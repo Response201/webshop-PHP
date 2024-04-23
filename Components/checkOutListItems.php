@@ -28,7 +28,7 @@ if($value <= 0){
       $btnRemove ='<a href="?checkout"> <button type="submit" name="remove" class="itemBtn checkOutBtn" >
       <i class="bi bi-dash-lg"></i>
       </button></a>';
-      if( $quanti  <= 0){
+      if( $quanti  <= 1){
         $btnRemove ='<div class="itemBtn checkOutHollowBtn checkOutBtn" ><i class="bi bi-dash-lg"></i></div> '; 
        }
 
