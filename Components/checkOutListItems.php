@@ -13,6 +13,9 @@ for ($i = 0; $i < count($list); $i++) {
     $listItem = $i +1;
       $value = $product->stockLevel;
 $message ='';
+
+
+
       /* ADD */
 $btnAdd ='<a href="?checkout"> <button type="submit" name="add" class="itemBtn checkOutBtn" >
 <i class="bi bi-plus-lg"></i>
@@ -35,9 +38,6 @@ if($value <= 0){
 
 
        /* DELETE */
-
-
-
        $btnDelete ='<a href="?checkout"> <button type="submit" name="delete" class="itemBtn checkOutBtn" >
        <i class="bi bi-trash"></i>
        </button></a>';

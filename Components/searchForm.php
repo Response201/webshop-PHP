@@ -12,7 +12,6 @@ function searchForm($category, $categoryName, $sort, $sortingType, $q, $per_page
             <input type="hidden" name="name" class="form-control" value="' . $categoryName . '" />
             <input type="hidden" name="sortingType" class="form-control" value="' . $sortingType . '" />
             <input type="hidden" name="per_page_record" class="form-control" value="' . $per_page_record . '" />
-          
             <button class="btn btn-outline-dark" type="submit">
                 <i class="bi bi-search"></i>
             </button>

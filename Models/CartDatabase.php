@@ -63,7 +63,8 @@ function addCart($username, $productId, $quantity, $action)
             }
 
 
-            /* Delete from cart */ else if ($run && $action === 'delete') {
+            /* Delete from cart */ 
+            else if ($run && $action === 'delete') {
                 $newValue = $productitem->stockLevel + $existInCartItem->quantity;
                 $sql = "DELETE FROM cart WHERE productId = :productId AND username = :username";
                 $prep = $this->pdo->prepare($sql);

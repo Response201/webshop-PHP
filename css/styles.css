@@ -109,7 +109,7 @@ header {
 
 .item {
   border-radius: 5px;
-  background-color: #e8edfa;
+  background-color:  #fefefe;
   border: #000 solid 1px;
   height: 90%;
   width: 100%;
@@ -178,7 +178,7 @@ text-overflow: ellipsis;
 
 .test img {
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
 
 }
 
@@ -210,7 +210,7 @@ text-overflow: ellipsis;
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: #e8edfa;
+  background-color: #fefefe;
   min-height: calc(600px + 3rem);
 }
 
@@ -670,7 +670,7 @@ th {
 
 @media screen and (min-width: 768px) {
   .productItemList {
-    grid-template: repeat(auto-fit, 50%) / repeat(2, .4fr);
+    grid-template: repeat(auto-fit, 50%) / repeat(2, .48fr);
     grid-auto-rows: 50%;
     justify-content: space-between;
     align-items: center;
