@@ -42,7 +42,7 @@ a:active {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  filter: opacity(10%);
+  filter: opacity(20%);
 }
 
 .navbar-nav,
@@ -569,7 +569,7 @@ text-overflow: ellipsis;
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color: #e8edfa;
+  background-color: #fefefe;
   min-height: calc(600px + 3rem);
 
 }

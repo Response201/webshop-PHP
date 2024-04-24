@@ -17,11 +17,11 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    filter: opacity(40%);
+    filter: opacity(20%);
 }
 
 .createUserForm {
-    background-color: #e8edfa;
+    background-color:  #fefefe;
     height: fit-content;
     min-height: 250px;
     width: clamp(200px, 90vw, 500px);

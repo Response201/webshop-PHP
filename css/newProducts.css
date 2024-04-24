@@ -19,7 +19,15 @@ h1 {
 }
 
 
-
+.background___img {
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: opacity(20%);
+}
 .newProductsSection {
     display: flex;
     align-items: center;
@@ -43,7 +51,7 @@ h1 {
     z-index: 10;
     grid-template-columns: repeat(auto-fit, minmax(30wv, 50%));
     overflow-y: scroll;
-    padding: 1rem ;
+    padding: 1rem;
     z-index: 0;
     height: 100%;
     max-width: 1850px;
@@ -62,20 +70,20 @@ h1 {
     display: flex;
     align-items: center;
     height: 100%;
-font-size: 12px;
-position: relative;
+    font-size: 12px;
+    position: relative;
 }
-.newProductDate{
-top: 14.5%;
-font-size: 0.7rem;
-border-radius: 20px 20px 0 0px;
-padding: 0 4%;
-right: -1.5%;
-z-index: 10;
-    background-color:#e8edfa; 
+
+.newProductDate {
+    top: 14.5%;
+    font-size: 0.7rem;
+    padding: 0 4%;
+    right: -1.5%;
+    z-index: 10;
+    border-bottom: 1px gray solid;
     position: absolute;
     transform: rotate(45deg);
-    }
+}
 
 .newProductContainer h5 {
 
@@ -111,12 +119,14 @@ z-index: 10;
 
 
     }
-    .newProductDate{
+
+    .newProductDate {
         top: 16%;
         right: -1%;
         font-size: clamp(0.55rem, 0.7vw, 0.7rem);
-    
-            }
+
+    }
+
     .newProductContainer h5 {
 
 
@@ -132,12 +142,13 @@ z-index: 10;
 
 
     }
-    .newProductDate{
+
+    .newProductDate {
         top: 14%;
         right: -1.5%;
         font-size: clamp(0.5rem, 0.7vw, 0.7rem);
-    
-            }
+
+    }
 
     .newProductsSection {
 

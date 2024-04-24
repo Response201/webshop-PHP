@@ -80,10 +80,11 @@ if (isset($_POST['buy'])){
         ?>
     </section>
     <!-- Footer-->
-    <footer class="py-5 bg-dark">
+    <footer >
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Solitaire Astoria 2024</p>
+            <p class="m-0 text-center text-dark">Copyright &copy; Solitaire Astoria 2024</p>
         </div>
+        <img src="./assets/images/background.png" class="background___img" />
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

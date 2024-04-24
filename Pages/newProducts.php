@@ -37,9 +37,10 @@ if (isset($_POST['buy'])){
     <?php include_once ('Components/navbar.php'); ?>
 
 <article>
-<h1> Nya Produkter </h1> 
+<img src="./assets/images/background.png" class="background___img" />
+<h1> Nyheter </h1> 
 <section class="newProductsSection">
- 
+
     <section class="newProductContainer">
     <input type="hidden" name="id" value="">
         <?php

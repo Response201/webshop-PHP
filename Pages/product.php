@@ -29,7 +29,9 @@ if (isset($_POST['buy'])){
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
+
     <article class="productContainer">
+    <img src="./assets/images/background.png" class="background___img" />
         <?php include_once ('Components/navbar.php'); ?>
         <section class="productItem">
             <?php

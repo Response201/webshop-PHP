@@ -5,14 +5,14 @@ $per_page_record = $_GET['per_page_record'] ?? 6;
 ?>
 <nav class="navbar navbar-default navbar-expand-lg text-white fixed-top" role="navigation">
     <div class="container-fluid">
-        <button class="navbar-toggler  text-dark border-dark" type="button" data-bs-toggle="collapse"
+        <button class="navbar-toggler font-weight-bold text-dark border-dark" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
             <span role="button"><i class="fa fa-bars" aria-hidden="true"></i></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item me-2">
+                <li class="nav-item me-2 font-weight-bold">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item me-2">

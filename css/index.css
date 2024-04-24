@@ -83,7 +83,8 @@ a:hover {
 
 /* salses */
 .lowStockLevelContainer {
-    background-color: #000000;
+    background-color: #010002;
+   
     display: grid;
     gap: 3rem;
     justify-content: space-evenly;
@@ -129,7 +130,15 @@ a:hover {
 
 }
 
-
+footer{
+font-weight: 500;
+position: relative;
+overflow: hidden;
+min-height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
 
 @media screen and (min-width: 768px) {
     .lowStockLevelContainer {
