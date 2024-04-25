@@ -59,9 +59,7 @@ if($value <= 0){
     <td  class=\"changeObjectItem\">$product->title</td>
     <td class=\"changeObjectItem\"> $quanti</td>
     <td class=\"changeObjectItem\">
-   
     <input name=\"id\" type=\"hidden\" class=\"form-control\" value=\"$product->id\" />
-  
     $btnAdd
    <p class=\" changeObjectText \"> $message </p>
     </td>

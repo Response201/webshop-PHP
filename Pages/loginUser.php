@@ -3,11 +3,9 @@ ob_start();
 require_once ('Models/Database.php');
 $dbContext = new DBContext();
 $dbContext->getAllCategories();
-
 $message = $_GET['message'] ?? "";
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
-$passwordAgain = $_POST['passwordAgain'] ?? '';
 
 
 if (isset($_POST['login'])) {

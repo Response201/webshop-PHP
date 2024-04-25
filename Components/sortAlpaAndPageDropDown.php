@@ -1,5 +1,6 @@
-<?php 
-function sortAlpaAndPageDropDown($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record) {
+<?php
+function sortAlpaAndPageDropDown($category, $categoryName, $sortingType, $sort, $q, $page, $per_page_record)
+{
     echo ' 
             <a class="categoryBtnSort" href="?category=' . $category . '&name=' . $categoryName . '&sortingType=title&sorting=ASC&q=' . $q . '&page=' . $page . '&per_page_record=' . $per_page_record . '">
                 <i class="sortBtn bi bi-sort-alpha-down"></i>

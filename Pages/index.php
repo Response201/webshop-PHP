@@ -18,10 +18,7 @@ if (isset($_POST['buy'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
 <?php include_once ('Components/basicHeadItem.php');?>
-    
     <link href="/css/styles.css" rel="stylesheet" />
     <link href="/css/index.css" rel="stylesheet" />
 </head>

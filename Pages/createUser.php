@@ -33,8 +33,6 @@ if ($v->is_valid()) {
 }
 ?>
 
-
-
 <!DOCTYPE HTML>
 <head>
 <?php include_once ('Components/basicHeadItem.php');?>
