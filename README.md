@@ -30,7 +30,7 @@ Användarna har möjlighet att lägga till/ta bort produkter i en shoppingvagn, 
 - Struktur och Designmönster
 Under utvecklingsprocessen har jag noggrant tillämpat olika designmönster och arkitektoniska principer för att säkerställa en god kodkvalitet och struktur.
 
-Med en genomtänkt planering, noggrann systemdesign och tillämpning av designmönster har jag lyckats bygga en e-handelsplattform som uppfyller alla angivna krav och mål.
+ - Med en genomtänkt planering, noggrann systemdesign och tillämpning av designmönster har jag lyckats bygga en e-handelsplattform som uppfyller alla angivna krav och mål.
 
 
 ##  Demo ✨
