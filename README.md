@@ -13,7 +13,6 @@ Webbshoppen innehåller ett brett utbud av produkter som alla tillhör en specif
 
 
 - Startsida och Populära Produkter
-
 På startsidan presenteras användarna med en välkomnande överblick över webbshoppen. Här syns en lista över de 10 mest populära produkterna baserat på antal varor i lager.
 
 - Produktsidor och Kategoriöversikt
