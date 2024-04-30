@@ -2,10 +2,13 @@
  
 
 ![App Screenshot](https://i.ibb.co/H2yZ0kw/Sk-rmklipp.jpg)
+ ✨ | ![MySQL badge](https://img.shields.io/badge/se%20Live-fff?style=for-the-badge&logo=&logoColor=white)  | ✨
+| --- | --- |  --- | 
+ 
+# Webbshop
 
-# Webbshop   
-| ![MySQL badge](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white) | ![PHP badge](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white) |
-| --- | --- | 
+ |  💻  | ![MySQL badge](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white) | ![PHP badge](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white) |
+| --- | --- | --- | 
  
 
 - Produktsortiment och Kategorier
@@ -30,13 +33,8 @@ Användarna har möjlighet att lägga till/ta bort produkter i en shoppingvagn, 
 - Struktur och Designmönster
 Under utvecklingsprocessen har jag noggrant tillämpat olika designmönster och arkitektoniska principer för att säkerställa en god kodkvalitet och struktur.
 
- - Med en genomtänkt planering, noggrann systemdesign och tillämpning av designmönster har jag lyckats bygga en e-handelsplattform som uppfyller alla angivna krav och mål.
+- Med en genomtänkt planering, noggrann systemdesign och tillämpning av designmönster har jag lyckats bygga en e-handelsplattform som uppfyller alla angivna krav och mål.
 
-
-##  Demo ✨
-
-(kommer snart):
-[![hello](https://img.shields.io/badge/se%20live-FFF0E5?style=for-the-badge&logoColor=303347)]('url')
 
 ## Links 🔗 
 
