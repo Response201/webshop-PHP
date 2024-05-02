@@ -2,8 +2,8 @@
  
 
 ![App Screenshot](https://i.ibb.co/H2yZ0kw/Sk-rmklipp.jpg)
- ✨ | ![MySQL badge](https://img.shields.io/badge/se%20Live-fff?style=for-the-badge&logo=&logoColor=white)  | ✨
-| --- | --- |  --- | 
+|✨| [![MySQL badge](https://img.shields.io/badge/se%20Live-fff?style=for-the-badge&logo=&logoColor=white)](https://jessicah.se) |✨
+|---|---|---|
  
 # Webbshop
 
