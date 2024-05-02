@@ -2,7 +2,7 @@
 function updateProduct($link)
 {
     include_once ('Models/Database.php');
-    include_once ('components/productItem.php');
+    include_once ('Components/productItem.php');
     require_once ("Utils/Validator.php");
     $dbContext = new DBContext();
     $id = $_POST['id'] ?? '';

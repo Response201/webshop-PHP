@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include_once ('Models/Database.php');
-include_once ('components/productItem.php');
+include_once ('Components/productItem.php');
 include_once ('functions/UpdateFunc.php');
 $dbContext = new DBContext();
 $id = $_GET['id'];
