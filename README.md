@@ -8,12 +8,12 @@
 Obs! 
 
 Login admin:
-Användarnamn:admin@test.se
-Lösenord:Hej123!
+- Användarnamn: admin@test.se
+- Lösenord: Hej123!
 
 Login kund:
-Användarnamn:kund@test.se
-Lösenord:Hej123!
+- Användarnamn: kund@test.se
+- Lösenord: Hej123!
  
 # Webbshop
 
