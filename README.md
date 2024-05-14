@@ -4,6 +4,16 @@
 ![App Screenshot](https://i.ibb.co/H2yZ0kw/Sk-rmklipp.jpg)
 |✨| [![MySQL badge](https://img.shields.io/badge/se%20Live-fff?style=for-the-badge&logo=&logoColor=white)](https://jessicah.se) |✨
 |---|---|---|
+
+Obs! 
+
+Login admin:
+Användarnamn:admin@test.se
+Lösenord:Hej123!
+
+Login kund:
+Användarnamn:kund@test.se
+Lösenord:Hej123!
  
 # Webbshop
 
