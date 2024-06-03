@@ -2,18 +2,26 @@
 ob_start();
 include_once ('Models/Database.php');
 include_once ('Components/checkOutListItems.php');
+include_once ('Components/checkOutTotalPriceListItem.php');
 $dbContext = new DBContext();
 $username = $dbContext->getUsersDatabase()->getAuth()->getEmail();
 $customer = $dbContext->getUsersDatabase()->getAuth()->hasRole(\Delight\Auth\Role::CONSUMER) ? true : false;
 $id = $_POST['id'] ?? '';
+
 if (isset($_POST['add'])){
+
     $dbContext ->getCartDatabase()-> addCart($username,$id,1,'add');
+   
 } 
 if (isset($_POST['remove'])){
+ 
   $dbContext ->getCartDatabase()-> addCart($username,$id,1,'remove');
+ 
 }
 if (isset($_POST['delete'])){
+
   $dbContext ->getCartDatabase()-> addCart($username,$id,1,'delete');
+
 }
 ?>
 <html>
@@ -29,8 +37,22 @@ if (isset($_POST['delete'])){
         <?php if($customer){
 $list = $dbContext ->getCartDatabase()-> findCart($username);
 $listCount = count($list);
+$total=0;
+
+
 if( 1 <= $listCount ){
+
+  $total =  $dbContext ->getCartDatabase()->totalPrice($username);
+
+
+
+
+
+
+
+
 echo ' 
+<p>'; $total; echo'</p>
 <table class="checkOutTabel">
   <thead>
     <tr class="headerTable">
@@ -44,9 +66,11 @@ echo '
   </thead>
   <tbody >';
 checkOutListItems();
+checkOutTotalPriceListItem($total);
   echo ' 
   </tbody>
 </table>
+
 ';}else{
   echo"Du är inloggad och kan handla";
 }

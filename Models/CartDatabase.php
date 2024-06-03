@@ -12,6 +12,10 @@ class CartDatabase {
     }
 
 
+
+
+
+
     
 
 
@@ -24,6 +28,33 @@ function findCart($username)
     $prep->execute(['username' => $username]);
     return $prep->fetchAll();
 }
+
+
+
+
+
+
+
+    /* Total price */
+
+
+    function totalPrice($username){
+        $database = new DBContext();
+          $list = $this-> findCart($username);
+    $total = 0;
+    if($list >= 1)
+            foreach ($list as $item) {
+                $product = $database->getProduct($item->productId);
+                $total += $product->price * $item->quantity;
+
+                }
+
+       return $total;
+          
+        }
+
+
+
 
 
 
